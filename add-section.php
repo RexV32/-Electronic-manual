@@ -24,8 +24,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             "name" => $name,
             "id" => $id
         ]);
-        $lastInsertId = $link -> lastInsertId();
-        $nameFolder = $lastInsertId;
+        $nameFolder = $link -> lastInsertId();
         $path = "uploads/$id/$nameFolder";
 
         if (!file_exists($path)) {

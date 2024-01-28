@@ -152,23 +152,46 @@
       </section>
     </div>
   </footer>
-  {% if currentSection == "Discipline" or currentSection == "Section" or currentSection == "subSection" or currentSection == "subSection" %}
+  {% if 
+        currentSection == "Discipline" or 
+        currentSection == "Section" or 
+        currentSection == "subSection" or 
+        currentSection == "subSection" 
+  %}
     <script src="./js/delete.js"></script>
   {% endif %}
-  {% if currentSection == "Section" or currentSection == "addSection" or currentSection == "subSection" or currentSection == "listUser" or currentSection == "subSectionAdd"%}
+
+  {% if 
+        currentSection == "Section" or 
+        currentSection == "addSection" or 
+        currentSection == "subSection" or 
+        currentSection == "listUser" or 
+        currentSection == "subSectionAdd"
+  %}
     <script src="./js/select.js"></script>
   {% endif %}
+
   {% if currentSection == "Group" %}
     <script src="./js/delete-group.js"></script>
   {% endif %}
+
   {% if currentSection == "userApproval" %}
     <script src="./js/user-approval.js"></script>
   {% endif %}
+
   {% if currentSection == "listUser" %}
     <script src="./js/control-user.js"></script>
   {% endif %}
-  {% if currentSection == "subSectionAdd" %}
+
+  {% if currentSection == "subSectionAdd"%}
     <script src="./js/editor.js" type="module"></script>
+    <script src="./js/editorJs/underline/dist/bundle.js"></script>
+    <script src="./js/editorJs/footnotes/dist/bundle.js"></script>
+    <script src="./js/editorJs/attaches/dist/bundle.js"></script>
+  {% endif %}
+
+  {% if currentSection == "subSectionEdit" %}
+    <script src="./js/edit.js" type="module"></script>
     <script src="./js/editorJs/underline/dist/bundle.js"></script>
     <script src="./js/editorJs/footnotes/dist/bundle.js"></script>
     <script src="./js/editorJs/attaches/dist/bundle.js"></script>

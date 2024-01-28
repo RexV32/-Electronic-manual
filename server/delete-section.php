@@ -34,9 +34,9 @@ switch ($section) {
         $stmt = $link->prepare($sql);
 
         try {
-            $path = "../uploads/$id";
+            $path = "../uploads";
             if (is_dir($path)) {
-                deleteDirectory($path);
+                findAndDeleteFolder($path, $id);
             }
             $success = $stmt->execute([$id]);
             echo json_encode(["success" => true]);
@@ -61,34 +61,14 @@ switch ($section) {
         }
         break;
     case "subSection":
-        $sql = "SELECT Disciplines.Id as idDiscipline,Sections.Id as idSection,`SubSections`.`Content` FROM `SubSections` 
-        INNER JOIN Sections ON Sections.Id = SubSections.Id_section 
-        INNER JOIN Disciplines ON Disciplines.Id = Sections.Id_discipline WHERE SubSections.Id = ?";
-        $stmt = $link->prepare($sql);
-        $stmt -> execute([$id]);
-        $data = $stmt -> fetch(PDO::FETCH_ASSOC);
-        $idDiscipline = $data["idDiscipline"];
-        $idSection = $data["idSection"];
-        $json = json_decode($data["Content"]);
-        for ($i = 0; $i < count($json->blocks); $i++) {
-            if (isset($json->blocks[$i]->data)) {
-                $data = $json->blocks[$i]->data;
-                if (isset($data->file)) {
-                    $file = $data->file;
-                    if (isset($file->url)) {
-                        $url = $file->url;
-                        $fileName = explode("/", $url)[3];
-                        $path = "../uploads/$idDiscipline/$idSection/$fileName";
-                        if(file_exists($path)) {
-                            unlink(realpath($path));
-                        }
-                    }
-                }
-            }
-        }
         $sql = "DELETE FROM `SubSections` WHERE Id = ?";
         $stmt = $link->prepare($sql);
+        
         try {
+            $path = "../uploads";
+            if (is_dir($path)) {
+                findAndDeleteFolder($path, $id);
+            }
             $success = $stmt->execute([$id]);
             echo json_encode(["success" => true]);
         } catch (PDOException $exception) {

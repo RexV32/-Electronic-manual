@@ -9,7 +9,7 @@ $offset = ($page - 1) * $limit;
 
 $sql = "SELECT * FROM `Disciplines`";
 $stmt = $link ->query($sql);
-$disciplines = $stmt->fetch(PDO::FETCH_ASSOC);
+$disciplines = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $disciplinesSlice = array_slice($disciplines,$offset,$limit,true);
 $disciplinesQuantity = count($disciplines);
 $pages = ceil($disciplinesQuantity / $limit);

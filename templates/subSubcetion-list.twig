@@ -53,7 +53,7 @@
               <h3 class="main__title">{{subSection.NameSubSection}}</h3>
               <ul class="main__control-panel">
                 <li class="main__panel-item" title="Редактировать подраздел">
-                  <a class="main__panel-button" href="#">
+                  <a class="main__panel-button" href="edit-SubSection.php?id={{subSection.Id}}">
                     <svg class="main__panel-icon" width="29" height="29" role="img" aria-label="edit">
                       <use xlink:href="image/icons/sprite.svg#editIcon"></use>
                     </svg>
@@ -101,7 +101,7 @@
               {% endfor %}
               </ul>
           </div>
-          <a class="main__button" href="subSection-add.php">Добавить подраздел</a>
+          <a class="main__button" href="add-subSection.php">Добавить подраздел</a>
         </section>
       </div>
 {% endblock %}

@@ -145,6 +145,7 @@ const pageBody = document.body;
 saveButton.addEventListener("click",(evt) => {
   evt.preventDefault();
   editor.save().then((outputData) => {
+    const jsonData = JSON.stringify(outputData, null, 2);
     const radioButtonDiscipline = document.querySelector("input[name='disciplines']:checked");
     const radioButtonSection = document.querySelector("input[name='sections']:checked");
     const idDiscipline = radioButtonDiscipline ? radioButtonDiscipline.value : null;
@@ -162,14 +163,6 @@ saveButton.addEventListener("click",(evt) => {
       modalError("Поле с основным содержимым подраздела не заполнено");
       return;
     }
-    outputData.blocks.forEach(block => {
-      if (block.data && block.data.file && block.data.file.url) {
-        const nameFile = block.data.file.url.split("/").at(-1);
-        const newPath = `./${idDiscipline}/${idSection}/${nameFile}`;
-        block.data.file.url = newPath;
-      }
-    });
-    const jsonData = JSON.stringify(outputData, null, 2);
     const data = new FormData();
     data.append("idDiscipline", idDiscipline);
     data.append("idSection", idSection);
