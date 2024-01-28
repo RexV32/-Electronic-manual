@@ -1,0 +1,90 @@
+{% extends 'layout-admin.twig' %}
+
+{% block content %}
+<div class="main__content">
+    <section class="main__section">
+        <h2 class="main__section-title">Список пользователей</h2>
+        <div class="user-list">
+        <form class="user-list__form" method="get">
+            <fieldset class="user-list__form-fieldset">
+                <div class="select unactive">
+                    <button class="select__button" role="combobox" aria-labelledby="select button" aria-haspopup="listbox" aria-expanded="false" aria-controls="select-dropdown">
+                        <span class="select__selected-value">Группа</span>
+                        <svg class="select__arrow" width="16" height="16" role="img" aria-label="select">
+                            <use xlink:href="image/icons/sprite.svg#select-arrow"></use>
+                        </svg>
+                    </button>
+                    <ul class="select__dropdown" role="listbox" id="select-dropdown">
+                    {% for group in groups %}
+                        <li role="select__option">
+                            <input type="radio" id="{{group.Id}}" name="group" value="{{group.Id}}"/>
+                            <label for="{{group.Id}}">{{group.Name}}</label>
+                        </li>
+                    {% endfor %}
+                    </ul>
+                </div>
+                <input class="user-list__input" type="text" placeholder="Фамилия" name="surname">
+                <input class="user-list__input" type="text" placeholder="Имя" name="name">
+                <input class="user-list__input" type="text" placeholder="Отчество" name="patronymic">
+                <input class="user-list__input" type="text" placeholder="Логин" name="login">
+            </fieldset>
+            <div class="user-list__button-panel">
+                <button class="user-list__submit" type="submit">Искать</button>
+                <a class="user-list__submit" href="users.php">Сбросить</a>
+            </div>
+        </form>
+        <table class="user-list__table">
+            <div class="user-list__wrapper-table">
+            <thead class="user-list__thead">
+                <tr class="user-list__tr">
+                <th class="user-list__th">Группа</th>
+                <th class="user-list__th">ФИО</th>
+                <th class="user-list__th">Логин</th>
+                <th class="user-list__th">Управление</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in usersSlice %}
+                <tr class="user-list__tr">
+                    <td class="user-list__td" data-label="Группа">{{user.NameGroup}}</td>
+                    <td class="user-list__td" data-label="ФИО">{{user.Surname}} {{user.Name}} {{user.Patronymic}}</td>
+                    <td class="user-list__td" data-label="Логин">{{user.Login}}</td>
+                    <td class="user-list__td" data-label="Управление">
+                        <ul class="user-list__control-list">
+                        <li class="user-list__control-item" title="Изменить пароль">
+                            <button class="user-list__button user-list__button--change" type="button" data-id="{{user.Id}}">
+                                <svg class="user-list__icon" width="29" height="29" role="img" aria-label="edit">
+                                    <use xlink:href="image/icons/sprite.svg#editIcon"></use>
+                                </svg>
+                                <span class="visually-hidden">Изменить пароль</span>
+                            </button>
+                        </li>
+                        <li class="user-list__control-item" title="Удалить">
+                            <button class="user-list__button user-list__button--delete" type="button" data-id="{{user.Id}}">
+                                <svg class="user-list__icon" width="28" height="28" role="img" aria-label="delete">
+                                    <use xlink:href="image/icons/sprite.svg#deleteIcon"></use>
+                                </svg>
+                                <span class="visually-hidden">Удалить</span>
+                            </button>
+                        </li>
+                        </ul>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            </div>
+        </table>
+        </div>
+        {% set className = users|length <= limit ? "pagintaion--none": ""%}
+        <div class="pagintaion {{className}}">
+            <ul class="pagination__list">
+            {% for i in 1..pages %}
+                <li class="pagination-item {{ i == page ? 'pagination-item--current' : '' }}">
+                    <a class="pagination-link" href="?page={{i}}">{{i}}</a>
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
+    </section>
+</div>
+{% endblock %}

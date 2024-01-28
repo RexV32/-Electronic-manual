@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./css/style.css">
+  <title>ЭМКУ - Регистрация</title>
+</head>
+<body>
+  <section class="reg">
+    <h1 class="visually-hidden">Регистрация</h1>
+    <div class="reg__wrapper">
+      <form class="reg__form" method="post">
+        <input class="reg__input" type="text" placeholder="Введите логин">
+        <input class="reg__input" type="text" placeholder="Введеите пароль">
+        <div class="select-reg unactive">
+          <button class="select-reg__button" role="combobox" aria-labelledby="select button" aria-haspopup="listbox" aria-expanded="false" aria-controls="select-dropdown">
+            <span class="select-reg__selected-value">Номер группы</span>
+            <svg class="select-reg__arrow" width="16" height="16" role="img" aria-label="select">
+              <use xlink:href="image/icons/sprite.svg#select-arrow"></use>
+            </svg>
+          </button>
+          <ul class="select-reg__dropdown" role="listbox" id="select-dropdown">
+            <li role="select-reg__option">
+              <input type="radio" id="1" name="radio"/>
+              <label for="1">ПР-20</label>
+            </li>
+          </ul>
+        </div>
+        <input class="reg__input" type="text" placeholder="Введеите имя">
+        <input class="reg__input" type="text" placeholder="Введеите фамилию">
+        <input class="reg__input" type="text" placeholder="Введеите отчество">
+        <button class="reg__submit" type="submit">Создать аккаунт</button>
+        <a class="reg__link reg__link--underline" href="#">Отмена</a>
+      </в>
+    </div>
+  </section>
+  <script src="./js/select-reg.js"></script>
+</body>
+</html>

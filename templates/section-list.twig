@@ -1,0 +1,91 @@
+{% extends 'layout-admin.twig' %}
+
+{% block content %}
+          <div class="main__content">
+        <section class="main__section">
+          <h2 class="main__section-title">Список разделов:</h2>
+<form class="main__form" method="get" action="">
+    <div class="select unactive">
+        <button class="select__button" role="combobox" aria-labelledby="select button" aria-haspopup="listbox" aria-expanded="false" aria-controls="select-dropdown">
+            {% if disciplines|length > 0 %}
+            <span class="select__selected-value">{{currentDiscipline}}</span>
+            {% else %}
+            <span class="select__selected-value">Дисциплины</span>
+            {% endif %}
+            <svg class="select__arrow" width="16" height="16" role="img" aria-label="select">
+                <use xlink:href="image/icons/sprite.svg#select-arrow"></use>
+            </svg>
+        </button>
+        <ul class="select__dropdown" role="listbox" id="select-dropdown">
+            {% set isFirstIteration = true %}
+            {% for discipline in disciplines %}
+            <li role="select__option">
+                <input type="radio" id="{{discipline.Id}}" name="discipline" value="{{discipline.Id}}" {% if discipline.Id == currentIdDiscipline %}checked{% endif %}/>
+                <label for="{{discipline.Id}}">{{discipline.Name}}</label>
+            </li>
+            {% set isFirstIteration = false %}
+            {% endfor %}
+        </ul>
+    </div>
+    <button class="main__form-button" type="submit">Показать</button>
+</form>
+          <ul class="main__section-list">
+          {% for section in sectionsSlice %}
+            <li class="main__section-item">
+              <h3 class="main__title">{{section.Name}}</h3>
+              <ul class="main__control-panel">
+                <li class="main__panel-item" title="Изменить название">
+                  <a class="main__panel-button" href="rename.php?id={{section.Id}}&section=section">
+                    <svg class="main__panel-icon" width="29" height="29" role="img" aria-label="edit">
+                      <use xlink:href="image/icons/sprite.svg#editIcon"></use>
+                    </svg>
+                    <span class="visually-hidden">Переименовать</span>
+                  </a>
+                </li>
+                {% if section.Status == 1 %}
+                <li class="main__panel-item" title="Скрыть дисциплину">
+                {% else %}
+                <li class="main__panel-item" title="Показать дисциплину">
+                {% endif %}
+                  <a class="main__panel-button" href="?id={{section.Id}}&status={{section.Status}}">
+                {% if section.Status == 1 %}
+                <svg class="main__panel-icon" width="27" height="28" role="img" aria-label="hidden">
+                    <use xlink:href="image/icons/sprite.svg#hiddenIcon"></use>
+                </svg>
+                <span class="visually-hidden">Скрыть</span>
+                {% else %}
+                <svg class="main__panel-icon" width="24" height="18" role="img" aria-label="show">
+                    <use xlink:href="image/icons/sprite.svg#showIcon"></use>
+                </svg>
+                <span class="visually-hidden">Показать</span>
+                {% endif %}
+                  </a>
+                </li>
+                <li class="main__panel-item" title="Удалить дисциплину">
+                  <button class="main__panel-button main__panel-button--delete" type="button" data-id="{{section.Id}}" data-section="sections">
+                    <svg class="main__panel-icon" width="28" height="28" role="img" aria-label="delete">
+                      <use xlink:href="image/icons/sprite.svg#deleteIcon"></use>
+                    </svg>
+                    <span class="visually-hidden">Удалить</span>
+                  </button>
+                </li>
+              </ul>
+            </li>
+          {% endfor %}
+          </ul>
+          {% set className = sections|length <= limit ? "pagintaion--none": ""%}
+          <div class="pagintaion {{className}}">
+              <ul class="pagination__list">
+              {% for i in 1..pages %}
+                  <li class="pagination-item {{ i == page ? 'pagination-item--current' : '' }}">
+                      <a class="pagination-link" href="?page={{i}}&discipline={{currentIdDiscipline}}">{{i}}</a>
+                  </li>
+              {% endfor %}
+              </ul>
+          </div>
+          <a class="main__button" href="add-section.php">
+            Добавить раздел
+          </a>
+        </section>
+      </div>
+{% endblock %}

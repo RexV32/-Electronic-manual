@@ -1,0 +1,41 @@
+{% extends 'layout-admin.twig' %}
+
+{% block content %}
+<div class="main__content">
+    <section class="main__section">
+        <h2 class="main__section-title"> Добавить раздел</h2>
+        <form class="main__second-form" method="post">
+        <div class="main__select-wrapper">
+        {% set className = errors|length > 0 ? "select__button--error" : "" %}
+            <div class="select unactive">
+                <button class="select__button {{className}}" role="combobox" aria-labelledby="select button" aria-haspopup="listbox" aria-expanded="false" aria-controls="select-dropdown">
+                    <span class="select__selected-value">Дисциплины</span>
+                    <svg class="select__arrow" width="16" height="16" role="img" aria-label="select">
+                    <use xlink:href="image/icons/sprite.svg#select-arrow"></use>
+                    </svg>
+                </button>
+                <ul class="select__dropdown" role="listbox" id="select-dropdown">
+                    {% for discipline in disciplines %}
+                        <li role="select__option">
+                            <input type="radio" id="{{discipline.Id}}" name="discipline" value="{{discipline.Id}}"/>
+                            <label for="{{discipline.Id}}">{{discipline.Name}}</label>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% if errors|length > 0 %}
+                <span class="main__input-error">{{errors.discipline}}</span>
+            {% endif %}
+        </div>
+            {% set className = errors|length > 0 ? "main__input--error" : "" %}
+            <input class="main__input {{className}}" type="text" placeholder="Наименование" name="name">
+            {% if errors|length > 0 %}
+            <span class="main__input-error">{{errors.name}}</span>
+            {% endif %}
+        <div class="main__button-wrapper">
+            <button class="main__form-button" type="submit">Добавить</button>
+        </div>
+        </form>
+    </section>
+</div>
+{% endblock %}
