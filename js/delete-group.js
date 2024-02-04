@@ -41,7 +41,7 @@ function cansel() {
 function accept() {
     const data = new FormData();
     data.append("id", id);
-    fetch("server/delete-group.php", {
+    fetch("../server/delete-group.php", {
         method:"POST",
         body: data
     })

@@ -1,12 +1,12 @@
 const allDropmenuButton = document.querySelectorAll(".dropmenu__button");
-const menu = document.querySelector(".dropmenu__menu");
+const dropmenu = document.querySelector(".dropmenu__menu");
 
 function OnClickDropMenu(evt) {
   const buttonTarget = evt.target;
   const parentNode = evt.target.parentNode;
-  const menu = parentNode.querySelector(".dropmenu__menu");
+  const dropmenu = parentNode.querySelector(".dropmenu__menu");
   buttonTarget.classList.toggle("dropmenu__button--open");
-  menu.classList.toggle("dropmenu__menu--open");
+  dropmenu.classList.toggle("dropmenu__menu--open");
 }
 
 

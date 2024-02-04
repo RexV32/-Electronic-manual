@@ -1,15 +1,11 @@
 <?php
-require_once("server/function.php");
+require_once("../server/function.php");
 $db = $link;
 $title = "ЭМКУ - Изменить наименование";
 $errors = [];
 $nameDiscipline = "";
 $refer = $_GET["section"];
 $id = $_GET["id"];
-
-/* if(!isset($_GET["section"], $_GET["id"])) {
-    header("Location:index.php");
-} */
 
 switch($refer) {
     case $refer == "discipline":
@@ -25,7 +21,7 @@ $nameDiscipline = $stmt -> fetch(PDO::FETCH_ASSOC)["Name"];
 
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
-    $name = filter_input(INPUT_POST, "name", FILTER_DEFAULT);
+    $name = trim(filter_input(INPUT_POST, "name", FILTER_DEFAULT));
     $errors["name"] = validateName($name, $db, $refer);
     $errors = array_filter($errors);
 
@@ -52,4 +48,3 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
 $content = $twig -> render('rename.twig', ["errors" => $errors, "title" => $title, "nameDiscipline" => $nameDiscipline]);
 print($content);
-?>

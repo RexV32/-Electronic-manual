@@ -13,7 +13,7 @@
             <span class="select__selected-value">Дисциплины</span>
             {% endif %}
             <svg class="select__arrow" width="16" height="16" role="img" aria-label="select">
-                <use xlink:href="image/icons/sprite.svg#select-arrow"></use>
+                <use xlink:href="../image/icons/sprite.svg#select-arrow"></use>
             </svg>
         </button>
         <ul class="select__dropdown" role="listbox" id="select-dropdown">
@@ -37,7 +37,7 @@
                 <li class="main__panel-item" title="Изменить название">
                   <a class="main__panel-button" href="rename.php?id={{section.Id}}&section=section">
                     <svg class="main__panel-icon" width="29" height="29" role="img" aria-label="edit">
-                      <use xlink:href="image/icons/sprite.svg#editIcon"></use>
+                      <use xlink:href="../image/icons/sprite.svg#editIcon"></use>
                     </svg>
                     <span class="visually-hidden">Переименовать</span>
                   </a>
@@ -50,12 +50,12 @@
                   <a class="main__panel-button" href="?id={{section.Id}}&status={{section.Status}}">
                 {% if section.Status == 1 %}
                 <svg class="main__panel-icon" width="27" height="28" role="img" aria-label="hidden">
-                    <use xlink:href="image/icons/sprite.svg#hiddenIcon"></use>
+                    <use xlink:href="../image/icons/sprite.svg#hiddenIcon"></use>
                 </svg>
                 <span class="visually-hidden">Скрыть</span>
                 {% else %}
                 <svg class="main__panel-icon" width="24" height="18" role="img" aria-label="show">
-                    <use xlink:href="image/icons/sprite.svg#showIcon"></use>
+                    <use xlink:href="../image/icons/sprite.svg#showIcon"></use>
                 </svg>
                 <span class="visually-hidden">Показать</span>
                 {% endif %}
@@ -64,7 +64,7 @@
                 <li class="main__panel-item" title="Удалить дисциплину">
                   <button class="main__panel-button main__panel-button--delete" type="button" data-id="{{section.Id}}" data-section="sections">
                     <svg class="main__panel-icon" width="28" height="28" role="img" aria-label="delete">
-                      <use xlink:href="image/icons/sprite.svg#deleteIcon"></use>
+                      <use xlink:href="../image/icons/sprite.svg#deleteIcon"></use>
                     </svg>
                     <span class="visually-hidden">Удалить</span>
                   </button>

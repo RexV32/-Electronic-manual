@@ -2,8 +2,7 @@
 require_once("../server/connect.php");
 header('Content-Type: application/json; charset=utf-8');
 
-$data = filter_input(INPUT_POST, "id", FILTER_DEFAULT);
-$id = $data["id"];
+$id = filter_input(INPUT_POST, "id", FILTER_DEFAULT);
 
 $sql = "DELETE FROM `Users` WHERE Id = ?";
 $stmt = $link->prepare($sql);

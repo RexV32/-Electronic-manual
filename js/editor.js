@@ -45,19 +45,19 @@ const editor = new EditorJS({
     },
     Marker: {
       class: Marker,
-      shortcut: 'CTRL+M',
+      shortcut: 'CTRL+2',
       tunes: ['footnotes'],
     },
     inlineCode: {
       class: inlineCode,
-      shortcut: 'CTRL+C',
+      shortcut: 'CTRL+1',
       tunes: ['footnotes'],
     },
     image: {
       class: ImageTool,
       config: {
         endpoints: {
-          byFile: 'server/upload-image.php',
+          byFile: '../server/upload-image.php',
         }
       },
     },
@@ -96,7 +96,7 @@ const editor = new EditorJS({
               const formData = new FormData();
               formData.append("file", file);
 
-              const response = await fetch("server/upload-file.php", {
+              const response = await fetch("../server/upload-file.php", {
                     method: "POST",
                     body: formData,
                 });
@@ -168,7 +168,7 @@ saveButton.addEventListener("click",(evt) => {
     data.append("idSection", idSection);
     data.append("name", name);
     data.append("content", jsonData);
-    fetch("server/send-data.php", {
+    fetch("../server/send-data.php", {
         method:"POST",
         body: data
     })

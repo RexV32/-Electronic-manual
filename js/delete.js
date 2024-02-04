@@ -61,7 +61,7 @@ function accept() {
     const data = new FormData();
     data.append("id", id);
     data.append("section", section);
-    fetch("server/delete-section.php", {
+    fetch("../server/delete-section.php", {
         method:"POST",
         body: data
     })

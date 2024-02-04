@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="../css/style.css">
   <title>{{ title }}</title>
 </head>
 <body class="page__body">
   <header class="header">
     <div class="header__wrapper">
       <nav class="header__nav">
-        <a class="header__logo-link" href="index.php">
+        <a class="header__logo-link" href="admin.php">
           <h1 class="visually-hidden">ЭМКУ</h1>
           <picture>
-            <source media="(min-width:768px)" srcset="./image/content/logo__desktop.svg">
-            <img class="header__logo-image" src="./image/content/logo__mobile.svg" alt="Логотип ЭМКУ">
+            <source media="(min-width:768px)" srcset="../image/content/logo__desktop.svg">
+            <img class="header__logo-image" src="../image/content/logo__mobile.svg" alt="Логотип ЭМКУ">
           </picture>
         </a>
         <ul class="header__user-list">
@@ -42,25 +42,32 @@
             </ul>
             <ul class="menu__additional-list">
               <li class="menu__additional-item">
-                <a class="menu__additional-link menu__additional-link--current" href="?all">Дисциплины</a>
+                {% set className = currentSection == "Discipline" ?  "menu__additional-link--current": ""%}
+                <a class="menu__additional-link {{className}}" href="disciplines.php">Дисциплины</a>
               </li>
               <li class="menu__additional-item">
-                <a class="menu__additional-link" href="#">Разделы</a>
+                {% set className = currentSection == "Section" ?  "menu__additional-link--current": ""%}
+                <a class="menu__additional-link {{className}}" href="sections.php">Разделы</a>
               </li>
               <li class="menu__additional-item">
-                <a class="menu__additional-link" href="#">Подразделы</a>
+                {% set className = currentSection == "subSection" ?  "menu__additional-link--current": ""%}
+                <a class="menu__additional-link {{className}}" href="sub-sections.php">Подразделы</a>
               </li>
               <li class="menu__additional-item">
-                <a class="menu__additional-link" href="#">Тесты</a>
+                {% set className = currentSection == "Group" ?  "menu__additional-link--current": ""%}
+                <a class="menu__additional-link {{className}}" href="group.php">Группы</a>
               </li>
               <li class="menu__additional-item">
-                <a class="menu__additional-link" href="#">Группы</a>
+                {% set className = currentSection == "userApproval" ?  "menu__additional-link--current": ""%}
+                <a class="menu__additional-link {{className}}" href="user-approval.php">Заявки на регистрацию</a>
               </li>
               <li class="menu__additional-item">
-                <a class="menu__additional-link" href="#">Заявки на регистрацию</a>
+                {% set className = currentSection == "listUser" ?  "menu__additional-link--current": ""%}
+                <a class="menu__additional-link {{className}}" href="users.php">Пользователи</a>
               </li>
               <li class="menu__additional-item">
-                <a class="menu__additional-link" href="#">Пользователи</a>
+                {% set className = currentSection == "test" ?  "menu__additional-link--current": ""%}
+                <a class="menu__additional-link {{className}}" href="#">Тесты</a>
               </li>
             </ul>
           </div>
@@ -79,30 +86,31 @@
           <ul class="main__navigation-list">
             <li class="main__navigation-item">
               {% set className = currentSection == "Discipline" ?  "main__navigation-link--current": ""%}
-              <a href="disciplines.php" class="main__navigation-link {{className}}">Дисциплины</a>
+              <a class="main__navigation-link {{className}}" href="disciplines.php">Дисциплины</a>
             </li>
             <li class="main__navigation-item">
               {% set className = currentSection == "Section" ?  "main__navigation-link--current": ""%}
-              <a href="sections.php" class="main__navigation-link {{className}}">Разделы</a>
+              <a class="main__navigation-link {{className}}" href="sections.php">Разделы</a>
             </li>
             <li class="main__navigation-item">
               {% set className = currentSection == "subSection" ?  "main__navigation-link--current": ""%}
-              <a href="sub-sections.php" class="main__navigation-link {{className}}">Подразделы</a>
+              <a class="main__navigation-link {{className}}" href="sub-sections.php">Подразделы</a>
             </li>
             <li class="main__navigation-item">
               {% set className = currentSection == "Group" ?  "main__navigation-link--current": ""%}
-              <a href="group.php" class="main__navigation-link {{className}}">Группы</a>
+              <a class="main__navigation-link {{className}}" href="group.php">Группы</a>
             </li>
             <li class="main__navigation-item">
               {% set className = currentSection == "userApproval" ?  "main__navigation-link--current": ""%}
-              <a href="user-approval.php" class="main__navigation-link {{className}}">Заявки на регистрацию</a>
+              <a class="main__navigation-link {{className}}" href="user-approval.php">Заявки на регистрацию</a>
             </li>
             <li class="main__navigation-item">
               {% set className = currentSection == "listUser" ?  "main__navigation-link--current": ""%}
-              <a href="users.php" class="main__navigation-link {{className}}">Пользователи</a>
+              <a class="main__navigation-link {{className}}" href="users.php">Пользователи</a>
             </li>
             <li class="main__navigation-item">
-              <a href="" class="main__navigation-link">Тесты</a>
+              {% set className = currentSection == "test" ?  "main__navigation-link--current": ""%}
+              <a class="main__navigation-link {{className}}" href="#">Тесты</a>
             </li>
           </ul>
         </nav>
@@ -148,7 +156,7 @@
       </section>
       <section class="footer__copyright">
         <h2 class="visually-hidden">Сибирский политехнический техникум</h2>
-        <img class="footer__copyright-image" src="./image/content/spt42.jpg" alt="Сибирский политехнический техникум">
+        <img class="footer__copyright-image" src="../image/content/spt42.jpg" alt="Сибирский политехнический техникум">
       </section>
     </div>
   </footer>
@@ -158,7 +166,7 @@
         currentSection == "subSection" or 
         currentSection == "subSection" 
   %}
-    <script src="./js/delete.js"></script>
+    <script src="../js/delete.js"></script>
   {% endif %}
 
   {% if 
@@ -168,34 +176,34 @@
         currentSection == "listUser" or 
         currentSection == "subSectionAdd"
   %}
-    <script src="./js/select.js"></script>
+    <script src="../js/select.js"></script>
   {% endif %}
 
   {% if currentSection == "Group" %}
-    <script src="./js/delete-group.js"></script>
+    <script src="../js/delete-group.js"></script>
   {% endif %}
 
   {% if currentSection == "userApproval" %}
-    <script src="./js/user-approval.js"></script>
+    <script src="../js/user-approval.js"></script>
   {% endif %}
 
   {% if currentSection == "listUser" %}
-    <script src="./js/control-user.js"></script>
+    <script src="../js/control-user.js"></script>
   {% endif %}
 
   {% if currentSection == "subSectionAdd"%}
-    <script src="./js/editor.js" type="module"></script>
-    <script src="./js/editorJs/underline/dist/bundle.js"></script>
-    <script src="./js/editorJs/footnotes/dist/bundle.js"></script>
-    <script src="./js/editorJs/attaches/dist/bundle.js"></script>
+    <script src="../js/editor.js" type="module"></script>
+    <script src="../js/editorJs/underline/dist/bundle.js"></script>
+    <script src="../js/editorJs/footnotes/dist/bundle.js"></script>
+    <script src="../js/editorJs/attaches/dist/bundle.js"></script>
   {% endif %}
 
   {% if currentSection == "subSectionEdit" %}
-    <script src="./js/edit.js" type="module"></script>
-    <script src="./js/editorJs/underline/dist/bundle.js"></script>
-    <script src="./js/editorJs/footnotes/dist/bundle.js"></script>
-    <script src="./js/editorJs/attaches/dist/bundle.js"></script>
+    <script src="../js/edit.js" type="module"></script>
+    <script src="../js/editorJs/underline/dist/bundle.js"></script>
+    <script src="../js/editorJs/footnotes/dist/bundle.js"></script>
+    <script src="../js/editorJs/attaches/dist/bundle.js"></script>
   {% endif %}
-  <script src="./js/menu.js"></script>
+  <script src="../js/menu.js"></script>
 </body>
 </html>

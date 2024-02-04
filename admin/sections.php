@@ -1,16 +1,15 @@
 <?php
-require_once("server/function.php");
+require_once("../server/function.php");
 $title = "ЭМКУ - Список разделов";
 $currentSection = "Section";
 $currentDiscipline = "";
 $sections = [];
+
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 $limit = 10;
 $offset = ($page - 1) * $limit;
 
-$sql = "SELECT Id, Name FROM `Disciplines`";
-$stmt = $link ->query($sql);
-$disciplines = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$disciplines = getDisciplines($link);
 $disciplinesQuantity = count($disciplines);
 
 if($disciplinesQuantity > 0) {
@@ -27,7 +26,8 @@ if($disciplinesQuantity > 0) {
 
 if(isset($_GET["discipline"])) {
     $id = $_GET["discipline"];
-    $sql = "SELECT Sections.Id,Sections.Name, Sections.Status,Disciplines.Name as NameDiscipline FROM `Sections` INNER JOIN Disciplines ON Sections.Id_discipline = Disciplines.Id WHERE Sections.Id_discipline = ?";
+    $sql = "SELECT Sections.Id,Sections.Name, Sections.Status,Disciplines.Name as NameDiscipline FROM `Sections` INNER JOIN 
+    Disciplines ON Sections.Id_discipline = Disciplines.Id WHERE Sections.Id_discipline = ?";
     $stmt = $link -> prepare($sql);
     $stmt -> execute([$id]);
     $sections = $stmt -> fetchAll(PDO::FETCH_ASSOC);
@@ -55,7 +55,7 @@ if(isset($_GET["id"], $_GET["status"])) {
         "newStatus" => $newStatus,
         "id" => $_GET["id"],
     ]);
-    $currentUrl = isset($_SERVER["HTTP_REFERER"])?explode("/",$_SERVER["HTTP_REFERER"])[4] : "sections.php";
+    $currentUrl = isset($_SERVER["HTTP_REFERER"])?explode("/",$_SERVER["HTTP_REFERER"])[5] : "sections.php";
     header("Location:$currentUrl");
 }
 
@@ -73,4 +73,3 @@ $content = $twig -> render('section-list.twig',
         "page" => $page
     ]);
 print($content);
-?>

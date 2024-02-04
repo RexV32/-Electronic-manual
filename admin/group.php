@@ -1,5 +1,5 @@
 <?php
-require_once("server/function.php");
+require_once("../server/function.php");
 $title = "ЭМКУ - Список групп";
 $currentSection = "Group";
 
@@ -7,8 +7,7 @@ $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 $limit = 10;
 $offset = ($page - 1) * $limit;
 
-$sql = "SELECT * FROM `Groups`";
-$groups = $link->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+$groups = getGroup($link);
 $groupsSlice = array_slice($groups,$offset,$limit,true);
 $groupsQuantity = count($groups);
 $pages = ceil($groupsQuantity / $limit);

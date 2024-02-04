@@ -12,7 +12,7 @@
             <li class="main__panel-item" title="Изменить название">
                 <a class="main__panel-button" href="rename.php?id={{discipline.Id}}&section=discipline">
                 <svg class="main__panel-icon" width="29" height="29" role="img" aria-label="edit">
-                    <use xlink:href="image/icons/sprite.svg#editIcon"></use>
+                    <use xlink:href="../image/icons/sprite.svg#editIcon"></use>
                 </svg>
                 <span class="visually-hidden">Переименовать</span>
                 </a>
@@ -25,12 +25,12 @@
                 <a class="main__panel-button" href="?id={{discipline.Id}}&status={{discipline.Status}}">
                 {% if discipline.Status == 1 %}
                 <svg class="main__panel-icon" width="27" height="28" role="img" aria-label="hidden">
-                    <use xlink:href="image/icons/sprite.svg#hiddenIcon"></use>
+                    <use xlink:href="../image/icons/sprite.svg#hiddenIcon"></use>
                 </svg>
                 <span class="visually-hidden">Скрыть</span>
                 {% else %}
                 <svg class="main__panel-icon" width="24" height="18" role="img" aria-label="show">
-                    <use xlink:href="image/icons/sprite.svg#showIcon"></use>
+                    <use xlink:href="../image/icons/sprite.svg#showIcon"></use>
                 </svg>
                 <span class="visually-hidden">Показать</span>
                 {% endif %}
@@ -39,7 +39,7 @@
             <li class="main__panel-item" title="Удалить дисциплину">
                 <button class="main__panel-button main__panel-button--delete" type="button" data-id="{{discipline.Id}}" data-section="discipline">
                     <svg class="main__panel-icon" width="28" height="28" role="img" aria-label="delete">
-                        <use xlink:href="image/icons/sprite.svg#deleteIcon"></use>
+                        <use xlink:href="../image/icons/sprite.svg#deleteIcon"></use>
                     </svg>
                     <span class="visually-hidden">Удалить</span>
                 </button>

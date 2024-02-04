@@ -89,35 +89,7 @@ const editor = new EditorJS({
       },
     },
     attaches: {
-      class: AttachesTool,
-      config: {
-        //endpoint: 'upload.php',
-        buttonText: "Выберите файл для загрузки",
-
-        uploader: {
-          async uploadByFile(file) {
-              const formData = new FormData();
-              formData.append("file", file);
-
-              const response = await fetch("upload.php", {
-                    method: "POST",
-                    body: formData,
-                });
-                const data = await response.json();
-                if (data.success) {
-                    return {
-                        success: 1,
-                        file: {
-                            url: data.file.url,
-                            size: file.size,
-                            name: file.size,
-                            extension: file.name.split('.').pop()
-                        }
-                    };
-                }
-          },
-        },
-      },
+      class: AttachesTool
     },
   },
 

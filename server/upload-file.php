@@ -3,7 +3,7 @@ if(isset($_FILES)) {
     $file = $_FILES["file"];
     $fileName = basename($file["name"]);
     $targetFile = "../uploads/temp/$fileName";
-    $url = "./uploads/temp/$fileName";
+    $url = "../uploads/temp/$fileName";
 
     if (move_uploaded_file($file['tmp_name'], $targetFile)) {
         echo json_encode(['success' => true, 'file' => ['url' => $url]], JSON_UNESCAPED_UNICODE);

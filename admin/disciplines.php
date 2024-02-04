@@ -1,5 +1,5 @@
 <?php
-require_once("server/function.php");
+require_once("../server/function.php");
 $title = "ЭМКУ - Список дисциплин";
 $currentSection = "Discipline";
 
@@ -7,9 +7,7 @@ $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 $limit = 5;
 $offset = ($page - 1) * $limit;
 
-$sql = "SELECT * FROM `Disciplines`";
-$stmt = $link ->query($sql);
-$disciplines = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$disciplines = getDisciplines($link);
 $disciplinesSlice = array_slice($disciplines,$offset,$limit,true);
 $disciplinesQuantity = count($disciplines);
 $pages = ceil($disciplinesQuantity / $limit);

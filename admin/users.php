@@ -1,17 +1,14 @@
 <?php
-require_once("server/function.php");
+require_once("../server/function.php");
 $title = "ЭМКУ - список пользователей";
 $currentSection = "listUser";
+$users = [];
 
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 $limit = 15;
 $offset = ($page - 1) * $limit;
 
-$users = [];
-
-$sql = "SELECT * FROM `Groups`";
-$stmt = $link ->query($sql);
-$groups = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$groups = getGroup($link);
 
 $sql = "SELECT Users.Id,Users.Name,Users.Surname,Users.Patronymic,Users.Login,Groups.Name as NameGroup 
 FROM `Users` INNER JOIN `Groups` ON Users.Group_id = Groups.Id WHERE `Status` = 1";
@@ -58,4 +55,3 @@ $content = $twig -> render('user-list.twig',
     "groups" => $groups
 ]);
 print($content);
-?>

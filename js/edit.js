@@ -37,7 +37,7 @@ const id = urlParams.get('id');
 const data = new FormData();
 data.append("id", id);
 
-fetch("server/get-data.php", {
+fetch("../server/get-data.php", {
     method: "POST",
     body: data
 })
@@ -81,19 +81,19 @@ const editor = new EditorJS({
         },
         Marker: {
         class: Marker,
-        shortcut: 'CTRL+M',
+        shortcut: 'CTRL+2',
         tunes: ['footnotes'],
         },
         inlineCode: {
         class: inlineCode,
-        shortcut: 'CTRL+C',
+        shortcut: 'CTRL+1',
         tunes: ['footnotes'],
         },
         image: {
         class: ImageTool,
         config: {
             endpoints: {
-            byFile: 'server/upload-image.php',
+            byFile: '../server/upload-image.php',
             }
         },
         },
@@ -132,7 +132,7 @@ const editor = new EditorJS({
                 const formData = new FormData();
                 formData.append("file", file);
     
-                const response = await fetch("server/upload-file.php", {
+                const response = await fetch("../server/upload-file.php", {
                         method: "POST",
                         body: formData,
                     });
@@ -170,7 +170,7 @@ submit.addEventListener("click", (evt) => {
     data.append("id", id);
     data.append("content", jsonData);
     data.append("name", name);
-    fetch("server/update-subSection.php", {
+    fetch("../server/update-subSection.php", {
         method:"POST",
         body: data
     })
@@ -197,43 +197,3 @@ submit.addEventListener("click", (evt) => {
 });
 })
 .catch(error => modalError(`Не удалось получить содержимое подраздела ${error}`));
-
-/* submit.addEventListener("click", (evt) => {
-    evt.preventDefault();
-    editor.save().then((outputData) => {
-    const input = document.querySelector(".main__input");
-    const name = input.value.trim();
-    if(name === "") {
-        modalError("Заполните поле с наименованием");
-        return;
-    }
-    const jsonData = JSON.stringify(outputData, null, 2);
-    const data = new FormData();
-    data.append("id", id);
-    data.append("content", jsonData);
-    data.append("name", name);
-    fetch("server/update-subSection.php", {
-        method:"POST",
-        body: data
-    })
-    .then(response => {
-        if(response.ok) {
-            return response.json();
-        }
-        else {
-            throw new Error("Не удалось выполнить запрос");
-        }
-    })
-    .then(data => {
-        if(data.success) {
-            window.location.href = "sub-sections.php";
-        }
-        else {
-            modalError(data.message);
-        }
-    })
-    .catch(error => {
-        modalError(error);
-    });
-    });
-}); */

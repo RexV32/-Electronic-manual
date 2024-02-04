@@ -1,11 +1,11 @@
 <?php
-require_once("vendor/autoload.php"); 
+require_once("../vendor/autoload.php"); 
 require_once("connect.php");
 
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
-$loader = new FilesystemLoader('templates');
+$loader = new FilesystemLoader('../templates');
 $twig = new Environment($loader);
 
 
@@ -81,4 +81,13 @@ function validateNameGroup($value, $link) {
 
     return null;
 }
-?>
+
+function getDisciplines($link) {
+    $sql = "SELECT * FROM `Disciplines`";
+    return $link->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function getGroup($link) {
+    $sql = "SELECT * FROM `Groups`";
+    return $link->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+}

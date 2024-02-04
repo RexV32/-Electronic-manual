@@ -1,12 +1,10 @@
 <?php
-require_once("server/function.php");
+require_once("../server/function.php");
 $title = "ЭМКУ - Добавить раздел";
 $currentSection = "addSection";
 $errors = [];
 
-$sql = "SELECT * FROM `Disciplines`";
-$stmt = $link ->query($sql);
-$disciplines = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$disciplines = getDisciplines($link);
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
     $data = filter_input_array(INPUT_POST, ["name" => FILTER_DEFAULT, "discipline" => FILTER_DEFAULT]);
@@ -25,7 +23,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             "id" => $id
         ]);
         $nameFolder = $link -> lastInsertId();
-        $path = "uploads/$id/$nameFolder";
+        $path = "../uploads/$id/$nameFolder";
 
         if (!file_exists($path)) {
             mkdir($path, 0777, true);
@@ -43,4 +41,3 @@ $content = $twig -> render('add-section.twig',
         "disciplines" => $disciplines
     ]);
 print($content);
-?>

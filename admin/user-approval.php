@@ -1,5 +1,5 @@
 <?php
-require_once("server/function.php");
+require_once("../server/function.php");
 $title = "ЭМКУ - Заявки на регистрацию";
 $currentSection = "userApproval";
 
@@ -26,4 +26,3 @@ $content = $twig -> render('user-approval.twig',
     "page" => $page
 ]);
 print($content);
-?>

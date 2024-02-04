@@ -30,7 +30,7 @@ function updateSectionList(id) {
   const data = new FormData();
   data.append("id", id);
 
-  fetch("server/get-section.php", {
+  fetch("../server/get-section.php", {
     method: "POST",
     body: data
   })

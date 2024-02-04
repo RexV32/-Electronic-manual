@@ -25,7 +25,7 @@ function userApproval(id, action) {
     data.append("id", id);
     data.append("action", action);
 
-    fetch("server/approval.php", {
+    fetch("../server/approval.php", {
         method: "POST",
         body: data
     })

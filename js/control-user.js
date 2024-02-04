@@ -100,7 +100,7 @@ function handleChangeButtonClick(button) {
       data.append("id", id);
       data.append("password", password);
       data.append("passwordConfirm", passwordConfirm);
-      fetch("server/change-password.php", {
+      fetch("../server/change-password.php", {
         method: "POST",
         body: data
       })
@@ -139,9 +139,10 @@ function handleDeleteButtonClick(button) {
 
   cancelButton.addEventListener("click", removeModal);
   acceptButton.addEventListener("click", () => {
+    console.log(id);
     const data = new FormData();
     data.append("id", id);
-    fetch("server/delete-user.php", {
+    fetch("../server/delete-user.php", {
       method: "POST",
       body: data
     })

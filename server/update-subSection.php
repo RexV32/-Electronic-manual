@@ -39,7 +39,7 @@ foreach ($json['blocks'] as &$block) {
     if ($block['type'] === 'image' || $block['type'] === 'attaches') {
         $currentUrl = $block['data']['file']['url'];
         $fileName = basename($currentUrl);
-        $newUrl = "./uploads/$idDiscipline/$idSection/$idSubSection/$fileName";
+        $newUrl = "../uploads/$idDiscipline/$idSection/$idSubSection/$fileName";
         $block['data']['file']['url'] = $newUrl;
         array_push($arrName, $fileName);
     }

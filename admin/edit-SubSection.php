@@ -1,5 +1,5 @@
 <?php
-require_once("server/function.php");
+require_once("../server/function.php");
 $title = "ЭМКУ - Редактировать подраздел";
 $currentSection = "subSectionEdit";
 

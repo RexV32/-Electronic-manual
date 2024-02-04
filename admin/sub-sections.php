@@ -1,5 +1,5 @@
 <?php
-require_once("server/function.php");
+require_once("../server/function.php");
 $title = "ЭМКУ - Список подразделов";
 $currentSection = "subSection";
 
@@ -15,11 +15,6 @@ $currentIdSection = 0;
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 $limit = 10;
 $offset = ($page - 1) * $limit;
-
-function getDisciplines($link) {
-    $sql = "SELECT Id, Name FROM `Disciplines`";
-    return $link->query($sql)->fetchAll(PDO::FETCH_ASSOC);
-}
 
 function getSection($link, $id) {
     $sql = "SELECT * FROM `Sections` WHERE `Id_discipline` = ?";
@@ -94,7 +89,7 @@ if(isset($_GET["id"], $_GET["status"])) {
         "newStatus" => $newStatus,
         "id" => $_GET["id"],
     ]);
-    $currentUrl = isset($_SERVER["HTTP_REFERER"])?explode("/",$_SERVER["HTTP_REFERER"])[4] : "sections.php";
+    $currentUrl = isset($_SERVER["HTTP_REFERER"])?explode("/",$_SERVER["HTTP_REFERER"])[5] : "sections.php";
     header("Location:$currentUrl");
 }
 
@@ -114,5 +109,5 @@ $content = $twig -> render('subSubcetion-list.twig',
         "currentIdSection" => $currentIdSection,
         "limit" => $limit
     ]);
+    
 print($content);
-?>
