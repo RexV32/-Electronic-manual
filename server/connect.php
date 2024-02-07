@@ -10,4 +10,3 @@ try {
     echo json_encode(["success" => false, "message" => "Не удалось подключиться к базе"]);
     exit;
 }
-?>

@@ -24,7 +24,7 @@ try {
             $success = true;
             break;
         default:
-            throw new Exception("Недопустимое значение 'action'");
+            throw new Exception("Не удалось выполнить запрос");
     }
 
     if (!$success) {
@@ -35,4 +35,3 @@ try {
 } catch (Exception $exception) {
     echo json_encode(["success" => false, "message" => $exception->getMessage()]);
 }
-?>

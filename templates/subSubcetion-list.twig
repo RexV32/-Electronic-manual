@@ -1,107 +1,77 @@
 {% extends 'layout-admin.twig' %}
 
 {% block content %}
-      <div class="main__content">
-        <section class="main__section">
-          <h2 class="main__section-title">Список подразделов:</h2>
-          <form class="main__form" method="get">
-            <div class="select unactive">
-              <button class="select__button" role="combobox" aria-labelledby="select button" aria-haspopup="listbox" aria-expanded="false" aria-controls="select-dropdown">
-                {% if disciplines|length > 0 %}
-                <span class="select__selected-value">{{currentNameDiscipline}}</span>
-                {% else %}
-                <span class="select__selected-value">Дисциплины</span>
-                {% endif %}
-                <svg class="select__arrow" width="16" height="16" role="img" aria-label="select">
-                  <use xlink:href="../image/icons/sprite.svg#select-arrow"></use>
-                </svg>
-              </button>
-              <ul class="select__dropdown" role="listbox" id="select-dropdown">
-                {% for discipline in disciplines %}
-                <li role="select__option">
-                  <input type="radio" id="{{discipline.Id}}" name="disciplines" value="{{discipline.Id}}" {% if discipline.Id == currentIdDiscipline %}checked{% endif %}/>
-                  <label for="{{discipline.Id}}">{{discipline.Name}}</label>
-                </li>
-                {% endfor %}
-              </ul>
-            </div>
-            <div class="select unactive">
-              <button class="select__button" role="combobox" aria-labelledby="select button" aria-haspopup="listbox" aria-expanded="false" aria-controls="select-dropdown">
-                {% if sections|length > 0 %}
-                <span class="select__selected-value select__selected-value--section">{{currentNameSection}}</span>
-                {% else %}
-                <span class="select__selected-value">Разделы</span>
-                {% endif %}
-                <svg class="select__arrow" width="16" height="16" role="img" aria-label="select">
-                  <use xlink:href="../image/icons/sprite.svg#select-arrow"></use>
-                </svg>
-              </button>
-              <ul class="select__dropdown select__dropdown--section" role="listbox" id="select-dropdown">
-                {% for section in sections %}
-                <li role="select__option">
-                  <input type="radio" id="{{section.Id}}" name="sections" value="{{section.Id}}" {% if section.Id == currentIdSection %}checked{% endif %}/>
-                  <label for="{{section.Id}}">{{section.Name}}</label>
-                </li>
-                {% endfor %}
-              </ul>
-            </div>
-            <button class="main__form-button" type="submit">Показать</button>
-          </form>
-          <ul class="main__section-list">
-            {% for subSection in subSectionsSlice %}
-            <li class="main__section-item">
-              <h3 class="main__title">{{subSection.NameSubSection}}</h3>
-              <ul class="main__control-panel">
-                <li class="main__panel-item" title="Редактировать подраздел">
-                  <a class="main__panel-button" href="edit-SubSection.php?id={{subSection.Id}}">
-                    <svg class="main__panel-icon" width="29" height="29" role="img" aria-label="edit">
-                      <use xlink:href="../image/icons/sprite.svg#editIcon"></use>
-                    </svg>
-                    <span class="visually-hidden">Переименовать</span>
-                  </a>
-                </li>
-                {% if subSection.Status == 1 %}
-                <li class="main__panel-item" title="Скрыть дисциплину">
-                {% else %}
-                <li class="main__panel-item" title="Показать дисциплину">
-                {% endif %}
-                  <a class="main__panel-button" href="?id={{subSection.Id}}&status={{subSection.Status}}">
-                {% if subSection.Status == 1 %}
-                <svg class="main__panel-icon" width="27" height="28" role="img" aria-label="hidden">
-                    <use xlink:href="../image/icons/sprite.svg#hiddenIcon"></use>
-                </svg>
-                <span class="visually-hidden">Скрыть</span>
-                {% else %}
-                <svg class="main__panel-icon" width="24" height="18" role="img" aria-label="show">
-                    <use xlink:href="../image/icons/sprite.svg#showIcon"></use>
-                </svg>
-                <span class="visually-hidden">Показать</span>
-                {% endif %}
-                  </a>
-                </li>
-                <li class="main__panel-item" title="Удалить дисциплину">
-                  <button class="main__panel-button main__panel-button--delete" data-id="{{subSection.Id}}" data-section="subSection">
-                    <svg class="main__panel-icon" width="28" height="28" role="img" aria-label="delete">
-                      <use xlink:href="../image/icons/sprite.svg#deleteIcon"></use>
-                    </svg>
-                    <span class="visually-hidden">Удалить</span>
-                  </button>
-                </li>
-              </ul>
-            </li>
-            {% endfor %}
-          </ul>
-          {% set className = subSections|length <= limit ? "pagintaion--none": ""%}
-          <div class="pagintaion {{className}}">
-              <ul class="pagination__list">
-              {% for i in 1..pages %}
-                  <li class="pagination-item {{ i == page ? 'pagination-item--current' : '' }}">
-                      <a class="pagination-link" href="?page={{i}}&disciplines={{currentIdDiscipline}}&sections={{currentIdSection}}">{{i}}</a>
-                  </li>
-              {% endfor %}
-              </ul>
-          </div>
-          <a class="main__button" href="add-subSection.php">Добавить подраздел</a>
-        </section>
-      </div>
-{% endblock %}
+	<div class="main__content">
+		<section class="main__section">
+			<h2 class="main__section-title">Список подразделов:</h2>
+			<form class="main__form" method="get">
+				<select class="selectpicker select select--padding select--discipline" data-width="300px" data-live-search="true" data-size="5" title="Дисциплины" name="discipline">
+					{% for discipline in disciplines %}
+						<option value="{{discipline.Id}}" {% if discipline.Id == currentIdDiscipline %} selected {% endif %}>{{discipline.Name}}</option>
+					{% endfor %}
+				</select>
+				<select class="selectpicker select select--padding select--sections" data-width="300px" data-live-search="true" data-size="5" title="Разделы" name="section">
+					{% for section in sections %}
+						<option value="{{section.Id}}" {% if section.Id == currentIdSection %} selected {% endif %}>{{section.Name}}</option>
+					{% endfor %}
+				</select>
+				<button class="main__form-button" type="submit">Показать</button>
+			</form>
+			<ul class="main__section-list">
+				{% for subSection in subSectionsSlice %}
+					<li class="main__section-item">
+						<h3 class="main__title">{{subSection.NameSubSection}}</h3>
+						<ul class="main__control-panel">
+							<li class="main__panel-item" title="Редактировать подраздел">
+								<a class="main__panel-button" href="edit-SubSection.php?id={{subSection.Id}}">
+									<svg class="main__panel-icon" width="29" height="29" role="img" aria-label="edit">
+										<use xlink:href="../image/icons/sprite.svg#editIcon"></use>
+									</svg>
+									<span class="visually-hidden">Переименовать</span>
+								</a>
+							</li>
+							{% if subSection.Status == 1 %}
+								<li class="main__panel-item" title="Скрыть дисциплину">
+								{% else %}
+									<li class="main__panel-item" title="Показать дисциплину">
+									{% endif %}
+									<a class="main__panel-button" href="?id={{subSection.Id}}&status={{subSection.Status}}">
+										{% if subSection.Status == 1 %}
+											<svg class="main__panel-icon" width="27" height="28" role="img" aria-label="hidden">
+												<use xlink:href="../image/icons/sprite.svg#hiddenIcon"></use>
+											</svg>
+											<span class="visually-hidden">Скрыть</span>
+										{% else %}
+											<svg class="main__panel-icon" width="24" height="18" role="img" aria-label="show">
+												<use xlink:href="../image/icons/sprite.svg#showIcon"></use>
+											</svg>
+											<span class="visually-hidden">Показать</span>
+										{% endif %}
+									</a>
+								</li>
+								<li class="main__panel-item" title="Удалить дисциплину">
+									<button class="main__panel-button main__panel-button--delete" data-id="{{subSection.Id}}" data-section="subSection">
+										<svg class="main__panel-icon" width="28" height="28" role="img" aria-label="delete">
+											<use xlink:href="../image/icons/sprite.svg#deleteIcon"></use>
+										</svg>
+										<span class="visually-hidden">Удалить</span>
+									</button>
+								</li>
+							</ul>
+						</li>
+					{% endfor %}
+				</ul>
+				{% set className = subSections|length <= limit ? "pagintaion--none": ""%}
+				<div class="pagintaion {{className}}">
+					<ul class="pagination__list">
+						{% for i in 1..pages %}
+							<li class="pagination-item {{ i == page ? 'pagination-item--current' : '' }}">
+								<a class="pagination-link" href="?page={{i}}&disciplines={{currentIdDiscipline}}&sections={{currentIdSection}}">{{i}}</a>
+							</li>
+						{% endfor %}
+					</ul>
+				</div>
+				<a class="main__button" href="add-subSection.php">Добавить подраздел</a>
+			</section>
+		</div>
+	{% endblock %}

@@ -9,7 +9,7 @@ $disciplines = getDisciplines($link);
 if($_SERVER["REQUEST_METHOD"] == "POST") {
     $data = filter_input_array(INPUT_POST, ["name" => FILTER_DEFAULT, "discipline" => FILTER_DEFAULT]);
     $id = $data["discipline"];
-    $name = $data["name"];
+    $name = trim($data["name"]);
     $disciplinesIdArray = array_column($disciplines, "Id");
     $errors["discipline"] = validateIdSection($id, $disciplinesIdArray);
     $errors["name"] = validateNameSection($name);

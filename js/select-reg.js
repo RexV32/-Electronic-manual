@@ -1,4 +1,4 @@
-const customSelect = document.querySelector(".select-reg");
+/* const customSelect = document.querySelector(".select-reg");
 const selectBtn = document.querySelector(".select-reg__button");
 const selectedValue = document.querySelector(".select-reg__selected-value");
 const optionsList = document.querySelectorAll(".select-reg__dropdown li");
@@ -32,3 +32,4 @@ optionsList.forEach((option) => {
   option.addEventListener("keyup", handler);
   option.addEventListener("click", handler);
 });
+ */

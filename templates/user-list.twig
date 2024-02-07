@@ -7,22 +7,11 @@
         <div class="user-list">
         <form class="user-list__form" method="get">
             <fieldset class="user-list__form-fieldset">
-                <div class="select unactive">
-                    <button class="select__button" role="combobox" aria-labelledby="select button" aria-haspopup="listbox" aria-expanded="false" aria-controls="select-dropdown">
-                        <span class="select__selected-value">Группа</span>
-                        <svg class="select__arrow" width="16" height="16" role="img" aria-label="select">
-                            <use xlink:href="../image/icons/sprite.svg#select-arrow"></use>
-                        </svg>
-                    </button>
-                    <ul class="select__dropdown" role="listbox" id="select-dropdown">
-                    {% for group in groups %}
-                        <li role="select__option">
-                            <input type="radio" id="{{group.Id}}" name="group" value="{{group.Id}}"/>
-                            <label for="{{group.Id}}">{{group.Name}}</label>
-                        </li>
-                    {% endfor %}
-                    </ul>
-                </div>
+				<select class="selectpicker select select--padding" data-width="300px" data-live-search="true" data-size="5" title="Группы" name="group">
+					{% for group in groups %}
+						<option value="{{group.Id}}">{{group.Name}}</option>
+					{% endfor %}
+				</select>
                 <input class="user-list__input" type="text" placeholder="Фамилия" name="surname">
                 <input class="user-list__input" type="text" placeholder="Имя" name="name">
                 <input class="user-list__input" type="text" placeholder="Отчество" name="patronymic">

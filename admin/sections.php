@@ -2,8 +2,10 @@
 require_once("../server/function.php");
 $title = "ЭМКУ - Список разделов";
 $currentSection = "Section";
-$currentDiscipline = "";
 $sections = [];
+$sectionsSlice = [];
+$pages = 0;
+$currentIdDiscipline = 0;
 
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 $limit = 10;
@@ -14,7 +16,6 @@ $disciplinesQuantity = count($disciplines);
 
 if($disciplinesQuantity > 0) {
     $currentIdDiscipline = $disciplines[0]["Id"];
-    $currentDiscipline = $disciplines[0]["Name"];
     $sql = "SELECT * FROM `Sections` WHERE `Id_discipline` = ?";
     $stmt = $link ->prepare($sql);
     $stmt -> execute([$currentIdDiscipline]);
@@ -35,16 +36,6 @@ if(isset($_GET["discipline"])) {
     $sectionQuantity = count($sections);
     $pages = ceil($sectionQuantity / $limit);
     $currentIdDiscipline = $id;
-    if(count($sections) > 0) {
-        $currentDiscipline = $sections[0]["NameDiscipline"];
-    }
-    else {
-        $sql = "SELECT Name FROM `Disciplines` WHERE id = ? LIMIT 1";
-        $stmt = $link -> prepare($sql);
-        $stmt -> execute([$id]);
-        $result = $stmt -> fetch(PDO::FETCH_ASSOC);
-        $currentDiscipline = $result["Name"];
-    }
 }
 
 if(isset($_GET["id"], $_GET["status"])) {
@@ -63,7 +54,6 @@ $content = $twig -> render('section-list.twig',
     [
         "title" => $title,
         "currentSection" => $currentSection,
-        "currentDiscipline" => $currentDiscipline,
         "disciplines" => $disciplines,
         "sections" => $sections,
         "sectionsSlice" => $sectionsSlice,

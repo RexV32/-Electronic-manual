@@ -3,8 +3,6 @@ require_once("../server/function.php");
 $title = "ЭМКУ - Список подразделов";
 $currentSection = "subSection";
 
-$currentNameDiscipline = "";
-$currentNameSection = "";
 $subSectionsSlice = [];
 $sections = [];
 $subSections = [];
@@ -48,11 +46,9 @@ $disciplinesQuantity = count($disciplines);
 
 if($disciplinesQuantity > 0) {
     $currentIdDiscipline = $disciplines[0]["Id"];
-    $currentNameDiscipline = $disciplines[0]["Name"];
     $sections = getSection($link, $currentIdDiscipline);
     if(count($sections) > 0) {
         $currentIdSection = $sections[0]["Id"];
-        $currentNameSection = $sections[0]["Name"];
         $subSections = getSubSection($link, $currentIdDiscipline, $currentIdSection);
         $subSectionsSlice = array_slice($subSections,$offset,$limit,true);
         $subSectionsQuantity = count($subSections);
@@ -60,9 +56,9 @@ if($disciplinesQuantity > 0) {
     }
 }
 
-if(isset($_GET["disciplines"], $_GET["sections"])) {
-    $idDiscipline = $_GET["disciplines"];
-    $idSection = $_GET["sections"];
+if(isset($_GET["discipline"], $_GET["section"])) {
+    $idDiscipline = $_GET["discipline"];
+    $idSection = $_GET["section"];
     $sections = getSection($link, $idDiscipline);
     $subSections = getSubSection($link, $idDiscipline, $idSection);
     $subSectionsSlice = array_slice($subSections,$offset,$limit,true);
@@ -70,15 +66,6 @@ if(isset($_GET["disciplines"], $_GET["sections"])) {
     $pages = ceil($subSectionsQuantity / $limit);
     $currentIdDiscipline = $idDiscipline;
     $currentIdSection = $idSection;
-    if(count($subSections) > 0) {
-        $currentNameDiscipline = $subSections[0]["NameDiscipline"];
-        $currentNameSection = $subSections[0]["NameSection"];
-    }
-    else {
-        $currentNames = getCurrentNames($link, $idDiscipline, $idSection);
-        $currentNameDiscipline = $currentNames["NameDiscipline"];
-        $currentNameSection = $currentNames["NameSection"];
-    }
 }
 
 if(isset($_GET["id"], $_GET["status"])) {
@@ -92,15 +79,12 @@ if(isset($_GET["id"], $_GET["status"])) {
     $currentUrl = isset($_SERVER["HTTP_REFERER"])?explode("/",$_SERVER["HTTP_REFERER"])[5] : "sections.php";
     header("Location:$currentUrl");
 }
-
 $content = $twig -> render('subSubcetion-list.twig', 
     [
         "title" => $title,
         "currentSection" => $currentSection,
         "disciplines" => $disciplines,
         "sections" => $sections,
-        "currentNameDiscipline" => $currentNameDiscipline,
-        "currentNameSection" => $currentNameSection,
         "subSections" => $subSections,
         "subSectionsSlice" => $subSectionsSlice,
         "pages" => $pages,
@@ -109,5 +93,4 @@ $content = $twig -> render('subSubcetion-list.twig',
         "currentIdSection" => $currentIdSection,
         "limit" => $limit
     ]);
-    
 print($content);

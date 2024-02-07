@@ -1,13 +1,13 @@
 <?php
 require_once("../server/function.php");
 $title = "ЭМКУ - Добавить подраздел";
-$currentSection = "subSectionAdd";
+$currentSection = "addSubSection";
 
 $currentIdDiscipline = 0;
 
 $disciplines = getDisciplines($link);
 
-$content = $twig -> render('subSection-add.twig', 
+$content = $twig -> render('add-subSection.twig', 
 [
     "title" => $title,
     "currentSection" => $currentSection,

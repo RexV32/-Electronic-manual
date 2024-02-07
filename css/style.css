@@ -194,6 +194,7 @@
 }
 .main__navigation-link:hover {
   color: #0d5f2e;
+  text-decoration: none;
 }
 
 .main__navigation-item {
@@ -331,6 +332,7 @@
   background-color: #ffffff;
   outline: 1px solid #0d5f2e;
   color: #0d5f2e;
+  text-decoration: none;
 }
 @media (min-width: 768px) {
   .main__button {
@@ -1134,7 +1136,7 @@
   background-color: #0d5f2e;
 }
 
-.select-reg {
+.select {
   position: relative;
   width: 280px;
   font-size: 20px;
@@ -1144,116 +1146,77 @@
   color: #000000;
   margin-top: 15px;
 }
+
+.select--padding {
+  margin-top: 0;
+}
+
+.select--padding .btn{
+  padding: 7px 18px;
+}
+
 @media (min-width: 768px) {
-  .select-reg {
+  .select {
     width: 300px;
   }
 }
 
-.select-reg__button {
-  width: 100%;
+.btn {
   font-size: 20px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  cursor: pointer;
+  color: #000000;
   padding: 17px 18px;
+  border-radius: 10px;
+  border: 1px solid #000000;
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.filter-option-inner-inner {
+  text-align: center;
+}
+
+.btn-light:hover {
   background-color: #ffffff;
   border: 1px solid #000000;
-  border-radius: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
-
-.select-reg__selected-value {
-  text-align: left;
-}
-
-.select-reg__dropdown {
-  position: absolute;
-  list-style: none;
-  width: 100%;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+.btn-light:focus {
   background-color: #ffffff;
-  border: 1px solid #caced1;
-  border-radius: 4px;
-  padding: 10px;
-  margin-top: 10px;
-  max-height: 200px;
-  overflow-y: auto;
-  transition: 0.5s ease;
-  transform: scaleY(0);
-  opacity: 0;
-  visibility: hidden;
+  border: 1px solid #000000;
+  box-shadow: none;
 }
 
-.select-reg__dropdown:focus-within {
-  box-shadow: 0 10px 25px rgba(94, 108, 233, 0.6);
+.bootstrap-select .dropdown-toggle:focus {
+  outline: 1px solid #000000 !important;
 }
 
-.select-reg__dropdownn li {
-  position: relative;
-  cursor: pointer;
-  display: flex;
-  gap: 1rem;
-  align-items: center;
+.bootstrap-select > .dropdown-toggle.bs-placeholder,
+.show > .btn-light.dropdown-toggle {
+  background-color: #ffffff;
+  border-color: #000000;
+  color: #000000;
 }
 
-.select-reg__dropdown li label {
-  width: 100%;
-  padding: 8px 10px;
-  cursor: pointer;
-  display: flex;
-  gap: 1rem;
-  align-items: center;
+.bootstrap-select>.dropdown-toggle.bs-placeholder:hover {
+  color: #000000;
 }
 
-.select-reg__dropdown::-webkit-scrollbar {
-  width: 7px;
-}
-
-.select-reg__dropdown::-webkit-scrollbar-track {
-  background: #ffffff;
-  border-radius: 25px;
-}
-
-.select-reg__dropdown::-webkit-scrollbar-thumb {
-  background: #0d5f2e;
-  border-radius: 25px;
-}
-
-.select-reg__dropdown li:hover,
-.select-reg__dropdown input:checked ~ label {
-  background-color: #f2f2f2;
-}
-
-.select-reg__dropdown input:focus ~ label {
-  background-color: #dfdfdf;
-}
-
-.select-reg__dropdown input[type=radio] {
-  position: absolute;
-  left: 0;
-  opacity: 0;
-}
-
-.select-reg.active .select-reg__arrow {
-  transform: rotate(0deg);
-  transition: 0.3s;
-  stroke: #000000;
-}
-
-.select-reg.unactive .select-reg__arrow {
+.dropdown-toggle::after {
   transform: rotate(180deg);
   transition: 0.3s;
-  stroke: #000000;
+  background-image: url("../image/icons/arrow.svg");
+  width: 16px;
+  height: 16px;
+  display: block;
+  margin: 0;
+  vertical-align: 0;
+  border: 0;
 }
 
-.select-reg.active .select-reg__dropdown {
-  opacity: 1;
-  visibility: visible;
-  transform: scaleY(1);
+.select.show .dropdown-toggle::after {
+  transform: rotate(0deg);
 }
 
 .user-list__form {

@@ -1,0 +1,28 @@
+{% extends 'layout-admin.twig' %}
+
+{% block content %}
+	<div class="main__content">
+		<section class="main__section">
+			<h2 class="main__section-title">Добавить подраздел</h2>
+			<form class="main__second-form" method="post">
+				<div class="main__select-wrapper main__select-wrapper--flex">
+				<select class="selectpicker select select--padding select--discipline" data-width="300px" data-live-search="true" data-size="5" title="Дисциплины" name="discipline">
+					{% for discipline in disciplines %}
+						<option value="{{discipline.Id}}" {% if discipline.Id == currentIdDiscipline %} selected {% endif %}>{{discipline.Name}}</option>
+					{% endfor %}
+				</select>
+				<select class="selectpicker select select--padding select--sections" data-width="300px" data-live-search="true" data-size="5" title="Разделы" name="section">
+					{% for section in sections %}
+						<option value="{{section.Id}}" {% if section.Id == currentIdSection %} selected {% endif %}>{{section.Name}}</option>
+					{% endfor %}
+				</select>
+				</div>
+				<input class="main__input" type="text" placeholder="Наименование">
+				<div class="main__text" id="editor"></div>
+				<div class="main__button-wrapper">
+					<button class="main__form-button" type="submit">Добавить</button>
+				</div>
+			</form>
+		</section>
+	</div>
+{% endblock %}
