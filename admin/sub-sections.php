@@ -79,7 +79,7 @@ if(isset($_GET["id"], $_GET["status"])) {
     $currentUrl = isset($_SERVER["HTTP_REFERER"])?explode("/",$_SERVER["HTTP_REFERER"])[5] : "sections.php";
     header("Location:$currentUrl");
 }
-$content = $twig -> render('subSubcetion-list.twig', 
+$content = $twig -> render('subSection-list.twig', 
     [
         "title" => $title,
         "currentSection" => $currentSection,

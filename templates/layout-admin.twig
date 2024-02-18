@@ -169,18 +169,21 @@
         currentSection == "Section" or 
         currentSection == "subSection" or 
         currentSection == "subSection" 
-  %}
+  		%}
 			<script src="../js/delete.js"></script>
 		{% endif %}
 
 		{% if 
         currentSection == "Section" or 
-        currentSection == "subSection" or 
         currentSection == "listUser" or 
-        currentSection == "addSection" or 
-        currentSection == "addSubSection" or 
-        currentSection == "listUser"
-  %}
+        currentSection == "addSection"
+  		%}
+			<script src="../js/bootstrap-select/jquery.min.js"></script>
+			<script src="../js/bootstrap-select/bootstrap.bundle.min.js"></script>
+			<script src="../js/bootstrap-select/bootstrap-select.min.js"></script>
+		{% endif %}
+
+		{% if  currentSection == "subSection" or currentSection == "addSubSection"%}
 			<script src="../js/select.js"></script>
 			<script src="../js/bootstrap-select/jquery.min.js"></script>
 			<script src="../js/bootstrap-select/bootstrap.bundle.min.js"></script>

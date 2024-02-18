@@ -1,4 +1,4 @@
-const select = document.querySelector(".select");
+const select = document.querySelector(".select--discipline");
 
 select.addEventListener("change", (evt) => {
   const id = evt.target.value;
