@@ -1,6 +1,13 @@
 <?php
-require_once("../server/function.php");
-$db = $link;
+require_once("../function.php");
+if(!isset($_SESSION["user"]) || $_SESSION["user"]["Role_id"] == 1) {
+    header("Location: ../index.php");
+}
+
+if(!isset($_GET["id"]) || !isset($_GET["section"])) {
+    header("Location: admin.php");
+}
+
 $title = "ЭМКУ - Изменить наименование";
 $errors = [];
 $nameDiscipline = "";
@@ -15,14 +22,14 @@ switch($refer) {
         $sql = "SELECT Name FROM `Sections` WHERE Id = ?";
         break;
 }
-$stmt = $db -> prepare($sql);
+$stmt = $link -> prepare($sql);
 $stmt -> execute([$id]);
 $nameDiscipline = $stmt -> fetch(PDO::FETCH_ASSOC)["Name"];
 
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = trim(filter_input(INPUT_POST, "name", FILTER_DEFAULT));
-    $errors["name"] = validateName($name, $db, $refer);
+    $errors["name"] = validateName($name, $link, $refer);
     $errors = array_filter($errors);
 
     if(!count($errors)) {
@@ -36,7 +43,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             $url = "sections.php";
             break;
        }
-       $stmt = $db -> prepare($sql);
+       $stmt = $link -> prepare($sql);
        $stmt -> execute([
         "name" => $name,
         "id" => $id

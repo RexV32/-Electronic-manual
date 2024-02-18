@@ -1,0 +1,16 @@
+{% extends 'layout-authentication.twig' %}
+
+{% block content %}
+  <main class="auth">
+    <h1 class="visually-hidden">Авторизация</h1>
+    <div class="auth__wrapper">
+      <form class="auth__form">
+        <input class="auth__input" type="text" placeholder="Введите логин">
+        <input class="auth__input" type="password" placeholder="Введеите пароль">
+        <button class="auth__submit" type="submit">Войти</button>
+        <a class="auth__link auth__link--underline" href="reg.php">Регистрация</a>
+      </form>
+    </div>
+  </main>
+  <script src="js/auth.js"></script>
+{% endblock %}

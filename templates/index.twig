@@ -1,0 +1,85 @@
+{% extends 'layout-user.twig' %}
+
+{% block content %}
+<div class="main__wrapper">
+	<section class="main__nav-section main__nav-section--padding">
+		<h2 class="visually-hidden">Навигация</h2>
+		<nav class="main__navigation">
+			<ul class="dropmenu__list">
+				<li class="dropmenu__item">
+					<button class="dropmenu__button" type="button">
+						МДК 04.04
+					</button>
+					<ul class="dropmenu__menu">
+						<li class="dropmenu__menu-item dropmenu__menu-item--current">
+							<a class="dropmenu__link" href="#">Практика</a>
+						</li>
+						<li class="dropmenu__menu-item">
+							<a class="dropmenu__link" href="#">Теория</a>
+						</li>
+						<li class="dropmenu__menu-item">
+							<a class="dropmenu__link" href="#">Тесты</a>
+						</li>
+						<li class="dropmenu__menu-item">
+							<a class="dropmenu__link" href="#">Глосарий</a>
+						</li>
+						<li class="dropmenu__menu-item">
+							<a class="dropmenu__link" href="#">Доп.материалы</a>
+						</li>
+					</ul>
+				</li>
+				<li class="dropmenu__item">
+					<button class="dropmenu__button" type="button">
+						МДК 04.03
+					</button>
+					<ul class="dropmenu__menu">
+						<li class="dropmenu__menu-item">
+							<a class="dropmenu__link" href="#">Практика</a>
+						</li>
+						<li class="dropmenu__menu-item">
+							<a class="dropmenu__link" href="#">Теория</a>
+						</li>
+						<li class="dropmenu__menu-item">
+							<a class="dropmenu__link" href="#">Тесты</a>
+						</li>
+						<li class="dropmenu__menu-item">
+							<a class="dropmenu__link" href="#">Глосарий</a>
+						</li>
+						<li class="dropmenu__menu-item">
+							<a class="dropmenu__link" href="#">Доп.материалы</a>
+						</li>
+					</ul>
+				</li>
+				<li class="dropmenu__item">
+					<button class="dropmenu__button" type="button">
+						Демо
+					</button>
+					<ul class="dropmenu__menu">
+						<li class="dropmenu__menu-item">
+							<a class="dropmenu__link" href="#">Практика</a>
+						</li>
+						<li class="dropmenu__menu-item">
+							<a class="dropmenu__link" href="#">Теория</a>
+						</li>
+						<li class="dropmenu__menu-item">
+							<a class="dropmenu__link" href="#">Тесты</a>
+						</li>
+						<li class="dropmenu__menu-item">
+							<a class="dropmenu__link" href="#">Глосарий</a>
+						</li>
+						<li class="dropmenu__menu-item">
+							<a class="dropmenu__link" href="#">Доп.материалы</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</nav>
+	</section>
+	<div class="main__stub">
+		<picture>
+			<source media="(min-width:768px)" srcset="./image/content/stub__desktop.jpg">
+			<img class="main__stub-image" src="./image/content/stub__mobile.jpg" alt="Выберите раздел">
+		</picture>
+	</div>
+</div>
+{% endblock %}

@@ -1,13 +1,17 @@
 <?php
-require_once("../vendor/autoload.php"); 
-require_once("connect.php");
+require_once("vendor/autoload.php"); 
+require_once("server/connect.php");
 
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
-$loader = new FilesystemLoader('../templates');
-$twig = new Environment($loader);
+$path = "../templates";
+if (!file_exists($path)) {
+    $path = "templates";
+}
 
+$loader = new FilesystemLoader("$path");
+$twig = new Environment($loader);
 
 function validateName($value, $link, $refer) {
     $length = strlen($value);
@@ -90,4 +94,48 @@ function getDisciplines($link) {
 function getGroup($link) {
     $sql = "SELECT * FROM `Groups`";
     return $link->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function validateUser($value) {
+    $length = strlen($value);
+    if($length == 0) {
+        return "Поле должно быть заполнено";
+    }
+
+    return null;
+}
+
+function validateGroup($value, $array) {
+    if(!in_array($value, $array)) {
+        return "Некорректная группа";
+    }
+
+    return null;
+}
+
+function validatePassword($value) {
+    $length = strlen($value);
+    if($length < 10) {
+        return "Длина пароля не менее 10 символов";
+    }
+
+    return null;
+}
+
+function validateLogin($value, $link) {
+    $length = strlen($value);
+    if($length == 0) {
+        return "Поле должно быть заполнено";
+    }
+
+    $sql = "SELECT * FROM `Users` WHERE Login = ?";
+    $stmt = $link -> prepare($sql);
+    $stmt -> execute([$value]);
+    $count = $stmt -> rowCount();
+
+    if($count > 0) {
+        return "Логин занят";
+    }
+
+    return null;
 }

@@ -1,5 +1,10 @@
 <?php
-require_once("../server/function.php");
+require_once("../function.php");
+if(!isset($_SESSION["user"]) || $_SESSION["user"]["Role_id"] == 1) {
+    header("Location: ../index.php");
+}
+
+
 $title = "ЭМКУ - Список подразделов";
 $currentSection = "subSection";
 

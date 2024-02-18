@@ -139,7 +139,6 @@ function handleDeleteButtonClick(button) {
 
   cancelButton.addEventListener("click", removeModal);
   acceptButton.addEventListener("click", () => {
-    console.log(id);
     const data = new FormData();
     data.append("id", id);
     fetch("../server/delete-user.php", {
