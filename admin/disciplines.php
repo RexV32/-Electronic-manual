@@ -25,7 +25,8 @@ if(isset($_GET["id"], $_GET["status"])) {
         "id" => $_GET["id"],
     ]);
 
-    header("Location:disciplines.php");
+    $currentUrl = isset($_SERVER["HTTP_REFERER"])?explode("/",$_SERVER["HTTP_REFERER"])[5] : "disciplines.php";
+    header("Location:$currentUrl");
 }
 
 $content = $twig -> render('disciplines-list.twig', 

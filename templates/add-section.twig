@@ -8,7 +8,7 @@
 			<form class="main__second-form" method="post">
 				<div class="main__select-wrapper">
 					{% set className = errors|length > 0 ? "select__button--error" : "" %}
-					<select class="selectpicker select select--padding" data-width="300px" data-live-search="true" data-size="5" title="Дисциплины" name="discipline">
+					<select class="selectpicker select select--padding {{className}}" data-width="300px" data-live-search="true" data-size="5" title="Дисциплины" name="discipline">
 						{% for discipline in disciplines %}
 							<option value="{{discipline.Id}}">{{discipline.Name}}</option>
 						{% endfor %}

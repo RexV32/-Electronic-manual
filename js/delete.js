@@ -8,7 +8,6 @@ const templateModal = `<div class="modal-accept">
 </div>
 </div>`;
 let acceptButton, canselButton, id, section;
-
 function findClosestButton(element) {
     let currentElement = element;
     while (currentElement) {
@@ -53,7 +52,6 @@ function modalOpen(evt) {
         canselButton.addEventListener("click", cansel);
         id = closestButton.dataset.id;
         section = closestButton.dataset.section;
-        console.log(id);
     }
 }
 
@@ -81,9 +79,11 @@ function accept() {
                 window.location.href = "sections.php";
             } else if(section == "subSection") {
                 window.location.href = "sub-sections.php";
+            } else if(section == "tests") {
+                window.location.href = "test-list.php";
             }
             else {
-                window.location.href = "index.php";
+                window.location.href = "admin.php";
             }
         }
         else {

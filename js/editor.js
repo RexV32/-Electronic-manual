@@ -146,10 +146,10 @@ saveButton.addEventListener("click",(evt) => {
   evt.preventDefault();
   editor.save().then((outputData) => {
     const jsonData = JSON.stringify(outputData, null, 2);
-    const radioButtonDiscipline = document.querySelector("input[name='disciplines']:checked");
-    const radioButtonSection = document.querySelector("input[name='sections']:checked");
-    const idDiscipline = radioButtonDiscipline ? radioButtonDiscipline.value : null;
-    const idSection = radioButtonSection ? radioButtonSection.value : null;
+    const radioButtonDiscipline = document.querySelector("select[name='discipline']");
+    const radioButtonSection = document.querySelector("select[name='section']");
+    const idDiscipline = radioButtonDiscipline.value ? radioButtonDiscipline.value : null;
+    const idSection = radioButtonSection.value ? radioButtonSection.value : null;
     const name = input.value.trim();
     if (idDiscipline === null || idSection === null) {
       modalError("Дисциплина или раздел не выбран");

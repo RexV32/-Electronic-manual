@@ -1,0 +1,28 @@
+{% extends 'layout-admin.twig' %}
+
+{% block content %}
+	<div class="main__content">
+		<section class="main__section">
+			<h2 class="main__section-title">Добавить тест</h2>
+			<form class="main__second-form" method="post">
+				{% set className = errors|length > 0 ? "select__button--error" : "" %}
+				<select class="selectpicker select select--padding {{ className }}" data-width="300px" data-live-search="true" data-size="5" title="Дисциплины" name="discipline">
+					{% for discipline in disciplines %}
+						<option value="{{discipline.Id}}">{{discipline.Name}}</option>
+					{% endfor %}
+				</select>
+				{% if errors|length > 0 %}
+					<span class="main__input-error">{{errors.discipline}}</span>
+				{% endif %}
+				{% set className = errors|length > 0 ? "main__input--error" : "" %}
+				<input class="main__input {{className}}" type="text" placeholder="Наименование" name="name">
+				{% if errors|length > 0 %}
+					<span class="main__input-error">{{errors.name}}</span>
+				{% endif %}
+				<div class="main__button-wrapper">
+					<button class="main__form-button" type="submit">Добавить</button>
+				</div>
+			</form>
+		</section>
+	</div>
+{% endblock %}

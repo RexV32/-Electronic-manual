@@ -1,0 +1,53 @@
+{% extends 'layout-admin.twig' %}
+
+{% block content %}
+	<div class="main__content">
+		<section class="main__section">
+			<h2 class="main__section-title">Список вопросов:</h2>
+			<form class="main__form" method="get">
+				<select class="selectpicker select select--padding" data-width="300px" data-live-search="true" data-size="5" title="Тесты" name="test">
+					{% set isFirst = true %}
+					{% for test in tests %}
+						<option value="{{ test.Id }}" {{ isFirst ? 'selected' : '' }}>{{ test.Name }}</option>
+						{% set isFirst = false %}
+					{% endfor %}
+				</select>
+				<button class="main__form-button" type="submit">Показать</button>
+			</form>
+			<ul class="main__section-list">
+				<li class="main__section-item">
+					<h3 class="main__title">Вопрос №1</h3>
+					<ul class="main__control-panel">
+						<li class="main__panel-item" title="Изменить название">
+							<a class="main__panel-button" href="#">
+								<svg class="main__panel-icon" width="29" height="29" role="img" aria-label="edit">
+									<use xlink:href="../image/icons/sprite.svg#editIcon"></use>
+								</svg>
+								<span class="visually-hidden">Переименовать</span>
+							</a>
+						</li>
+						<li class="main__panel-item" title="Удалить дисциплину">
+							<a class="main__panel-button" href="#">
+								<svg class="main__panel-icon" width="28" height="28" role="img" aria-label="delete">
+									<use xlink:href="../image/icons/sprite.svg#deleteIcon"></use>
+								</svg>
+								<span class="visually-hidden">Удалить</span>
+							</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+			{% set className = questions|length <= limit ? "pagintaion--none": ""%}
+			<div class="pagintaion {{className}}">
+				<ul class="pagination__list">
+					{% for i in 1..pages %}
+						<li class="pagination-item {{ i == page ? 'pagination-item--current' : '' }}">
+							<a class="pagination-link" href="?page={{i}}">{{i}}</a>
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+			<a class="main__button" href="add-question.php">Добавить вопрос</a>
+		</section>
+	</div>
+{% endblock %}

@@ -60,9 +60,27 @@ function validateNameSection($value) {
     return null;
 }
 
-function validateIdSection($id, $arrayId) {
+function validateIdDiscipline($id, $arrayId) {
     if(!in_array($id, $arrayId)) {
         return "Некорректная дисциплина";
+    }
+
+    return null;
+}
+
+function validateNameTests($value, $link) {
+    $length = strlen($value);
+    if($length == 0) {
+        return "Поле должно быть заполнено";
+    }
+
+    $sql = "SELECT * FROM `Tests` WHERE `Name` = ?";
+    $stmt = $link -> prepare($sql);
+    $stmt -> execute([$value]);
+    $rowCount = $stmt -> rowCount();
+
+    if($rowCount) {
+        return "Тест с таким названием существует";
     }
 
     return null;
@@ -93,6 +111,11 @@ function getDisciplines($link) {
 
 function getGroup($link) {
     $sql = "SELECT * FROM `Groups`";
+    return $link->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function getTests($link) {
+    $sql = "SELECT * FROM `Tests`";
     return $link->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 }
 
@@ -138,4 +161,17 @@ function validateLogin($value, $link) {
     }
 
     return null;
+}
+
+function getQuestions($link) {
+    $sql = "SELECT * FROM `Questions`";
+    return $link->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function validateTests($id, $arrayId) {
+    if(!in_array($id, $arrayId)) {
+        return false;
+    }
+
+    return true;
 }

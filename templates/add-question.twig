@@ -1,0 +1,60 @@
+{% extends 'layout-admin.twig' %}
+
+{% block content %}
+	<div class="main__content">
+		<section class="main__section">
+			<h2 class="main__section-title">Добавить вопрос</h2>
+			<div class="form-question">
+				<select class="selectpicker select select--padding" data-width="300px" data-live-search="true" data-size="5" title="Тесты" name="test">
+					{% for test in tests %}
+						<option value="{{ test.Id }}">{{ test.Name }}</option>
+					{% endfor %}
+				</select>
+				<form class="form-question__form" method="post">
+					<div class="form-question__wrapper-button">
+						<label class="form-question__label-button">
+							Добавить фото
+							<input type="file" class="visually-hidden" accept="image/png, image/jpeg, image/jpg, image/webp, image/gif">
+						</label>
+						<button type="button" class="form-question__button form-question__button--none">Удалить фото</button>
+					</div>
+					<img class="form-question__image form-question__image--none" alt="Вставленное фото">
+					<fieldset class="form-question__fieldset form-question__fieldset--radio">
+						<legend class="visually-hidden">Количество ответов</legend>
+						<p class="form-question__group">
+							<label class="form-question__label-radio">
+								<input class="form-question__radio" type="radio" name="option-answer" id="radio" checked>
+								<span class="form-question__control">
+									Один вариант ответа
+								</span>
+							</label>
+						</p>
+						<p class="form-question__group">
+							<label class="form-question__label-radio">
+								<input class="form-question__radio" type="radio" name="option-answer" id="checkbox">
+								<span class="form-question__control">
+									Несколько вариантов ответа
+								</span>
+							</label>
+						</p>
+					</fieldset>
+					<fieldset>
+						<legend class="visually-hidden">Текст вопроса и ответов</legend>
+						<input class="form-question__question-input" type="text" placeholder="Вопрос">
+						<p class="form-question__group-answer">
+							<label class="form-question__label-answer">
+								<input class="form-question__radio" type="radio" name="answer-control">
+								<span class="form-question__control">
+									<input class="form-question__answer-input" type="text" placeholder="Ответ" name="answer">
+								</span>
+							</label>
+							<button class="form-question__button-delete" type="button"></button>
+						</p>
+					</fieldset>
+					<button type="button" class="form-question__button" id="add-question">Добавить ответ</button>
+					<button type="submit" class="form-question__submit">Создать</button>
+				</form>
+			</div>
+		</section>
+	</div>
+{% endblock %}

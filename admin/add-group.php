@@ -6,11 +6,10 @@ if(!isset($_SESSION["user"]) || $_SESSION["user"]["Role_id"] == 1) {
 
 
 $title = "ЭМКУ - Добавить группу";
-
 $errors = [];
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
-    $name = filter_input(INPUT_POST, "name", FILTER_DEFAULT);
+    $name = trim(filter_input(INPUT_POST, "name", FILTER_DEFAULT));
     $errors["name"] = validateNameGroup($name, $link);
     $errors = array_filter($errors);
 

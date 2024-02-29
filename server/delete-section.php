@@ -1,7 +1,8 @@
 <?php
 require_once("../server/connect.php");
 header('Content-Type: application/json; charset=utf-8');
-function deleteDirectory($dir) {
+function deleteDirectory($dir)
+{
     $files = array_diff(scandir($dir), array('.', '..'));
 
     foreach ($files as $file) {
@@ -11,7 +12,8 @@ function deleteDirectory($dir) {
 
     return rmdir($dir);
 }
-function findAndDeleteFolder($parentFolder, $targetFolder) {
+function findAndDeleteFolder($parentFolder, $targetFolder)
+{
     $dirs = glob($parentFolder . '/*', GLOB_ONLYDIR);
 
     foreach ($dirs as $dir) {
@@ -63,9 +65,24 @@ switch ($section) {
     case "subSection":
         $sql = "DELETE FROM `SubSections` WHERE Id = ?";
         $stmt = $link->prepare($sql);
-        
+
         try {
             $path = "../uploads";
+            if (is_dir($path)) {
+                findAndDeleteFolder($path, $id);
+            }
+            $success = $stmt->execute([$id]);
+            echo json_encode(["success" => true]);
+        } catch (PDOException $exception) {
+            echo json_encode(["success" => false, "message" => "Не удалось выполнить запрос"]);
+        }
+        break;
+    case "tests":
+        $sql = "DELETE FROM `Tests` WHERE Id = ?";
+        $stmt = $link->prepare($sql);
+
+        try {
+            $path = "../uploads/quiz";
             if (is_dir($path)) {
                 findAndDeleteFolder($path, $id);
             }

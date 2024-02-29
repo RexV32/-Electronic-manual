@@ -3,7 +3,15 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		{% if currentSection == "Section" or currentSection == "subSection" or currentSection == "addSection" or currentSection == "addSubSection" or currentSection == "listUser"%}
+		{% if currentSection == "Section" or 
+		currentSection == "subSection" or 
+		currentSection == "addSection" or 
+		currentSection == "addSubSection" or 
+		currentSection == "listUser" or 
+		currentSection == "addTests" or
+		currentSection == "editorTests" or
+		currentSection == "addQuestion"
+		%}
 			<link rel="stylesheet" href="../js/bootstrap-select/bootstrap.min.css">
 			<link rel="stylesheet" href="../js/bootstrap-select/bootstrap-select.min.css">
 		{% endif %}
@@ -71,7 +79,11 @@
 								</li>
 								<li class="menu__additional-item">
 									{% set className = currentSection == "test" ?  "menu__additional-link--current": ""%}
-									<a class="menu__additional-link {{className}}" href="#">Тесты</a>
+									<a class="menu__additional-link {{className}}" href="test-list.php">Тесты</a>
+								</li>
+								<li class="menu__additional-item">
+									{% set className = currentSection == "editorTests" ?  "menu__additional-link--current": ""%}
+									<a class="menu__additional-link {{className}}" href="question-list.php">Управление тестами</a>
 								</li>
 							</ul>
 						</div>
@@ -114,7 +126,11 @@
 							</li>
 							<li class="main__navigation-item">
 								{% set className = currentSection == "test" ?  "main__navigation-link--current": ""%}
-								<a class="main__navigation-link {{className}}" href="#">Тесты</a>
+								<a class="main__navigation-link {{className}}" href="test-list.php">Тесты</a>
+							</li>
+							<li class="main__navigation-item">
+								{% set className = currentSection == "editorTests" ?  "main__navigation-link--current": ""%}
+								<a class="main__navigation-link {{className}}" href="question-list.php">Управление тестами</a>
 							</li>
 						</ul>
 					</nav>
@@ -168,7 +184,8 @@
         currentSection == "Discipline" or 
         currentSection == "Section" or 
         currentSection == "subSection" or 
-        currentSection == "subSection" 
+        currentSection == "subSection" or
+		currentSection == "test"
   		%}
 			<script src="../js/delete.js"></script>
 		{% endif %}
@@ -176,7 +193,10 @@
 		{% if 
         currentSection == "Section" or 
         currentSection == "listUser" or 
-        currentSection == "addSection"
+        currentSection == "addSection" or 
+		currentSection == "addTests" or
+		currentSection == "editorTests" or
+		currentSection == "addQuestion"
   		%}
 			<script src="../js/bootstrap-select/jquery.min.js"></script>
 			<script src="../js/bootstrap-select/bootstrap.bundle.min.js"></script>
@@ -214,6 +234,10 @@
 			<script src="../js/editorJs/underline/dist/bundle.js"></script>
 			<script src="../js/editorJs/footnotes/dist/bundle.js"></script>
 			<script src="../js/editorJs/attaches/dist/bundle.js"></script>
+		{% endif %}
+
+		{% if currentSection == "addQuestion" %}
+			<script src="../js/questionEditor.js"></script>
 		{% endif %}
 		<script src="../js/menu.js"></script>
 	</body>

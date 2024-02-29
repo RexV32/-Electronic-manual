@@ -31,9 +31,9 @@
 								</a>
 							</li>
 							{% if subSection.Status == 1 %}
-								<li class="main__panel-item" title="Скрыть дисциплину">
+								<li class="main__panel-item" title="Скрыть подраздел">
 								{% else %}
-									<li class="main__panel-item" title="Показать дисциплину">
+									<li class="main__panel-item" title="Показать подраздел">
 									{% endif %}
 									<a class="main__panel-button" href="?id={{subSection.Id}}&status={{subSection.Status}}">
 										{% if subSection.Status == 1 %}
@@ -49,7 +49,7 @@
 										{% endif %}
 									</a>
 								</li>
-								<li class="main__panel-item" title="Удалить дисциплину">
+								<li class="main__panel-item" title="Удалить подраздел">
 									<button class="main__panel-button main__panel-button--delete" data-id="{{subSection.Id}}" data-section="subSection">
 										<svg class="main__panel-icon" width="28" height="28" role="img" aria-label="delete">
 											<use xlink:href="../image/icons/sprite.svg#deleteIcon"></use>

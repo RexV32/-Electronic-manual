@@ -84,13 +84,13 @@ inputsPassword.forEach((input) => {
 submit.addEventListener("click", (evt) => {
     evt.preventDefault();
     const dataUser = {
-        name: document.querySelector(".reg__input--name").value,
-        surname: document.querySelector(".reg__input--surname").value,
-        patronymic: document.querySelector(".reg__input--patronymic").value,
-        login: document.querySelector(".reg__input--login").value,
-        group: document.querySelector(".selectpicker").value,
-        password: document.querySelector(".reg__input--password").value,
-        confirm: document.querySelector(".reg__input--confirm").value
+        name: document.querySelector(".reg__input--name").value.trim(),
+        surname: document.querySelector(".reg__input--surname").value.trim(),
+        patronymic: document.querySelector(".reg__input--patronymic").value.trim(),
+        login: document.querySelector(".reg__input--login").value.trim(),
+        group: document.querySelector(".selectpicker").value.trim(),
+        password: document.querySelector(".reg__input--password").value.trim(),
+        confirm: document.querySelector(".reg__input--confirm").value.trim()
     };
     const data = new FormData();
     data.append("data", JSON.stringify(dataUser));
