@@ -1,0 +1,65 @@
+{% extends 'layout-admin.twig' %}
+
+{% block content %}
+	<div class="main__content">
+		<section class="main__section">
+			<h2 class="main__section-title">Редактировать вопрос</h2>
+			<div class="form-question">
+				<form class="form-question__form" method="post">
+					<div class="form-question__wrapper-button">
+						<label class="form-question__label-button">
+							Добавить фото
+							<input type="file" class="visually-hidden" accept="image/png, image/jpeg, image/jpg, image/webp, image/gif">
+						</label>
+						{% set className = question.Image != null ? "" : "form-question__button--none" %}
+						<button type="button" class="form-question__button {{ className }}">Удалить фото</button>
+					</div>
+					{% set className = question.Image != null ? "" : "form-question__image--none" %}
+					<img class="form-question__image {{ className }}" alt="Вставленное фото" src="../uploads/quiz/{{ question.Id_test }}/{{ question.Image }}">
+					<fieldset class="form-question__fieldset form-question__fieldset--radio">
+						<legend class="visually-hidden">Количество ответов</legend>
+						<p class="form-question__group">
+							<label class="form-question__label-radio">
+								{% set className = question.Multiple ? "" : "checked" %}
+								<input class="form-question__radio" type="radio" name="option-answer" id="radio" {{ className }}>
+								<span class="form-question__control">
+									Один вариант ответа
+								</span>
+							</label>
+						</p>
+						<p class="form-question__group">
+							<label class="form-question__label-radio">
+								{% set className = question.Multiple ? "checked" : "" %}
+								<input class="form-question__radio" type="radio" name="option-answer" id="checkbox" {{ className }}>
+								<span class="form-question__control">
+									Несколько вариантов ответа
+								</span>
+							</label>
+						</p>
+					</fieldset>
+					<fieldset>
+						<legend class="visually-hidden">Текст вопроса и ответов</legend>
+						<input class="form-question__question-input" type="text" placeholder="Вопрос" value="{{ question.Text }}">
+						{% for answer in answers %}
+							<p class="form-question__group-answer">
+								<label class="form-question__label-answer">
+									{% set atributte = answer.Correct ? "checked" : "" %}
+									{% set className = question.Multiple ? "form-question__checkbox" : "form-question__radio" %}
+									{% set type = question.Multiple ? "checkbox" : "radio" %}
+									<input class="{{className}}" type="{{type}}" name="answer-control" {{atributte}}>
+									{% set className = question.Multiple ? "form-question__control-checkbox" : "form-question__control" %}
+									<span class="{{className}}">
+										<input class="form-question__answer-input" type="text" placeholder="Ответ" name="answer" value="{{ answer.Text }}" data-id="{{answer.Id}}">
+									</span>
+								</label>
+								<button class="form-question__button-delete" type="button"></button>
+							</p>
+						{% endfor %}
+					</fieldset>
+					<button type="button" class="form-question__button" id="add-question">Добавить ответ</button>
+					<button type="submit" class="form-question__submit form-question__submit--edit">Изменить</button>
+				</form>
+			</div>
+		</section>
+	</div>
+{% endblock %}

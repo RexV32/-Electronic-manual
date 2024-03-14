@@ -10,7 +10,8 @@
 		currentSection == "listUser" or 
 		currentSection == "addTests" or
 		currentSection == "editorTests" or
-		currentSection == "addQuestion"
+		currentSection == "addQuestion" or 
+		currentSection == "editQuestion"
 		%}
 			<link rel="stylesheet" href="../js/bootstrap-select/bootstrap.min.css">
 			<link rel="stylesheet" href="../js/bootstrap-select/bootstrap-select.min.css">
@@ -184,8 +185,8 @@
         currentSection == "Discipline" or 
         currentSection == "Section" or 
         currentSection == "subSection" or 
-        currentSection == "subSection" or
-		currentSection == "test"
+		currentSection == "test" or
+		currentSection == "editorTests"
   		%}
 			<script src="../js/delete.js"></script>
 		{% endif %}
@@ -236,7 +237,7 @@
 			<script src="../js/editorJs/attaches/dist/bundle.js"></script>
 		{% endif %}
 
-		{% if currentSection == "addQuestion" %}
+		{% if currentSection == "addQuestion" or currentSection == "editQuestion" %}
 			<script src="../js/questionEditor.js"></script>
 		{% endif %}
 		<script src="../js/menu.js"></script>

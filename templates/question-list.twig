@@ -15,27 +15,29 @@
 				<button class="main__form-button" type="submit">Показать</button>
 			</form>
 			<ul class="main__section-list">
-				<li class="main__section-item">
-					<h3 class="main__title">Вопрос №1</h3>
-					<ul class="main__control-panel">
-						<li class="main__panel-item" title="Изменить название">
-							<a class="main__panel-button" href="#">
-								<svg class="main__panel-icon" width="29" height="29" role="img" aria-label="edit">
-									<use xlink:href="../image/icons/sprite.svg#editIcon"></use>
-								</svg>
-								<span class="visually-hidden">Переименовать</span>
-							</a>
-						</li>
-						<li class="main__panel-item" title="Удалить дисциплину">
-							<a class="main__panel-button" href="#">
-								<svg class="main__panel-icon" width="28" height="28" role="img" aria-label="delete">
-									<use xlink:href="../image/icons/sprite.svg#deleteIcon"></use>
-								</svg>
-								<span class="visually-hidden">Удалить</span>
-							</a>
-						</li>
-					</ul>
-				</li>
+				{% for question in questionSlice %}
+					<li class="main__section-item">
+						<h3 class="main__title">{{ question.Text }}</h3>
+						<ul class="main__control-panel">
+							<li class="main__panel-item" title="Изменить название">
+								<a class="main__panel-button" href="edit-question.php?id={{question.Id}}">
+									<svg class="main__panel-icon" width="29" height="29" role="img" aria-label="edit">
+										<use xlink:href="../image/icons/sprite.svg#editIcon"></use>
+									</svg>
+									<span class="visually-hidden">Переименовать</span>
+								</a>
+							</li>
+							<li class="main__panel-item" title="Удалить вопрос">
+								<button class="main__panel-button main__panel-button--delete" data-id="{{question.Id}}" data-section="question">
+									<svg class="main__panel-icon" width="28" height="28" role="img" aria-label="delete">
+										<use xlink:href="../image/icons/sprite.svg#deleteIcon"></use>
+									</svg>
+									<span class="visually-hidden">Удалить</span>
+								</button>
+							</li>
+						</ul>
+					</li>
+				{% endfor %}
 			</ul>
 			{% set className = questions|length <= limit ? "pagintaion--none": ""%}
 			<div class="pagintaion {{className}}">

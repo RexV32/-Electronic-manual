@@ -8,6 +8,7 @@ $title = "ЭМКУ - Управление тестами";
 $currentSection = "editorTests";
 $questionSlice = [];
 $pages = 0;
+$index = 1;
 
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 $limit = 5;
@@ -30,7 +31,9 @@ $content = $twig->render(
         "tests" => $tests,
         "questionSlice" => $questionSlice,
         "pages" => $pages,
-        "questions" => $questions
+        "questions" => $questions,
+        "limit" => $limit,
+        "page" => $page
     ]
 );
 print($content);

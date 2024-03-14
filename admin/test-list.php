@@ -39,6 +39,7 @@ $content = $twig -> render('test-list.twig',
     "limit" => $limit,
     "pages" => $page,
     "testSlice" => $testSlice,
+    "page" => $page
 
 ]);
 print($content);

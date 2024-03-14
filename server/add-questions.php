@@ -3,9 +3,9 @@ require_once("../function.php");
 header('Content-Type: application/json; charset=utf-8');
 
 $data = filter_input_array(INPUT_POST, ["data" => FILTER_DEFAULT, "file" => FILTER_DEFAULT]);
-$decodedData = json_decode($data["data"], true);;
+$decodedData = json_decode($data["data"], true);
 $multiple = $decodedData["multiple"] ? 1 : 0;
-$text = $decodedData["text"];
+$text = trim($decodedData["text"]);
 $id = $decodedData["id"];
 $questions = $decodedData["questions"];
 
@@ -44,5 +44,5 @@ if(validateTests($id, $testsIdArray)) {
     echo json_encode(["success" => true]);
 }
 else {
-    echo json_encode(["success" => false, "message" => "Некорректный тест", "title" => "Ошибка"]);
+    echo json_encode(["success" => false, "message" => "Неудалось создать вопрос", "title" => "Ошибка"]);
 }

@@ -73,18 +73,26 @@ function accept() {
     })
     .then(data => {
         if(data.success) {
-            if(section == "discipline") {
-                window.location.href = "disciplines.php";
-            } else if(section == "sections") {
-                window.location.href = "sections.php";
-            } else if(section == "subSection") {
-                window.location.href = "sub-sections.php";
-            } else if(section == "tests") {
-                window.location.href = "test-list.php";
-            }
-            else {
-                window.location.href = "admin.php";
-            }
+            switch (section) {
+                case "discipline":
+                  window.location.href = "disciplines.php";
+                  break;
+                case "sections":
+                  window.location.href = "sections.php";
+                  break;
+                case "subSection":
+                  window.location.href = "sub-sections.php";
+                  break;
+                case "tests":
+                  window.location.href = "test-list.php";
+                  break;
+                case "question":
+                  window.location.href = "question-list.php";
+                  break;
+                default:
+                  window.location.href = "admin.php";
+                  break;
+              }
         }
         else {
             modalError(data.message); 

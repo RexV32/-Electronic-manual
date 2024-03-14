@@ -5,12 +5,12 @@
 		<section class="main__section">
 			<h2 class="main__section-title">Добавить вопрос</h2>
 			<div class="form-question">
-				<select class="selectpicker select select--padding" data-width="300px" data-live-search="true" data-size="5" title="Тесты" name="test">
-					{% for test in tests %}
-						<option value="{{ test.Id }}">{{ test.Name }}</option>
-					{% endfor %}
-				</select>
 				<form class="form-question__form" method="post">
+					<select class="selectpicker select select--padding select--add-style" data-width="300px" data-live-search="true" data-size="5" title="Тесты" name="test">
+						{% for test in tests %}
+							<option value="{{ test.Id }}">{{ test.Name }}</option>
+						{% endfor %}
+					</select>
 					<div class="form-question__wrapper-button">
 						<label class="form-question__label-button">
 							Добавить фото
@@ -52,7 +52,7 @@
 						</p>
 					</fieldset>
 					<button type="button" class="form-question__button" id="add-question">Добавить ответ</button>
-					<button type="submit" class="form-question__submit">Создать</button>
+					<button type="submit" class="form-question__submit form-question__submit--create">Создать</button>
 				</form>
 			</div>
 		</section>

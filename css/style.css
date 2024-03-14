@@ -249,6 +249,14 @@
   font-weight: 400;
   line-height: normal;
   margin-bottom: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (min-width: 768px) {
+  .main__title {
+    white-space: nowrap;
+  }
 }
 
 .main__title--second-style {
@@ -315,7 +323,8 @@
 
 @media (min-width: 768px) {
   .main__section-item {
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr min-content;
     padding: 0 30px;
     flex-direction: row;
   }
@@ -348,7 +357,7 @@
   border-radius: 10px;
   margin: 0 auto;
   display: block;
-  width: 280px;
+  width: 300px;
   padding: 8px 0;
   margin-top: 30px;
   cursor: pointer;
@@ -869,6 +878,11 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  text-decoration: none;
+  color: #000000;
+}
+
+.pagination-link:hover {
   text-decoration: none;
   color: #000000;
 }
@@ -2129,7 +2143,6 @@
   padding: 8px 0;
   margin-bottom: 30px;
   text-align: center;
-  margin-top: 30px;
 }
 .form-question__label-button:hover {
   background-color: #ffffff;
@@ -2179,6 +2192,11 @@
   line-height: 24px;
   padding: 7px 0 7px 10px;
   border: 1px solid #000000;
+}
+
+.form-question__answer-input--delete {
+  outline: 3px solid #ff0000;
+  border: 1px solid #ff0000;
 }
 
 .form-question__group-answer {
@@ -2334,4 +2352,8 @@
 }
 .form-question__button-delete:hover {
   outline: 1px solid #000000;
+}
+
+.select--add-style {
+  margin-bottom: 30px;
 }

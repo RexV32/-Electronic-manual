@@ -92,4 +92,27 @@ switch ($section) {
             echo json_encode(["success" => false, "message" => "Не удалось выполнить запрос"]);
         }
         break;
+    case "question":
+        $sql = "SELECT Image, Id_test FROM `Questions` WHERE Id = ?";
+        $stmt = $link->prepare($sql);
+        $stmt -> execute([$id]);
+        $data = $stmt -> fetch(PDO::FETCH_ASSOC);
+        $idTest = $data["Id_test"];
+        $image = $data["Image"];
+
+        $sql = "DELETE FROM `Questions` WHERE Id = ?";
+        $stmt = $link->prepare($sql);
+
+        try {
+            if($image != null) {
+                $path = "../uploads/quiz/$idTest/$image";
+                unlink($path);
+            }
+            $success = $stmt->execute([$id]);
+            echo json_encode(["success" => true]);
+        } catch (PDOException $exception) {
+            echo json_encode(["success" => false, "message" => "Не удалось выполнить запрос"]);
+        }
+        break;
+
 }
