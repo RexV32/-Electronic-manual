@@ -2,7 +2,7 @@
 require_once("../server/connect.php");
 header('Content-Type: application/json; charset=utf-8');
 
-$data = filter_input_array(INPUT_POST, ["id" => FILTER_DEFAULT, "section" => FILTER_DEFAULT]);
+$data = filter_input_array(INPUT_POST, ["id" => FILTER_DEFAULT]);
 $id = $data["id"];
 
 $sql = "DELETE FROM `Groups` WHERE Id = ?";

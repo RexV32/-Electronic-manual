@@ -10,7 +10,7 @@
 		<header class="header">
 			<div class="header__wrapper">
 				<nav class="header__nav">
-					<a class="header__logo-link" href="index.html">
+					<a class="header__logo-link" href="index.php">
 						<h1 class="visually-hidden">ЭМКУ</h1>
 						<picture>
 							<source media="(min-width:768px)" srcset="./image/content/logo__desktop.svg">
@@ -167,6 +167,9 @@
 				</section>
 			</div>
 		</footer>
+		{% if currentSection == "test" %}
+		<script src="./js/test.js"></script>
+		{% endif %}
 		<script src="./js/dropmenu.js"></script>
 		<script src="./js/menu.js"></script>
 	</body>

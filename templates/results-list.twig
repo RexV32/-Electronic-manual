@@ -1,0 +1,57 @@
+{% extends 'layout-admin.twig' %}
+
+{% block content %}
+	<div class="main__content">
+		<section class="main__section">
+			<h2 class="main__section-title">Результаты теста</h2>
+			<div class="user-list">
+				<form class="user-list__form" method="get">
+					<select class="selectpicker select select--padding" data-width="300px" data-live-search="true" data-size="5" title="Группы" name="group">
+						{% for group in groups %}
+							<option value="{{group.Id}}">{{group.Name}}</option>
+						{% endfor %}
+					</select>
+					<input class="user-list__input" type="text" placeholder="Фамилия" name="surname">
+					<input class="user-list__input" type="text" placeholder="Имя" name="name">
+					<input class="user-list__input" type="text" placeholder="Отчество" name="patronymic">
+					<button class="user-list__submit" type="submit">Искать</button>
+				</form>
+				<table class="user-list__table">
+					<div class="user-list__wrapper-table">
+						<thead class="user-list__thead">
+							<tr class="user-list__tr">
+								<th class="user-list__th">Группа</th>
+								<th class="user-list__th">ФИО</th>
+								<th class="user-list__th">Количество баллов</th>
+								<th class="user-list__th">Управление</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for result in results %}
+								<tr class="user-list__tr">
+									<td class="user-list__td" data-label="Группа">{{result.GroupName}}</td>
+									<td class="user-list__td" data-label="ФИО">{{result.Name}}
+										{{result.Surname}}
+										{{result.Patronymic}}</td>
+									<td class="user-list__td" data-label="Логин">{{result.Score}}</td>
+									<td class="user-list__td" data-label="Управление">
+										<ul class="user-list__control-list">
+											<li class="user-list__control-item" title="Удалить">
+												<button class="user-list__link" data-id="{{result.Id}}">
+													<svg class="user-list__icon" width="28" height="28" role="img" aria-label="delete">
+														<use xlink:href="../image/icons/sprite.svg#deleteIcon"></use>
+													</svg>
+													<span class="visually-hidden">Удалить</span>
+												</button>
+											</li>
+										</ul>
+									</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</div>
+				</table>
+			</div>
+		</section>
+	</div>
+{% endblock %}

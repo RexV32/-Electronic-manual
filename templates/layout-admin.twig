@@ -11,7 +11,8 @@
 		currentSection == "addTests" or
 		currentSection == "editorTests" or
 		currentSection == "addQuestion" or 
-		currentSection == "editQuestion"
+		currentSection == "editQuestion" or 
+		currentSection == "results"
 		%}
 			<link rel="stylesheet" href="../js/bootstrap-select/bootstrap.min.css">
 			<link rel="stylesheet" href="../js/bootstrap-select/bootstrap-select.min.css">
@@ -197,7 +198,8 @@
         currentSection == "addSection" or 
 		currentSection == "addTests" or
 		currentSection == "editorTests" or
-		currentSection == "addQuestion"
+		currentSection == "addQuestion" or 
+		currentSection == "results"
   		%}
 			<script src="../js/bootstrap-select/jquery.min.js"></script>
 			<script src="../js/bootstrap-select/bootstrap.bundle.min.js"></script>
@@ -239,6 +241,9 @@
 
 		{% if currentSection == "addQuestion" or currentSection == "editQuestion" %}
 			<script src="../js/questionEditor.js"></script>
+		{% endif %}
+		{% if currentSection == "results" %}
+			<script src="../js/delete-results.js"></script>
 		{% endif %}
 		<script src="../js/menu.js"></script>
 	</body>

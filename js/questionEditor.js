@@ -285,7 +285,6 @@ if (submit.classList.contains("form-question__submit--create")) {
       modal("Вы не добавили ответы", "Ошибка");
       return;
     }
-    debugger
     if (count <= 0) {
       modal("Вы не отметили правильный ответ", "Ошибка");
       return;

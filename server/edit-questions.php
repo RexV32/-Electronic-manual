@@ -97,7 +97,7 @@ try {
         }
     }
 
-    echo json_encode(["success" => true, "mes" => $isDeletePhoto]);
+    echo json_encode(["success" => true]);
 } catch (PDOException $e) {
     echo json_encode(["success" => false, "message" => $e->getMessage(), "title" => "Ошибка"]);
 }

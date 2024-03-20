@@ -8,7 +8,6 @@ $title = "ЭМКУ - Управление тестами";
 $currentSection = "editorTests";
 $questionSlice = [];
 $pages = 0;
-$index = 1;
 
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 $limit = 5;

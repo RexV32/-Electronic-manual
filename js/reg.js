@@ -108,7 +108,6 @@ submit.addEventListener("click", (evt) => {
         })
         .then(data => {
             if (data.success) {
-                console.log(data);
                 modal(data.message, data.title, true);
             }
             else {
