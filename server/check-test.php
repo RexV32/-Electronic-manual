@@ -34,23 +34,33 @@ try {
     }
     $questions = $array;
     $score = 0;
-    for ($i = 0; $i < count($decodedData); $i++) {
-        if ($decodedData[$i]["questionId"] == $questions[$i]["IdQuestions"]) {
-            $answersDb = $questions[$i]["answers"];
-            $answersUser = $decodedData[$i]["answers"];
-            $correct = 0;
-            $uncorrect = 0;
-
-            for ($j = 0; $j < count($answersDb); $j++) {
-                if ($answersDb[$j]["TextAnswer"] == $answersUser[$j]["answer"]) {
-                    $correct++;
+    foreach ($decodedData as $userAnswer) {
+        foreach ($questions as $correctAnswer) {
+            if ($userAnswer['questionId'] === (string) $correctAnswer['IdQuestions']) {
+                $question = $userAnswer['question'];
+                if (count($correctAnswer["answers"]) <= 1) {
+                    $userResponse = $userAnswer['answers'][0]['answer'];
+                    $correctResponse = $correctAnswer['answers'][0]['TextAnswer'];
+                    if (strtolower($userResponse) == strtolower($correctResponse)) {
+                        $score++;
+                    }
                 } else {
-                    $uncorrect++;
-                }
-            }
+                    if (count($userAnswer['answers']) == count($correctAnswer['answers'])) {
+                        $count = 0;
+                        $userAnswerArray = $userAnswer['answers'];
+                        $correctAnswerArray = $correctAnswer["answers"];
+                        for ($i = 0; $i < count($userAnswerArray); $i++) {
+                            if (strtolower($userAnswerArray[$i]["answer"]) !== strtolower($correctAnswerArray[$i]["TextAnswer"])) {
+                                $count++;
+                            }
+                        }
 
-            if ($correct > 0 && $uncorrect == 0) {
-                $score++;
+                        if ($count == 0) {
+                            $score++;
+                        }
+
+                    }
+                }
             }
         }
     }

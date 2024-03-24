@@ -51,6 +51,11 @@
   cursor: pointer;
 }
 
+.header__toggle-button:focus-visible,
+.header__toggle-button:focus {
+  outline: none;
+}
+
 .header__toggle-button::before {
   content: "";
   position: absolute;
@@ -91,6 +96,7 @@
 .header__user-list {
   list-style-type: none;
   display: none;
+  margin-bottom: 0;
 }
 
 @media (min-width: 1280px) {
@@ -235,6 +241,7 @@
   line-height: 114.97%;
   letter-spacing: 0.25px;
   margin-bottom: 30px;
+  width: 100%;
 }
 
 @media (min-width: 768px) {
@@ -297,6 +304,11 @@
   cursor: pointer;
 }
 
+.main__panel-button:focus-visible,
+.main__panel-button:focus {
+  outline: none;
+}
+
 .main__panel-button:hover .main__panel-icon {
   stroke: #0d5f2e;
   transition: 0.3s;
@@ -305,6 +317,7 @@
 .main__panel-icon {
   stroke: #000000;
 }
+
 
 .main__section-item {
   display: flex;
@@ -333,6 +346,10 @@
 
 .main__section {
   padding: 80px 20px;
+}
+
+.main__section--padding {
+  padding: 80px 10px;
 }
 
 .main__section--test {
@@ -957,6 +974,12 @@
   background-color: transparent;
   margin-left: 20px;
   border: none;
+  cursor: pointer;
+}
+
+.menu__button:focus-visible,
+.menu__button:focus {
+  outline: none;
 }
 
 .menu__button::before {
@@ -1011,6 +1034,11 @@
   border-radius: 10px;
 }
 
+.menu__user-link:hover {
+  color: #ffffff;
+  text-decoration: none;
+}
+
 @media (min-width: 768px) {
   .menu__user-link {
     width: 300px;
@@ -1036,6 +1064,16 @@
   display: block;
   padding: 10px 0 9px 0;
   border-bottom: 1px solid #000000;
+}
+
+.menu__additional-link:hover:not(.menu__additional-link--current) {
+  text-decoration: none;
+  color: #000000;
+}
+
+.menu__additional-link--current:hover {
+  color: #ffffff;
+  text-decoration: none;
 }
 
 .menu__additional-link--current {
@@ -1562,6 +1600,7 @@
 @media (min-width: 768px) {
   .dropmenu__menu--open {
     width: 300px;
+    height: min-content;
   }
 }
 
@@ -2514,6 +2553,11 @@
   .test__image {
     width: 300px;
   }
+
+  .main__result {
+    width: 300px;
+    text-align: right;
+  }
 }
 
 .test__image--none {
@@ -2559,4 +2603,60 @@
 .user-list__link {
   border: none;
   background-color: transparent;
+}
+
+@media (min-width: 1280px) {
+  .header__logo-link {
+    height: 40px;
+  }
+
+  .main--grid {
+    display: grid;
+    grid-template-columns: 400px 1fr;
+  }
+}
+
+.main__result-text {
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .main__result-text {
+    text-align: start;
+  }
+}
+
+.main__test-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: #000000;
+}
+
+@media (min-width: 768px) {
+  .main__test-link {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0;
+  }
+}
+
+.main__result {
+  margin-top: 15px;
+}
+
+@media (min-width: 768px) {
+  .main__result {
+    margin-top: 0;
+  }
+}
+
+.main__title--test {
+  margin-bottom: 0;
 }

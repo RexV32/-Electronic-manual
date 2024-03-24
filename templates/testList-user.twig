@@ -1,0 +1,44 @@
+{% extends 'layout-user.twig' %}
+
+{% block content %}
+	<div class="main__content">
+		<section class="main__section">
+			<h2 class="main__section-title">МДК 04.03</h2>
+			<h3 class="main__section-subtitle">Тесты</h3>
+			<ul class="main__section-list">
+				{% for test in testsSlice %}
+					{% set has_result = false %}
+					{% for result in results %}
+						{% if test.Id == result.Id_Test %}
+							{% set has_result = true %}
+							{% set break = true %}
+						{% endif %}
+					{% endfor %}
+					<li class="main__section-item">
+						<a class="main__test-link" href="{% if not has_result %}test.php?id={{ test.Id }}{% endif %}">
+							<h3 class="main__title main__title--test">{{ test.Name }}</h3>
+							{% for result in results %}
+								{% if test.Id == result.Id_Test  %}
+									<div class="main__result">
+										<p class="main__result-text">Ваш результат
+											{{result.Score}}</p>
+									</div>
+								{% endif %}
+							{% endfor %}
+						</a>
+					</li>
+				{% endfor %}
+			</ul>
+			{% set className = tests|length <= limit ? "pagintaion--none": ""%}
+			<div class="pagintaion {{className}}">
+				<ul class="pagination__list">
+					{% for i in 1..pages %}
+						<li class="pagination-item {{ i == page ? 'pagination-item--current' : '' }}">
+							<a class="pagination-link" href="?page={{i}}">{{i}}</a>
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</section>
+	</div>
+{% endblock %}

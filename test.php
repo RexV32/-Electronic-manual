@@ -7,9 +7,33 @@ if(!isset($_SESSION["user"])) {
 }
 
 $array = [];
-$_GET["id"] = 5;
+$role = $_SESSION["user"]["Role_id"];
 
-if (isset($_GET["id"])) {
+$sql = "SELECT Disciplines.Id as IdDisciplines,
+    Disciplines.Name as NameDiscipline,
+    GROUP_CONCAT(Sections.Name) as SectionName,
+    GROUP_CONCAT(Sections.Id) as SectionId FROM `Disciplines` 
+    INNER JOIN Sections ON Disciplines.Id = Sections.Id_discipline WHERE Disciplines.Status = 1 AND Sections.Status = 1 GROUP BY Disciplines.Id";
+$stmt = $link->prepare($sql);
+$stmt->execute();
+$data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+foreach ($data as $item) {
+    $idArray = explode(",", $item["SectionId"]);
+    $nameArray = explode(",", $item["SectionName"]);
+    unset($item["SectionId"]);
+    unset($item["SectionName"]);
+    $item["Section"] = [];
+    for ($i = 0; $i < count($idArray); $i++) {
+        $id = $idArray[$i];
+        $name = $nameArray[$i];
+        array_push($item["Section"], ["Id" => $id, "Name" => $name]);
+    }
+    array_push($array, $item);
+}
+$data = $array;
+$array = [];
+if (isset($_GET["id"]) && $_GET["id"] != "") {
     $id = $_GET["id"];
     $sql = "SELECT Name FROM `Tests` WHERE Id = ?";
     $stmt = $link->prepare($sql);
@@ -28,6 +52,10 @@ if (isset($_GET["id"])) {
     $stmt->execute([$id]);
     $questions = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+    if(count($questions) <= 0) {
+        header("Location:index.php");
+    }
+
     foreach($questions as $question) {
         $idAnswersArr = explode(",", $question["IdAnswers"]);
         $textAnswersArr = explode(",", $question["TextAnswers"]);
@@ -45,12 +73,14 @@ if (isset($_GET["id"])) {
 } else {
     header("Location:index.php");
 }
-
-$sql = "";
-$content = $twig->render('test.twig', [
+dump($questions);
+$template = "test.twig";
+$content = $twig->render($template, [
     "title" => $title,
     "TestName" => $TestName,
     "questions" => $questions,
-    "currentSection" => $currentSection
+    "currentSection" => $currentSection,
+    "data" => $data,
+    "role" => $role
 ]);
 print($content);

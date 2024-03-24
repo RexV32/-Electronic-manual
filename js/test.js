@@ -78,7 +78,6 @@ submit.addEventListener("click", (evt) => {
     const data = new FormData();
     data.append("data", jsonData);
     data.append("id", id);
-    console.log(jsonData);
     fetch("./server/check-test.php", {
         method: "POST",
         body: data

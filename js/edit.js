@@ -8,6 +8,7 @@ import nestedList from "./editorJs/nested-list/dist/nested-list.mjs";
 import Quote from "./editorJs/quote/dist/quote.mjs";
 import Table from "./editorJs/table/dist/table.mjs";
 import Paragraph from "./editorJs/paragraph/dist/paragraph.mjs";
+import P from "./editorJs/image/dist/image.mjs";
 const submit = document.querySelector(".main__form-button");
 function closeModalError() {
     const buttonError = document.querySelector(".modal-error__button");
@@ -43,7 +44,7 @@ fetch("../server/get-data.php", {
 })
 .then(response => response.json())
 .then(data => {
-const content = JSON.parse(data);
+const content = JSON.parse(data.Content);
 const editor = new EditorJS({
     holder: "editor",
     data : content,

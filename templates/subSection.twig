@@ -1,0 +1,29 @@
+{% extends 'layout-user.twig' %}
+
+{% block content %}
+	<div class="main__content">
+		<section class="main__section main__section--padding">
+			<h2 class="main__section-title">{{ disciplineName }}</h2>
+			<h3 class="main__section-subtitle">{{ sectionName }}</h3>
+			<ul class="main__subsection-list">
+				{% for item in subSectionsSlice %}
+					<li class="main__subsection-item">
+						<a class="main__subsection-link" href="content.php?id={{item.IdSubSections}}">
+							<h4 class="main__subsection-title" href="#">{{item.NameSubSections}}</h4>
+						</a>
+					</li>
+				{% endfor %}
+			</ul>
+			{% set className = subSections|length <= limit ? "pagintaion--none": ""%}
+			<div class="pagintaion {{className}}">
+				<ul class="pagination__list">
+					{% for i in 1..pages %}
+						<li class="pagination-item {{ i == page ? 'pagination-item--current' : '' }}">
+							<a class="pagination-link" href="?page={{i}}">{{i}}</a>
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</section>
+	</div>
+{% endblock %}
