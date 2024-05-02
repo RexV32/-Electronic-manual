@@ -19,7 +19,7 @@
 				<ul class="pagination__list">
 					{% for i in 1..pages %}
 						<li class="pagination-item {{ i == page ? 'pagination-item--current' : '' }}">
-							<a class="pagination-link" href="?page={{i}}">{{i}}</a>
+							<a class="pagination-link" href="?page={{i}}&section={{currentIdSection}}">{{i}}</a>
 						</li>
 					{% endfor %}
 				</ul>

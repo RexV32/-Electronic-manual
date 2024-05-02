@@ -73,7 +73,6 @@ if (isset($_GET["id"]) && $_GET["id"] != "") {
 } else {
     header("Location:index.php");
 }
-dump($questions);
 $template = "test.twig";
 $content = $twig->render($template, [
     "title" => $title,

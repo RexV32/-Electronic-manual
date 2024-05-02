@@ -9,6 +9,31 @@ import Quote from "./editorJs/quote/dist/quote.mjs";
 import Table from "./editorJs/table/dist/table.mjs";
 import Paragraph from "./editorJs/paragraph/dist/paragraph.mjs";
 
+function modal(error, title) {
+  const pageBody = document.body;
+  const templateModal = `<div class="modal">
+      <div class="modal__wrapper">
+          <p class="modal__title">${title}</p>
+          <p class="modal__text-error">${error}</p>
+          <button class="modal__button" type="button">Ок</button>
+      </div>
+  </div>`;
+  
+  pageBody.insertAdjacentHTML("beforeend", templateModal);
+  
+  let modal = document.querySelector(".modal");
+  const buttons = document.querySelectorAll(".modal__button");
+
+  const closeModal = () => {
+      modal = document.querySelector(".modal");
+      modal.remove();
+  };
+  
+  buttons.forEach((button) => {
+      button.addEventListener("click", closeModal);
+  });
+}
+
 const urlParams = new URLSearchParams(window.location.search);
 const id = urlParams.get('id');
 const data = new FormData();
@@ -29,7 +54,7 @@ fetch("./server/get-data.php", {
     })
     loadEditor(content);
   })
-  .catch(error => console.error("Ошибка:", error));
+  .catch(error => modal(error, "Ошибка"));
 
 function loadEditor(content) {
   const editor = new EditorJS({

@@ -20,6 +20,31 @@ acceptAllButton.addEventListener("click", () => {
     userApproval(null, "allAccept");
 });
 
+function modal(error, title) {
+    const pageBody = document.body;
+    const templateModal = `<div class="modal">
+        <div class="modal__wrapper">
+            <p class="modal__title">${title}</p>
+            <p class="modal__text-error">${error}</p>
+            <button class="modal__button" type="button">Ок</button>
+        </div>
+    </div>`;
+    
+    pageBody.insertAdjacentHTML("beforeend", templateModal);
+    
+    let modal = document.querySelector(".modal");
+    const buttons = document.querySelectorAll(".modal__button");
+
+    const closeModal = () => {
+        modal = document.querySelector(".modal");
+        modal.remove();
+    };
+    
+    buttons.forEach((button) => {
+        button.addEventListener("click", closeModal);
+    });
+}
+
 function userApproval(id, action) {
     const data = new FormData();
     data.append("id", id);
@@ -41,32 +66,10 @@ function userApproval(id, action) {
             window.location.href = "user-approval.php";
         }
         else {
-            modalError(data.message);
+            modal(data.message, "Ошибка");
         }
     })
     .catch(error => {
-        modalError(error);
+        modal(error, "Ошибка");
     });
-}
-
-function closeModalError() {
-    const buttonError = document.querySelector(".modal-error__button");
-    const modalError = document.querySelector(".modal-error");
-    buttonError.removeEventListener("click", closeModalError);
-    modalError.remove();  
-}
-
-function modalError(error) {
-    const templateModalError = `
-        <div class="modal-error">
-            <div class="modal-error__wrapper">
-                <p class="modal-error__title">Произошла ошибка</p>
-                <p class="modal-error__text-error">${error}</p>
-                <button class="modal-error__button" type="button">Ок</button>
-            </div>
-        </div>`;
-    
-    pageBody.insertAdjacentHTML("beforeend", templateModalError);
-    const buttonError = document.querySelector(".modal-error__button");
-    buttonError.addEventListener("click", closeModalError);
 }

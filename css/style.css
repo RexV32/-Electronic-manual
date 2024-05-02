@@ -1871,7 +1871,7 @@
   box-shadow: 0 0 5px #0d5f2e;
 }
 
-.modal-error {
+/* .modal-error {
   position: fixed;
   width: 100vw;
   height: 100vh;
@@ -1929,7 +1929,7 @@
   background-color: #ffffff;
   outline: 1px solid #0d5f2e;
   color: #0d5f2e;
-}
+} */
 
 .modal {
   position: fixed;
@@ -2020,6 +2020,11 @@
   background-color: transparent;
   border: none;
   cursor: pointer;
+}
+
+.user-list__button:focus,
+.user-list__button:focus-visible {
+  outline: none;
 }
 
 .modal-change {

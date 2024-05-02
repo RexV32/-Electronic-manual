@@ -1,8 +1,8 @@
 const submit = document.querySelector(".reg__submit");
 const inputsPassword = document.querySelectorAll("input[type='password']");
-const pageBody = document.body;
 
 function modal(error, title, isSuccess = false) {
+    const pageBody = document.body;
     const templateModal = `<div class="modal">
         <div class="modal__wrapper">
             <p class="modal__title">${title}</p>

@@ -10,7 +10,7 @@ $stmt = $link->prepare($sql);
 
 try {
     $success = $stmt->execute([$id]);
-    echo json_encode(["success" => true]);
+    echo json_encode(["success" => true, "message" => "Группа успешно удалена"]);
 } catch (PDOException $exception) {
     echo json_encode(["success" => false, "message" => "Не удалось выполнить запрос"]);
 }

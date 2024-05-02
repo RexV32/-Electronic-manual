@@ -52,7 +52,8 @@ if (!isset ($_GET["section"]) && !isset ($_GET["tests"])) {
         $sql = "SELECT SubSections.Id as IdSubSections,
         SubSections.Name as NameSubSections,
         Sections.Name as NameSection,
-        Disciplines.Name as NameDiscipline 
+        Disciplines.Name as NameDiscipline,
+        SubSections.Id_section as currentIdSection
         FROM `SubSections` INNER JOIN Sections ON Sections.Id = SubSections.Id_section 
         INNER JOIN Disciplines ON Disciplines.Id = Sections.Id_discipline WHERE `SubSections`.`Id_section` = ? AND SubSections.Status = 1";
         $stmt = $link->prepare($sql);
@@ -60,6 +61,7 @@ if (!isset ($_GET["section"]) && !isset ($_GET["tests"])) {
         $subSections = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $disciplineName = $subSections[0]["NameDiscipline"];
         $sectionName = $subSections[0]["NameSection"];
+        $currentIdSection = $subSections[0]["currentIdSection"];
         $template = 'subSection.twig';
 
         $subSectionsSlice = array_slice($subSections, $offset, $limit, true);
@@ -76,7 +78,8 @@ if (!isset ($_GET["section"]) && !isset ($_GET["tests"])) {
             "pages" => $pages,
             "page" => $page,
             "limit" => $limit,
-            "subSectionsSlice" => $subSectionsSlice
+            "subSectionsSlice" => $subSectionsSlice,
+            "currentIdSection" => $currentIdSection
         ];
     } else if (isset ($_GET["tests"])) {
         $idUser = $_SESSION["user"]["Id"];

@@ -1,7 +1,7 @@
 const submit = document.querySelector(".auth__submit");
-const pageBody = document.body;
 
-function modal(error, title, isSuccess = false) {
+function modal(error, title) {
+    const pageBody = document.body;
     const templateModal = `<div class="modal">
         <div class="modal__wrapper">
             <p class="modal__title">${title}</p>
@@ -18,9 +18,6 @@ function modal(error, title, isSuccess = false) {
     const closeModal = () => {
         modal = document.querySelector(".modal");
         modal.remove();
-        if (isSuccess) {
-            window.location.href = `index.php`;
-        }
     };
     
     buttons.forEach((button) => {
@@ -50,7 +47,7 @@ submit.addEventListener("click", (evt) => {
         })
         .then(data => {
             if (data.success) {
-                modal(data.message, data.title, true);
+                window.location.href = "index.php";
             }
             else {
                 modal(data.message, data.title);

@@ -47,27 +47,34 @@ function removeModal() {
   modal.remove();
 }
 
-function closeModalError() {
-  const buttonError = document.querySelector(".modal-error__button");
-  const modalError = document.querySelector(".modal-error");
-  buttonError.removeEventListener("click", closeModalError);
-  modalError.remove();  
+function modal(error, title, isSuccess = false) {
+  const pageBody = document.body;
+  const templateModal = `<div class="modal">
+      <div class="modal__wrapper">
+          <p class="modal__title">${title}</p>
+          <p class="modal__text-error">${error}</p>
+          <button class="modal__button" type="button">Ок</button>
+      </div>
+  </div>`;
+
+  pageBody.insertAdjacentHTML("beforeend", templateModal);
+
+  let modal = document.querySelector(".modal");
+  const buttons = document.querySelectorAll(".modal__button");
+
+  const closeModal = () => {
+    modal = document.querySelector(".modal");
+    modal.remove();
+    if (isSuccess) {
+      window.location.href = `users.php`;
+    }
+  };
+
+  buttons.forEach((button) => {
+    button.addEventListener("click", closeModal);
+  });
 }
 
-function modalError(error) {
-  const modal = document.querySelector(".modal");
-  modal.remove();
-  const templateModalError = `<div class="modal-error">
-<div class="modal-error__wrapper">
-<p class="modal-error__title">Произошла ошибка</p>
-<p class="modal-error__text-error">${error}</p>
-<button class="modal-error__button" type="button">Ок</button>
-</div>
-  </div>`;
-  pageBody.insertAdjacentHTML("beforeend", templateModalError);
-  const buttonError = document.querySelector(".modal-error__button");
-  buttonError.addEventListener("click", closeModalError);
-}
 
 function handleChangeButtonClick(button) {
   const id = button.dataset.id;
@@ -96,6 +103,7 @@ function handleChangeButtonClick(button) {
     const passwordConfirm = inputs[1].value;
 
     if (password === passwordConfirm) {
+      removeModal();
       const data = new FormData();
       data.append("id", id);
       data.append("password", password);
@@ -114,14 +122,14 @@ function handleChangeButtonClick(button) {
         })
         .then(data => {
           if (data.success) {
-            window.location.href = "users.php";
+            modal(data.message, data.title, true);
           }
           else {
-            modalError(data.message);
+            modal(data.message, data.title);
           }
         })
         .catch(error => {
-          modalError(error);
+          modal(error, "Ошибка");
         });
     } else {
       showError(inputs[0], "");
@@ -139,6 +147,7 @@ function handleDeleteButtonClick(button) {
 
   cancelButton.addEventListener("click", removeModal);
   acceptButton.addEventListener("click", () => {
+    removeModal();
     const data = new FormData();
     data.append("id", id);
     fetch("../server/delete-user.php", {
@@ -155,14 +164,14 @@ function handleDeleteButtonClick(button) {
       })
       .then(data => {
         if (data.success) {
-          window.location.href = `users.php`;
+          modal(data.message, data.title, true);
         }
         else {
-          modalError(data.message);
+          modal(data.message, data.title);
         }
       })
       .catch(error => {
-        modalError(error);
+        modal(error, "Ошибка");
       });
   });
 }

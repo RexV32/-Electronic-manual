@@ -26,7 +26,7 @@ try {
     } else {
         deleteUser($link, $id);
     }
-    echo json_encode(["success" => true]);
+    echo json_encode(["success" => true, "title" => "Успешно", "message" => "Пользователь успешно удален"]);
 } catch (PDOException $exception) {
-    echo json_encode(["success" => false, "message" => "Не удалось выполнить запрос"]);
+    echo json_encode(["success" => false, "message" => "Не удалось выполнить запрос", "title" => "Ошибка"]);
 }

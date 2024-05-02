@@ -65,9 +65,9 @@ const editor = new EditorJS({
       class: Header,
       inlineToolBar: true,
       config: {
-          placeholder: 'Введите заголовок',
-          levels: [1, 2, 3, 4, 5, 6],
-          defaultLevel: 1
+        placeholder: 'Введите заголовок',
+        levels: [1, 2, 3, 4, 5, 6],
+        defaultLevel: 1
       },
       tunes: ['footnotes'],
     },
@@ -77,13 +77,13 @@ const editor = new EditorJS({
       tunes: ['footnotes'],
     },
     embed: {
-      class:Embed,
-      inlineToolBar:true,
+      class: Embed,
+      inlineToolBar: true,
       config: {
-          services: {
-              youtube:true,
-              coub:true
-          }
+        services: {
+          youtube: true,
+          coub: true
+        }
       },
     },
     attaches: {
@@ -93,56 +93,65 @@ const editor = new EditorJS({
 
         uploader: {
           async uploadByFile(file) {
-              const formData = new FormData();
-              formData.append("file", file);
+            const formData = new FormData();
+            formData.append("file", file);
 
-              const response = await fetch("../server/upload-file.php", {
-                    method: "POST",
-                    body: formData,
-                });
-                const data = await response.json();
-                if (data.success) {
-                    return {
-                        success: 1,
-                        file: {
-                            url: data.file.url,
-                            size: file.size,
-                            name: file.name,
-                            title: file.name,
-                            extension: file.name.split('.').pop()
-                        }
-                    };
+            const response = await fetch("../server/upload-file.php", {
+              method: "POST",
+              body: formData,
+            });
+            const data = await response.json();
+            if (data.success) {
+              return {
+                success: 1,
+                file: {
+                  url: data.file.url,
+                  size: file.size,
+                  name: file.name,
+                  title: file.name,
+                  extension: file.name.split('.').pop()
                 }
+              };
+            }
           },
         },
       },
     },
   }
 });
-function closeModalError() {
-  const buttonError = document.querySelector(".modal-error__button");
-  const modalError = document.querySelector(".modal-error");
-  buttonError.removeEventListener("click", closeModalError);
-  modalError.remove();  
+
+function modal(error, title, isSuccess = false) {
+  const pageBody = document.body;
+  const templateModal = `<div class="modal">
+      <div class="modal__wrapper">
+          <p class="modal__title">${title}</p>
+          <p class="modal__text-error">${error}</p>
+          <button class="modal__button" type="button">Ок</button>
+      </div>
+  </div>`;
+
+  pageBody.insertAdjacentHTML("beforeend", templateModal);
+
+  let modal = document.querySelector(".modal");
+  const buttons = document.querySelectorAll(".modal__button");
+
+  const closeModal = () => {
+    modal = document.querySelector(".modal");
+    modal.remove();
+    if (isSuccess) {
+      window.location.href = `sub-sections.php`;
+    }
+  };
+
+  buttons.forEach((button) => {
+    button.addEventListener("click", closeModal);
+  });
 }
 
-function modalError(error) {
-  const templateModalError = `<div class="modal-error">
-<div class="modal-error__wrapper">
-<p class="modal-error__title">Произошла ошибка</p>
-<p class="modal-error__text-error">${error}</p>
-<button class="modal-error__button" type="button">Ок</button>
-</div>
-  </div>`;
-  pageBody.insertAdjacentHTML("beforeend", templateModalError);
-  const buttonError = document.querySelector(".modal-error__button");
-  buttonError.addEventListener("click", closeModalError);
-}
 const saveButton = document.querySelector(".main__form-button");
 const input = document.querySelector(".main__input");
-const pageBody = document.body;
 
-saveButton.addEventListener("click",(evt) => {
+saveButton.addEventListener("click", (evt) => {
   evt.preventDefault();
   editor.save().then((outputData) => {
     const jsonData = JSON.stringify(outputData, null, 2);
@@ -152,15 +161,15 @@ saveButton.addEventListener("click",(evt) => {
     const idSection = radioButtonSection.value ? radioButtonSection.value : null;
     const name = input.value.trim();
     if (idDiscipline === null || idSection === null) {
-      modalError("Дисциплина или раздел не выбран");
+      modal("Дисциплина или раздел не выбран", "Ошибка");
       return;
     }
-    if(name === "") {
-      modalError("Заполните поле с наименованием");
+    if (name === "") {
+      modal("Заполните поле с наименованием", "Ошибка");
       return;
     }
-    if(outputData.blocks.length === 0) {
-      modalError("Поле с основным содержимым подраздела не заполнено");
+    if (outputData.blocks.length === 0) {
+      modal("Поле с основным содержимым подраздела не заполнено", "Ошибка");
       return;
     }
     const data = new FormData();
@@ -169,27 +178,27 @@ saveButton.addEventListener("click",(evt) => {
     data.append("name", name);
     data.append("content", jsonData);
     fetch("../server/send-data.php", {
-        method:"POST",
-        body: data
+      method: "POST",
+      body: data
     })
-    .then(response => {
-        if(response.ok) {
-            return response.json();
+      .then(response => {
+        if (response.ok) {
+          return response.json();
         }
         else {
-            throw new Error("Не удалось выполнить запрос");
+          throw new Error("Не удалось выполнить запрос");
         }
-    })
-    .then(data => {
-        if(data.success) {
-            window.location.href = "sub-sections.php";
+      })
+      .then(data => {
+        if (data.success) {
+          modal("Подраздел успешно создан", "Успешно", true);
         }
         else {
-            modalError(data.message);
+          modal(data.message, "Ошибка");
         }
-    })
-    .catch(error => {
-        modalError(error);
-    });
+      })
+      .catch(error => {
+        modal(error, "Ошибка");
+      });
   });
 });

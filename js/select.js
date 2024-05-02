@@ -1,5 +1,30 @@
 const select = document.querySelector(".select--discipline");
 
+function modal(error, title) {
+  const pageBody = document.body;
+  const templateModal = `<div class="modal">
+      <div class="modal__wrapper">
+          <p class="modal__title">${title}</p>
+          <p class="modal__text-error">${error}</p>
+          <button class="modal__button" type="button">Ок</button>
+      </div>
+  </div>`;
+  
+  pageBody.insertAdjacentHTML("beforeend", templateModal);
+  
+  let modal = document.querySelector(".modal");
+  const buttons = document.querySelectorAll(".modal__button");
+
+  const closeModal = () => {
+      modal = document.querySelector(".modal");
+      modal.remove();
+  };
+  
+  buttons.forEach((button) => {
+      button.addEventListener("click", closeModal);
+  });
+}
+
 select.addEventListener("change", (evt) => {
   const id = evt.target.value;
   const data = new FormData();
@@ -44,5 +69,5 @@ select.addEventListener("change", (evt) => {
       removeNode.remove();
       $('.select--sections').selectpicker('refresh');
     })
-    .catch(error => console.error("Ошибка:", error));
+    .catch(error => modal(error, "Ошибка"));
 });

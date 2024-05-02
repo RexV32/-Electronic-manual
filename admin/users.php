@@ -12,7 +12,7 @@ $users = [];
 $groups = getGroup($link);
 
 $sql = "SELECT Users.Id,Users.Name,Users.Surname,Users.Patronymic,Users.Login,Groups.Name as NameGroup 
-FROM `Users` INNER JOIN `Groups` ON Users.Group_id = Groups.Id WHERE `Status` = 1";
+FROM `Users` INNER JOIN `Groups` ON Users.Group_id = Groups.Id WHERE `Status` = 1 AND Users.Role_id = 1";
 $stmt = $link ->query($sql);
 $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -27,7 +27,7 @@ if(isset($_GET["surname"], $_GET["name"], $_GET["patronymic"], $_GET["login"])) 
     FROM `Users` 
     INNER JOIN `Groups` ON Users.Group_id = Groups.Id 
     WHERE (Users.Group_id = :idGroup OR Users.Surname = :surname OR Users.Name = :name OR Users.Patronymic = :patronymic OR Users.Login = :login) 
-    AND Users.Status = 1";
+    AND Users.Status = 1 AND Users.Role_id = 1";
     $stmt = $link ->prepare($sql);
     $stmt -> execute([
         "idGroup" => $group,
