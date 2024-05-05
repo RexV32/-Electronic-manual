@@ -72,6 +72,12 @@ submit.addEventListener("click", (evt) => {
         test = [];
         return;
     }
+
+    if(test.length == 0) {
+        modal("Произошла непредвиденная ошибка", "Ошибка", true);
+        return;
+    }
+
     const jsonData = JSON.stringify(test, null, 2);
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get('id');

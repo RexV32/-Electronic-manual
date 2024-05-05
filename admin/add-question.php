@@ -4,7 +4,7 @@ if (!isset($_SESSION["user"]) || $_SESSION["user"]["Role_id"] == 1) {
     header("Location: ../index.php");
 }
 
-$title = "ЭМКУ - Добавить вопрос";
+$title = "ЭКУМО - Добавить вопрос";
 $currentSection = "addQuestion";
 
 $tests = getTests($link);

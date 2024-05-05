@@ -1,6 +1,6 @@
 <?php
 require_once("function.php");
-$title = "ЭМКУ - Регистрация";
+$title = "ЭКУМО - Регистрация";
 $errors = [];
 
 $sql = "SELECT * FROM `Groups`";

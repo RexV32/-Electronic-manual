@@ -12,50 +12,54 @@
 				</select>
 				<button class="main__form-button" type="submit">Показать</button>
 			</form>
-			<ul class="main__section-list">
-				{% for section in sectionsSlice %}
-					<li class="main__section-item">
-						<h3 class="main__title">{{section.Name}}</h3>
-						<ul class="main__control-panel">
-							<li class="main__panel-item" title="Изменить название">
-								<a class="main__panel-button" href="rename.php?id={{section.Id}}&section=section">
-									<svg class="main__panel-icon" width="29" height="29" role="img" aria-label="edit">
-										<use xlink:href="../image/icons/sprite.svg#editIcon"></use>
-									</svg>
-									<span class="visually-hidden">Переименовать</span>
-								</a>
-							</li>
-							{% if section.Status == 1 %}
-								<li class="main__panel-item" title="Скрыть раздел">
-								{% else %}
-									<li class="main__panel-item" title="Показать раздел">
-									{% endif %}
-									<a class="main__panel-button" href="?id={{section.Id}}&status={{section.Status}}">
-										{% if section.Status == 1 %}
-											<svg class="main__panel-icon" width="27" height="28" role="img" aria-label="hidden">
-												<use xlink:href="../image/icons/sprite.svg#hiddenIcon"></use>
-											</svg>
-											<span class="visually-hidden">Скрыть</span>
-										{% else %}
-											<svg class="main__panel-icon" width="24" height="18" role="img" aria-label="show">
-												<use xlink:href="../image/icons/sprite.svg#showIcon"></use>
-											</svg>
-											<span class="visually-hidden">Показать</span>
-										{% endif %}
+			{% if sectionsSlice|length > 0 %}
+				<ul class="main__section-list">
+					{% for section in sectionsSlice %}
+						<li class="main__section-item">
+							<h3 class="main__title">{{section.Name}}</h3>
+							<ul class="main__control-panel">
+								<li class="main__panel-item" title="Изменить название">
+									<a class="main__panel-button" href="rename.php?id={{section.Id}}&section=section">
+										<svg class="main__panel-icon" width="29" height="29" role="img" aria-label="edit">
+											<use xlink:href="../image/icons/sprite.svg#editIcon"></use>
+										</svg>
+										<span class="visually-hidden">Переименовать</span>
 									</a>
 								</li>
-								<li class="main__panel-item" title="Удалить раздел">
-									<button class="main__panel-button main__panel-button--delete" type="button" data-id="{{section.Id}}" data-section="sections">
-										<svg class="main__panel-icon" width="28" height="28" role="img" aria-label="delete">
-											<use xlink:href="../image/icons/sprite.svg#deleteIcon"></use>
-										</svg>
-										<span class="visually-hidden">Удалить</span>
-									</button>
-								</li>
-							</ul>
-						</li>
-					{% endfor %}
-				</ul>
+								{% if section.Status == 1 %}
+									<li class="main__panel-item" title="Скрыть раздел">
+									{% else %}
+										<li class="main__panel-item" title="Показать раздел">
+										{% endif %}
+										<a class="main__panel-button" href="?id={{section.Id}}&status={{section.Status}}">
+											{% if section.Status == 1 %}
+												<svg class="main__panel-icon" width="27" height="28" role="img" aria-label="hidden">
+													<use xlink:href="../image/icons/sprite.svg#hiddenIcon"></use>
+												</svg>
+												<span class="visually-hidden">Скрыть</span>
+											{% else %}
+												<svg class="main__panel-icon" width="24" height="18" role="img" aria-label="show">
+													<use xlink:href="../image/icons/sprite.svg#showIcon"></use>
+												</svg>
+												<span class="visually-hidden">Показать</span>
+											{% endif %}
+										</a>
+									</li>
+									<li class="main__panel-item" title="Удалить раздел">
+										<button class="main__panel-button main__panel-button--delete" type="button" data-id="{{section.Id}}" data-section="sections">
+											<svg class="main__panel-icon" width="28" height="28" role="img" aria-label="delete">
+												<use xlink:href="../image/icons/sprite.svg#deleteIcon"></use>
+											</svg>
+											<span class="visually-hidden">Удалить</span>
+										</button>
+									</li>
+								</ul>
+							</li>
+						{% endfor %}
+					</ul>
+				{% else %}
+					<p class="main__stub-text">Нет данных</p>
+				{% endif %}
 				{% set className = sections|length <= limit ? "pagintaion--none": ""%}
 				<div class="pagintaion {{className}}">
 					<ul class="pagination__list">

@@ -8,7 +8,7 @@ if (!isset($_GET["id"]) || !isset($_GET["section"])) {
     header("Location: admin.php");
 }
 
-$title = "ЭМКУ - Изменить наименование";
+$title = "ЭКУМО - Изменить наименование";
 $errors = [];
 $nameDiscipline = "";
 $refer = $_GET["section"];

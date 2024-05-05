@@ -5,7 +5,7 @@ if(!isset($_SESSION["user"]) || $_SESSION["user"]["Role_id"] == 1) {
 }
 
 
-$title = "ЭМКУ - Заявки на регистрацию";
+$title = "ЭКУМО - Заявки на регистрацию";
 $currentSection = "userApproval";
 
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;

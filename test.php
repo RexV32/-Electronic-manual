@@ -1,6 +1,6 @@
 <?php
 require_once("function.php");
-$title = "ЭМКУ";
+$title = "ЭКУМО";
 $currentSection = "test";
 if(!isset($_SESSION["user"])) {
     header("Location: auth.php");
@@ -8,6 +8,19 @@ if(!isset($_SESSION["user"])) {
 
 $array = [];
 $role = $_SESSION["user"]["Role_id"];
+$idUser = $_SESSION["user"]["Id"];
+$idTest = $_GET["id"];
+
+$sql = "SELECT * FROM `Results` WHERE Id_User = :idUser AND Id_Test = :IdTest";
+$stmt = $link -> prepare($sql);
+$stmt -> execute([
+    "idUser" => $idUser,
+    "IdTest" => $idTest
+]);
+
+if($stmt -> rowCount() > 0) {
+    header("Location:index.php");
+}
 
 $sql = "SELECT Disciplines.Id as IdDisciplines,
     Disciplines.Name as NameDiscipline,
@@ -34,10 +47,9 @@ foreach ($data as $item) {
 $data = $array;
 $array = [];
 if (isset($_GET["id"]) && $_GET["id"] != "") {
-    $id = $_GET["id"];
     $sql = "SELECT Name FROM `Tests` WHERE Id = ?";
     $stmt = $link->prepare($sql);
-    $stmt->execute([$id]);
+    $stmt->execute([$idTest]);
     $TestName = $stmt->fetchColumn();
 
 
@@ -49,7 +61,7 @@ if (isset($_GET["id"]) && $_GET["id"] != "") {
     GROUP_CONCAT(a.Text) AS TextAnswers 
     FROM `Questions` AS q INNER JOIN `Answers` AS a ON a.Id_question = q.Id WHERE q.`Id_test` = ? GROUP BY q.Id";
     $stmt = $link->prepare($sql);
-    $stmt->execute([$id]);
+    $stmt->execute([$idTest]);
     $questions = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     if(count($questions) <= 0) {
@@ -80,6 +92,7 @@ $content = $twig->render($template, [
     "questions" => $questions,
     "currentSection" => $currentSection,
     "data" => $data,
-    "role" => $role
+    "role" => $role,
+    "idTest" => $idTest
 ]);
 print($content);

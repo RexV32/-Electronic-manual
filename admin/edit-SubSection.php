@@ -5,7 +5,7 @@ if(!isset($_SESSION["user"]) || $_SESSION["user"]["Role_id"] == 1) {
 }
 
 
-$title = "ЭМКУ - Редактировать подраздел";
+$title = "ЭКУМО - Редактировать подраздел";
 $currentSection = "subSectionEdit";
 
 $id = isset($_GET["id"]) ? $_GET["id"] : 0;

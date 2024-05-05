@@ -4,7 +4,7 @@ if(!isset($_SESSION["user"]) || $_SESSION["user"]["Role_id"] == 1) {
     header("Location: ../index.php");
 }
 
-$title = "ЭМКУ - Список дисциплин";
+$title = "ЭКУМО - Список дисциплин";
 $currentSection = "Discipline";
 
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;

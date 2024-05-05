@@ -5,7 +5,7 @@ if(!isset($_SESSION["user"]) || $_SESSION["user"]["Role_id"] == 1) {
 }
 
 
-$title = "ЭМКУ - Список разделов";
+$title = "ЭКУМО - Список разделов";
 $currentSection = "Section";
 $sections = [];
 $sectionsSlice = [];

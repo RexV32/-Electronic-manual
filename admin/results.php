@@ -19,7 +19,7 @@ function getResults($link, $id) {
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-$title = "ЭМКУ - Результаты теста";
+$title = "ЭКУМО - Результаты теста";
 $currentSection = "results";
 $idTest = isset($_SESSION['idTest']) ? $_SESSION['idTest'] : $_GET["id"];
 if (isset($_GET["id"])) {

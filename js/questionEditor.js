@@ -214,6 +214,7 @@ if (submit.classList.contains("form-question__submit--create")) {
     }
     const data = new FormData();
     const jsonData = JSON.stringify(questionData, null, 2);
+    console.log(jsonData);
     data.append("data", jsonData);
     data.append("file", file);
     fetch("../server/add-questions.php", {
@@ -230,7 +231,7 @@ if (submit.classList.contains("form-question__submit--create")) {
       })
       .then(data => {
         if (data.success) {
-          window.location.href = "question-list.php";
+          //window.location.href = "question-list.php";
         }
         else {
           modal(data.message, "Ошибка");

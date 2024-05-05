@@ -10,7 +10,7 @@
 					<div class="test__wrapper-question">
 						<p class="test__question" data-id="{{question.IdQuestions}}">{{question.TextQuestions}}</p>
 						{% set className = question.ImageQuestions? "" : "test__image--none" %}
-						<img class="test__image {{className}}" src="./uploads/quiz/5/{{question.ImageQuestions}}" alt="Фото к вопросу">
+						<img class="test__image {{className}}" src="./uploads/quiz/{{idTest}}/{{question.ImageQuestions}}" alt="Фото к вопросу">
 						{% for answer in question.answers %}
 							{% if question.MultipleQuestions == 0 %}
 								<p class="test__group-answer">
@@ -34,7 +34,7 @@
 						{% endfor %}
 					</div>
 				{% endfor %}
-				<button class="test__submit" type="submit">Завершить тест</button>
+				<button class="test__submit" type="submit" {% if questions|length == 0 %} disabled {% endif %}>Завершить тест</button>
 			</form>
 		</section>
 	</div>

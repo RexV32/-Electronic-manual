@@ -11,7 +11,7 @@
 			<div class="header__wrapper">
 				<nav class="header__nav">
 					<a class="header__logo-link" href="index.php">
-						<h1 class="visually-hidden">ЭМКУ</h1>
+						<h1 class="visually-hidden">ЭКУМО</h1>
 						<picture>
 							<source media="(min-width:768px)" srcset="./image/content/logo__desktop.svg">
 							<img class="header__logo-image" src="./image/content/logo__mobile.svg" alt="Логотип ЭМКУ">
@@ -57,7 +57,7 @@
 														</li>
 													{% endfor %}
 													<li class="dropmenu__menu-item">
-														<a class="dropmenu__link" href="index.php?tests">Тесты</a>
+														<a class="dropmenu__link" href="index.php?tests&disciplines="{{item.IdDisciplines}}"">Тесты</a>
 													</li>
 												</ul>
 											</li>
@@ -94,7 +94,7 @@
 											</li>
 										{% endfor %}
 										<li class="dropmenu__menu-item">
-											<a class="dropmenu__link" href="index.php?tests">Тесты</a>
+											<a class="dropmenu__link" href="index.php?tests&disciplines={{item.IdDisciplines}}">Тесты</a>
 										</li>
 									</ul>
 								</li>

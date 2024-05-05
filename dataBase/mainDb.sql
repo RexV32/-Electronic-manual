@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Май 02 2024 г., 20:11
+-- Время создания: Май 05 2024 г., 16:07
 -- Версия сервера: 8.0.30
 -- Версия PHP: 8.1.9
 
@@ -153,13 +153,20 @@ CREATE TABLE `Users` (
   `Id` int NOT NULL,
   `Login` varchar(150) COLLATE utf8mb4_general_ci NOT NULL,
   `Password` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `Group_id` int NOT NULL,
+  `Group_id` int DEFAULT NULL,
   `Name` varchar(150) COLLATE utf8mb4_general_ci NOT NULL,
   `Surname` varchar(150) COLLATE utf8mb4_general_ci NOT NULL,
   `Patronymic` varchar(150) COLLATE utf8mb4_general_ci NOT NULL,
   `Role_id` int NOT NULL DEFAULT '1',
   `Status` int NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Дамп данных таблицы `Users`
+--
+
+INSERT INTO `Users` (`Id`, `Login`, `Password`, `Group_id`, `Name`, `Surname`, `Patronymic`, `Role_id`, `Status`) VALUES
+(1, 'admin', '$2y$10$RzVHKAyI1Hb.0RNsh/gQVuD9hSeOQQdN8ZQoN6lijjV5ICsDgTFJO', NULL, 'admin', 'admin', 'admin', 2, 1);
 
 --
 -- Индексы сохранённых таблиц
@@ -297,7 +304,7 @@ ALTER TABLE `Tests`
 -- AUTO_INCREMENT для таблицы `Users`
 --
 ALTER TABLE `Users`
-  MODIFY `Id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц

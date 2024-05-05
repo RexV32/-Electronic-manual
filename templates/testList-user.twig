@@ -3,8 +3,8 @@
 {% block content %}
 	<div class="main__content">
 		<section class="main__section">
-			<h2 class="main__section-title">МДК 04.03</h2>
-			<h3 class="main__section-subtitle">Тесты</h3>
+			<h2 class="main__section-title">{{nameDiscipline}}</h2>
+			<h3 class="main__section-subtitle">Список доступных тестов</h3>
 			<ul class="main__section-list">
 				{% for test in testsSlice %}
 					{% set has_result = false %}
@@ -15,7 +15,7 @@
 						{% endif %}
 					{% endfor %}
 					<li class="main__section-item">
-						<a class="main__test-link" href="{% if not has_result %}test.php?id={{ test.Id }}{% endif %}">
+						<a class="main__test-link" href="{% if not has_result %}test.php?id={{ test.Id }} {% else %} # {% endif %}">
 							<h3 class="main__title main__title--test">{{ test.Name }}</h3>
 							{% for result in results %}
 								{% if test.Id == result.Id_Test  %}

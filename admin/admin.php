@@ -4,7 +4,7 @@ if(!isset($_SESSION["user"]) || $_SESSION["user"]["Role_id"] == 1) {
     header("Location: ../index.php");
 }
 
-$title = "ЭМКУ - Панель администратора";
+$title = "ЭКУМО - Панель администратора";
 
 $content = $twig -> render('stub.twig', ["title" => $title]);
 print($content);

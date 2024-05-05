@@ -41,7 +41,7 @@ if(validateTests($id, $testsIdArray)) {
         ]);
     }
 
-    echo json_encode(["success" => true]);
+    echo json_encode(["success" => true, "message" => $id]);
 }
 else {
     echo json_encode(["success" => false, "message" => "Неудалось создать вопрос", "title" => "Ошибка"]);

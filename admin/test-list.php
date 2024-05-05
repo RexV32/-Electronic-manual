@@ -4,7 +4,7 @@ if(!isset($_SESSION["user"]) || $_SESSION["user"]["Role_id"] == 1) {
     header("Location: ../index.php");
 }
 
-$title = "ЭМКУ - Тесты";
+$title = "ЭКУМО - Тесты";
 $currentSection = "test";
 $questionSlice = [];
 $pages = 0;

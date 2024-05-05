@@ -17,6 +17,7 @@
 				</select>
 				<button class="main__form-button" type="submit">Показать</button>
 			</form>
+			{% if subSectionsSlice|length > 0 %}
 			<ul class="main__section-list">
 				{% for subSection in subSectionsSlice %}
 					<li class="main__section-item">
@@ -61,17 +62,20 @@
 						</li>
 					{% endfor %}
 				</ul>
-				{% set className = subSections|length <= limit ? "pagintaion--none": ""%}
-				<div class="pagintaion {{className}}">
-					<ul class="pagination__list">
-						{% for i in 1..pages %}
-							<li class="pagination-item {{ i == page ? 'pagination-item--current' : '' }}">
-								<a class="pagination-link" href="?page={{i}}&disciplines={{currentIdDiscipline}}&sections={{currentIdSection}}">{{i}}</a>
-							</li>
-						{% endfor %}
-					</ul>
-				</div>
-				<a class="main__button" href="add-subSection.php">Добавить подраздел</a>
-			</section>
-		</div>
-	{% endblock %}
+			{% else %}
+				<p class="main__stub-text">Нет данных</p>
+			{% endif %}
+			{% set className = subSections|length <= limit ? "pagintaion--none": ""%}
+			<div class="pagintaion {{className}}">
+				<ul class="pagination__list">
+					{% for i in 1..pages %}
+						<li class="pagination-item {{ i == page ? 'pagination-item--current' : '' }}">
+							<a class="pagination-link" href="?page={{i}}&disciplines={{currentIdDiscipline}}&sections={{currentIdSection}}">{{i}}</a>
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+			<a class="main__button" href="add-subSection.php">Добавить подраздел</a>
+		</section>
+	</div>
+{% endblock %}

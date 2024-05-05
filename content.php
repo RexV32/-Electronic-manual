@@ -3,7 +3,7 @@ require_once ("function.php");
 if (!isset ($_SESSION["user"])) {
     header("Location: auth.php");
 }
-$title = "ЭМКУ";
+$title = "ЭКУМО";
 $array = [];
 $data = [];
 $template = "content.twig";

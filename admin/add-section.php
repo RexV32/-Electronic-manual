@@ -5,7 +5,7 @@ if(!isset($_SESSION["user"]) || $_SESSION["user"]["Role_id"] == 1) {
 }
 
 
-$title = "ЭМКУ - Добавить раздел";
+$title = "ЭКУМО - Добавить раздел";
 $currentSection = "addSection";
 $errors = [];
 

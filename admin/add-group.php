@@ -5,7 +5,7 @@ if(!isset($_SESSION["user"]) || $_SESSION["user"]["Role_id"] == 1) {
 }
 
 
-$title = "ЭМКУ - Добавить группу";
+$title = "ЭКУМО - Добавить группу";
 $errors = [];
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {

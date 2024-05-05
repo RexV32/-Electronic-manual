@@ -4,9 +4,10 @@ if (!isset($_SESSION["user"]) || $_SESSION["user"]["Role_id"] == 1) {
     header("Location: ../index.php");
 }
 
-$title = "ЭМКУ - Управление тестами";
+$title = "ЭКУМО - Управление тестами";
 $currentSection = "editorTests";
 $questionSlice = [];
+$questions = [];
 $pages = 0;
 
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;

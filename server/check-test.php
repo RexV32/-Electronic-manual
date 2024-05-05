@@ -66,13 +66,14 @@ try {
     }
 
     if($_SESSION["user"]["Role_id"] == 1) {
+        $result = "$score/$countCorrect";
         $idUser = $_SESSION["user"]["Id"];
         $sql = "INSERT INTO `Results`(`Id_User`, `Id_Test`, `Score`) VALUES (:idUser,:idTest,:score)";
         $stmt = $link -> prepare($sql);
         $stmt -> execute([
             "idUser" => $idUser,
             "idTest" => $idTest,
-            "score" => $score
+            "score" => $result
         ]);
     }
 

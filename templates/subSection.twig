@@ -5,15 +5,19 @@
 		<section class="main__section main__section--padding">
 			<h2 class="main__section-title">{{ disciplineName }}</h2>
 			<h3 class="main__section-subtitle">{{ sectionName }}</h3>
-			<ul class="main__subsection-list">
-				{% for item in subSectionsSlice %}
-					<li class="main__subsection-item">
-						<a class="main__subsection-link" href="content.php?id={{item.IdSubSections}}">
-							<h4 class="main__subsection-title" href="#">{{item.NameSubSections}}</h4>
-						</a>
-					</li>
-				{% endfor %}
-			</ul>
+			{% if subSectionsSlice|length > 0 %}
+				<ul class="main__subsection-list">
+					{% for item in subSectionsSlice %}
+						<li class="main__subsection-item">
+							<a class="main__subsection-link" href="content.php?id={{item.IdSubSections}}">
+								<h4 class="main__subsection-title" href="#">{{item.NameSubSections}}</h4>
+							</a>
+						</li>
+					{% endfor %}
+				</ul>
+			{% else %}
+				<p class="main__stub-text">Нет данных</p>
+			{% endif %}
 			{% set className = subSections|length <= limit ? "pagintaion--none": ""%}
 			<div class="pagintaion {{className}}">
 				<ul class="pagination__list">

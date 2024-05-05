@@ -18,53 +18,57 @@
 						<input class="user-list__input" type="text" placeholder="Логин" name="login">
 					</fieldset>
 					<div class="user-list__button-panel">
-						<button class="user-list__submit" type="submit">Искать</button>
-						<a class="user-list__submit" href="users.php">Сбросить</a>
+						<button class="user-list__submit" type="submit" {% if users|length == 0 %} disabled {% endif %}>Искать</button>
+						<a class="user-list__submit" href="users.php" {% if users|length == 0 %} disabled {% endif %}>Сбросить</a>
 					</div>
 				</form>
-				<table class="user-list__table">
-					<div class="user-list__wrapper-table">
-						<thead class="user-list__thead">
-							<tr class="user-list__tr">
-								<th class="user-list__th">Группа</th>
-								<th class="user-list__th">ФИО</th>
-								<th class="user-list__th">Логин</th>
-								<th class="user-list__th">Управление</th>
-							</tr>
-						</thead>
-						<tbody>
-							{% for user in users %}
+				{% if users|length > 0 %}
+					<table class="user-list__table">
+						<div class="user-list__wrapper-table">
+							<thead class="user-list__thead">
 								<tr class="user-list__tr">
-									<td class="user-list__td" data-label="Группа">{{user.NameGroup}}</td>
-									<td class="user-list__td" data-label="ФИО">{{user.Surname}}
-										{{user.Name}}
-										{{user.Patronymic}}</td>
-									<td class="user-list__td" data-label="Логин">{{user.Login}}</td>
-									<td class="user-list__td" data-label="Управление">
-										<ul class="user-list__control-list">
-											<li class="user-list__control-item" title="Изменить пароль">
-												<button class="user-list__button user-list__button--change" type="button" data-id="{{user.Id}}">
-													<svg class="user-list__icon" width="29" height="29" role="img" aria-label="edit">
-														<use xlink:href="../image/icons/sprite.svg#editIcon"></use>
-													</svg>
-													<span class="visually-hidden">Изменить пароль</span>
-												</button>
-											</li>
-											<li class="user-list__control-item" title="Удалить">
-												<button class="user-list__button user-list__button--delete" type="button" data-id="{{user.Id}}">
-													<svg class="user-list__icon" width="28" height="28" role="img" aria-label="delete">
-														<use xlink:href="../image/icons/sprite.svg#deleteIcon"></use>
-													</svg>
-													<span class="visually-hidden">Удалить</span>
-												</button>
-											</li>
-										</ul>
-									</td>
+									<th class="user-list__th">Группа</th>
+									<th class="user-list__th">ФИО</th>
+									<th class="user-list__th">Логин</th>
+									<th class="user-list__th">Управление</th>
 								</tr>
-							{% endfor %}
-						</tbody>
-					</div>
-				</table>
+							</thead>
+							<tbody>
+								{% for user in users %}
+									<tr class="user-list__tr">
+										<td class="user-list__td" data-label="Группа">{{user.NameGroup}}</td>
+										<td class="user-list__td" data-label="ФИО">{{user.Surname}}
+											{{user.Name}}
+											{{user.Patronymic}}</td>
+										<td class="user-list__td" data-label="Логин">{{user.Login}}</td>
+										<td class="user-list__td" data-label="Управление">
+											<ul class="user-list__control-list">
+												<li class="user-list__control-item" title="Изменить пароль">
+													<button class="user-list__button user-list__button--change" type="button" data-id="{{user.Id}}">
+														<svg class="user-list__icon" width="29" height="29" role="img" aria-label="edit">
+															<use xlink:href="../image/icons/sprite.svg#editIcon"></use>
+														</svg>
+														<span class="visually-hidden">Изменить пароль</span>
+													</button>
+												</li>
+												<li class="user-list__control-item" title="Удалить">
+													<button class="user-list__button user-list__button--delete" type="button" data-id="{{user.Id}}">
+														<svg class="user-list__icon" width="28" height="28" role="img" aria-label="delete">
+															<use xlink:href="../image/icons/sprite.svg#deleteIcon"></use>
+														</svg>
+														<span class="visually-hidden">Удалить</span>
+													</button>
+												</li>
+											</ul>
+										</td>
+									</tr>
+								{% endfor %}
+							</tbody>
+						</div>
+					</table>
+				{% else %}
+					<p class="main__stub-text">Нет данных</p>
+				{% endif %}
 			</div>
 		</section>
 	</div>
