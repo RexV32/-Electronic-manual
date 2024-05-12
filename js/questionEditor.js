@@ -163,7 +163,7 @@ if (submit.classList.contains("form-question__submit--create")) {
   submit.addEventListener("click", (evt) => {
     evt.preventDefault();
     const questionData = {
-      questions: []
+      answers: []
     };
 
     const idTest = document.querySelector(".selectpicker").value;
@@ -199,9 +199,9 @@ if (submit.classList.contains("form-question__submit--create")) {
         return;
       }
       const question = { answer: answerText, correct: isCorrectAnswer };
-      questionData.questions.push(question);
+      questionData.answers.push(question);
     });
-    if (questionData.questions.length === 0) {
+    if (questionData.answers.length === 0) {
       modal("Вы не добавили ответы", "Ошибка");
       return;
     }
@@ -231,7 +231,7 @@ if (submit.classList.contains("form-question__submit--create")) {
       })
       .then(data => {
         if (data.success) {
-          //window.location.href = "question-list.php";
+          window.location.href = "question-list.php";
         }
         else {
           modal(data.message, "Ошибка");
@@ -245,7 +245,7 @@ if (submit.classList.contains("form-question__submit--create")) {
   submit.addEventListener("click", (evt) => {
     evt.preventDefault();
     const questionData = {
-      questions: []
+      answers: []
     };
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get('id');
@@ -280,9 +280,9 @@ if (submit.classList.contains("form-question__submit--create")) {
       }
       const isDeleteAnswer = answerInput.classList.contains("form-question__answer-input--delete")? true : false;
       const question = { answer: answerText, correct: isCorrectAnswer, id: idAnswer, isDelete: isDeleteAnswer };
-      questionData.questions.push(question);
+      questionData.answers.push(question);
     });
-    if (questionData.questions.length === 0) {
+    if (questionData.answers.length === 0) {
       modal("Вы не добавили ответы", "Ошибка");
       return;
     }

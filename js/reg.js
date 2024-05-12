@@ -22,6 +22,7 @@ function modal(error, title, isSuccess = false) {
         if (isSuccess) {
             window.location.href = `auth.php`;
         }
+        submit.disabled = false;
     };
     
     buttons.forEach((button) => {
@@ -83,6 +84,7 @@ inputsPassword.forEach((input) => {
 
 submit.addEventListener("click", (evt) => {
     evt.preventDefault();
+    evt.target.disabled = true;
     const dataUser = {
         name: document.querySelector(".reg__input--name").value.trim(),
         surname: document.querySelector(".reg__input--surname").value.trim(),

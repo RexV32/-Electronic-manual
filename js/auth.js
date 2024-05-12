@@ -18,6 +18,7 @@ function modal(error, title) {
     const closeModal = () => {
         modal = document.querySelector(".modal");
         modal.remove();
+        submit.disabled = false;
     };
     
     buttons.forEach((button) => {
@@ -27,6 +28,7 @@ function modal(error, title) {
 
 submit.addEventListener("click", (evt) => {
     evt.preventDefault();
+    evt.target.disabled = true;
     const dataUser = {
         login: document.querySelector(".auth__input[type='text']").value,
         password: document.querySelector(".auth__input[type='password']").value,

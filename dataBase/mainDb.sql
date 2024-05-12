@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Май 05 2024 г., 16:07
+-- Время создания: Май 12 2024 г., 19:31
 -- Версия сервера: 8.0.30
 -- Версия PHP: 8.1.9
 
@@ -87,19 +87,19 @@ CREATE TABLE `Results` (
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `Role`
+-- Структура таблицы `Roles`
 --
 
-CREATE TABLE `Role` (
+CREATE TABLE `Roles` (
   `Id` int NOT NULL,
   `Name` varchar(150) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Дамп данных таблицы `Role`
+-- Дамп данных таблицы `Roles`
 --
 
-INSERT INTO `Role` (`Id`, `Name`) VALUES
+INSERT INTO `Roles` (`Id`, `Name`) VALUES
 (1, 'user'),
 (2, 'admin');
 
@@ -207,9 +207,9 @@ ALTER TABLE `Results`
   ADD KEY `results_ibfk_2` (`Id_User`);
 
 --
--- Индексы таблицы `Role`
+-- Индексы таблицы `Roles`
 --
-ALTER TABLE `Role`
+ALTER TABLE `Roles`
   ADD PRIMARY KEY (`Id`);
 
 --
@@ -277,9 +277,9 @@ ALTER TABLE `Results`
   MODIFY `Id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `Role`
+-- AUTO_INCREMENT для таблицы `Roles`
 --
-ALTER TABLE `Role`
+ALTER TABLE `Roles`
   MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
@@ -304,7 +304,7 @@ ALTER TABLE `Tests`
 -- AUTO_INCREMENT для таблицы `Users`
 --
 ALTER TABLE `Users`
-  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
@@ -352,7 +352,7 @@ ALTER TABLE `Tests`
 --
 ALTER TABLE `Users`
   ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`Group_id`) REFERENCES `Groups` (`Id`) ON DELETE CASCADE ON UPDATE RESTRICT,
-  ADD CONSTRAINT `users_ibfk_2` FOREIGN KEY (`Role_id`) REFERENCES `Role` (`Id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `users_ibfk_2` FOREIGN KEY (`Role_id`) REFERENCES `Roles` (`Id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

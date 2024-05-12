@@ -61,6 +61,7 @@ function accept() {
     const data = new FormData();
     data.append("id", id);
     data.append("section", section);
+    console.log(id);
     fetch("../server/delete-section.php", {
         method: "POST",
         body: data
@@ -94,9 +95,9 @@ function cansel() {
 }
 
 buttons.forEach((button) => {
-    id = button.dataset.id;
-    section = button.dataset.section;
     button.addEventListener("click", () => {
+        id = button.dataset.id;
+        section = button.dataset.section;
         pageBody.insertAdjacentHTML("beforeend", templateModal);
         acceptButton = document.querySelector(".modal-accept__button");
         canselButton = document.querySelector(".modal-accept__button--cansel");

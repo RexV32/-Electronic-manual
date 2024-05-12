@@ -74,8 +74,8 @@ function accept() {
 }
 
 buttons.forEach((button) => {
-    id = button.dataset.id;
     button.addEventListener("click", () => {
+        id = button.dataset.id;
         pageBody.insertAdjacentHTML("beforeend", templateModal);
         acceptButton = document.querySelector(".modal-accept__button");
         canselButton = document.querySelector(".modal-accept__button--cansel");

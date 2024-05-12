@@ -1,5 +1,5 @@
 <?php
-require_once("../function.php");
+require_once ("../function.php");
 header('Content-Type: application/json; charset=utf-8');
 
 function deleteFile($nameFolder, $nameFile)
@@ -19,9 +19,9 @@ try {
     $data = filter_input_array(INPUT_POST, ["data" => FILTER_DEFAULT, "file" => FILTER_DEFAULT, "currentPhoto" => FILTER_DEFAULT, "isDeletePhoto" => FILTER_DEFAULT]);
     $decodedData = json_decode($data["data"], true);
     $multiple = $decodedData["multiple"] ? 1 : 0;
-    $text = trim($decodedData["text"]);
+    $textQuestion = trim($decodedData["text"]);
     $idQuestion = $decodedData["id"];
-    $questions = $decodedData["questions"];
+    $answers = $decodedData["answers"];
     $currentPhoto = $data["currentPhoto"];
     $isDeletePhoto = $data["isDeletePhoto"] ? 1 : 0;
 
@@ -34,7 +34,7 @@ try {
     $sql = "UPDATE `Questions` SET Text = :text, Multiple = :multiple WHERE Id = :id";
     $stmt = $link->prepare($sql);
     $stmt->execute([
-        "text" => $text,
+        "text" => $textQuestion,
         "multiple" => $multiple,
         "id" => $idQuestion
     ]);
@@ -66,12 +66,12 @@ try {
         }
     }
 
-    foreach ($questions as $question) {
-        if (isset($question["id"])) {
-            $id = $question["id"];
-            $text = $question["answer"];
-            $correct = $question["correct"] ? 1 : 0;
-            $isDelete = $question["isDelete"] ? 1 : 0;
+    foreach ($answers as $answer) {
+        if (isset($answer["id"])) {
+            $id = $answer["id"];
+            $text = $answer["answer"];
+            $correct = $answer["correct"] ? 1 : 0;
+            $isDelete = $answer["isDelete"] ? 1 : 0;
             $sql = "SELECT * FROM `Answers` WHERE Id = ?";
             $stmt = $link->prepare($sql);
             $stmt->execute([$id]);
@@ -93,6 +93,8 @@ try {
                 }
             }
         } else {
+            $text = $answer["answer"];
+            $correct = $answer["correct"] ? 1 : 0;
             addAnswer($idQuestion, $text, $correct, $link);
         }
     }

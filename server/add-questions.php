@@ -7,7 +7,7 @@ $decodedData = json_decode($data["data"], true);
 $multiple = $decodedData["multiple"] ? 1 : 0;
 $text = trim($decodedData["text"]);
 $id = $decodedData["id"];
-$questions = $decodedData["questions"];
+$answers = $decodedData["answers"];
 
 $tests = getTests($link);
 $testsIdArray = array_column($tests, "Id");
@@ -29,9 +29,9 @@ if(validateTests($id, $testsIdArray)) {
         move_uploaded_file($file["tmp_name"], $path);
     }
 
-    foreach($questions as $question) {
-        $text = $question["answer"];
-        $correct = $question["correct"] ? 1 : 0;
+    foreach($answers as $answer) {
+        $text = $answer["answer"];
+        $correct = $answer["correct"] ? 1 : 0;
         $sql = "INSERT INTO `Answers`(`Id_question`, `Text`, `Correct`) VALUES (:id, :text, :correct)";
         $stmt = $link -> prepare($sql);
         $stmt -> execute([
@@ -41,7 +41,7 @@ if(validateTests($id, $testsIdArray)) {
         ]);
     }
 
-    echo json_encode(["success" => true, "message" => $id]);
+    echo json_encode(["success" => true]);
 }
 else {
     echo json_encode(["success" => false, "message" => "Неудалось создать вопрос", "title" => "Ошибка"]);
