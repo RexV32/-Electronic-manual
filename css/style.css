@@ -1490,6 +1490,10 @@
   border-spacing: 0;
 }
 
+.user-list__table--none {
+  display: none;
+}
+
 @media (max-width: 1279px) {
   .user-list__table {
     border: 0;
@@ -2550,6 +2554,11 @@
   background-color: transparent;
 }
 
+.user-list__link:focus,
+.user-list__link:focus-visible {
+  outline: none;
+}
+
 @media (min-width: 1280px) {
   .header__logo-link {
     height: 40px;
@@ -2581,6 +2590,7 @@
   align-items: center;
   text-decoration: none;
   color: #000000;
+  width: 100%;
 }
 
 @media (min-width: 768px) {
@@ -2617,4 +2627,15 @@
   .main__stub-text {
     font-size: 30px;
   }
+}
+
+*:disabled {
+  background-color: #8f8c8c;
+  transition: none;
+}
+
+*:disabled:hover {
+  background-color: #8f8c8c;
+  color: #ffffff;
+  outline: none;
 }

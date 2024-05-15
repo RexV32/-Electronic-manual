@@ -175,3 +175,19 @@ function validateTests($id, $arrayId) {
 
     return true;
 }
+
+function getResults($link, $id) {
+    $sql = "SELECT
+    Results.Id,
+    Users.Name,
+    Users.Surname,
+    Users.Patronymic,
+    Results.Score,
+    Users.Login,
+    `Groups`.`Name` as GroupName  FROM `Results` 
+    INNER JOIN `Users` ON Users.Id = Results.Id_User 
+    INNER JOIN `Groups` ON `Groups`.`Id` = `Users`.`Group_id` WHERE Results.Id_Test = ?";
+    $stmt = $link->prepare($sql);
+    $stmt->execute([$id]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}

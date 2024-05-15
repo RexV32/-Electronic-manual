@@ -16,19 +16,6 @@ $disciplinesSlice = array_slice($disciplines,$offset,$limit,true);
 $disciplinesQuantity = count($disciplines);
 $pages = ceil($disciplinesQuantity / $limit);
 
-if(isset($_GET["id"], $_GET["status"])) {
-    $newStatus = ($_GET["status"] == 1) ? 0 : 1;
-    $sql = "UPDATE Disciplines SET Status = :newStatus WHERE Id = :id";
-    $stmt = $link->prepare($sql);
-    $stmt->execute([
-        "newStatus" => $newStatus,
-        "id" => $_GET["id"],
-    ]);
-
-    $currentUrl = isset($_SERVER["HTTP_REFERER"])?explode("/",$_SERVER["HTTP_REFERER"])[5] : "disciplines.php";
-    header("Location:$currentUrl");
-}
-
 $content = $twig -> render('disciplines-list.twig', 
 [
     "disciplines" => $disciplines,

@@ -62,28 +62,15 @@ if($disciplinesQuantity > 0) {
 }
 
 if(isset($_GET["discipline"], $_GET["section"])) {
-    $idDiscipline = $_GET["discipline"];
-    $idSection = $_GET["section"];
-    $sections = getSection($link, $idDiscipline);
-    $subSections = getSubSection($link, $idDiscipline, $idSection);
+    $currentIdDiscipline = $_GET["discipline"];
+    $currentIdSection = $_GET["section"];
+    $sections = getSection($link, $currentIdDiscipline);
+    $subSections = getSubSection($link, $currentIdDiscipline, $currentIdSection);
     $subSectionsSlice = array_slice($subSections,$offset,$limit,true);
     $subSectionsQuantity = count($subSections);
     $pages = ceil($subSectionsQuantity / $limit);
-    $currentIdDiscipline = $idDiscipline;
-    $currentIdSection = $idSection;
 }
 
-if(isset($_GET["id"], $_GET["status"])) {
-    $newStatus = ($_GET["status"] == 1) ? 0 : 1;
-    $sql = "UPDATE `SubSections` SET Status = :newStatus WHERE Id = :id";
-    $stmt = $link->prepare($sql);
-    $stmt->execute([
-        "newStatus" => $newStatus,
-        "id" => $_GET["id"],
-    ]);
-    $currentUrl = isset($_SERVER["HTTP_REFERER"])?explode("/",$_SERVER["HTTP_REFERER"])[5] : "sections.php";
-    header("Location:$currentUrl");
-}
 $content = $twig -> render('subSection-list.twig', 
     [
         "title" => $title,

@@ -1,16 +1,16 @@
 {% extends 'layout-admin.twig' %}
 
 {% block content %}
-<div class="main__content">
-    <section class="main__section">
-        <h2 class="main__section-title">Редактирование подраздела</h2>
-        <form class="main__second-form" method="post">
-        <input class="main__input" type="text" placeholder="Наименование" value="{{name}}">
-        <div class="main__text" id="editor"></div>
-        <div class="main__button-wrapper">
-            <button class="main__form-button" type="submit">Сохранить</button>
-        </div>
-        </form>
-    </section>
-</div>
+	<div class="main__content">
+		<section class="main__section">
+			<h2 class="main__section-title">Редактирование подраздела</h2>
+			<form class="main__second-form" method="post">
+				<input class="main__input" type="text" placeholder="Наименование" value="{{name}}">
+				<div class="main__text" id="editor"></div>
+				<div class="main__button-wrapper">
+					<button class="main__form-button" type="submit">Сохранить</button>
+				</div>
+			</form>
+		</section>
+	</div>
 {% endblock %}

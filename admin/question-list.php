@@ -9,6 +9,7 @@ $currentSection = "editorTests";
 $questionSlice = [];
 $questions = [];
 $pages = 0;
+$currentIdTest = 0;
 
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 $limit = 5;
@@ -17,7 +18,22 @@ $offset = ($page - 1) * $limit;
 $tests = getTests($link);
 
 if (count($tests) > 0) {
-    $questions = getQuestions($link);
+    $currentIdTest = $tests[0]["Id"];
+    $sql = "SELECT * FROM `Questions` WHERE `Id_test` = ?";
+    $stmt = $link -> prepare($sql);
+    $stmt -> execute([$currentIdTest]);
+    $questions = $stmt -> fetchAll(PDO::FETCH_ASSOC);
+    $questionSlice = array_slice($questions, $offset, $limit, true);
+    $questionsQuantity = count($questions);
+    $pages = ceil($questionsQuantity / $limit);
+}
+
+if(isset($_GET["test"])) {
+    $currentIdTest = $_GET["test"];
+    $sql = "SELECT * FROM `Questions` WHERE `Id_test` = ?";
+    $stmt = $link -> prepare($sql);
+    $stmt -> execute([$currentIdTest]);
+    $questions = $stmt -> fetchAll(PDO::FETCH_ASSOC);
     $questionSlice = array_slice($questions, $offset, $limit, true);
     $questionsQuantity = count($questions);
     $pages = ceil($questionsQuantity / $limit);
@@ -33,7 +49,8 @@ $content = $twig->render(
         "pages" => $pages,
         "questions" => $questions,
         "limit" => $limit,
-        "page" => $page
+        "page" => $page,
+        "currentIdTest" => $currentIdTest
     ]
 );
 print($content);

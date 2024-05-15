@@ -18,8 +18,8 @@
 						<input class="user-list__input" type="text" placeholder="Логин" name="login">
 					</fieldset>
 					<div class="user-list__button-panel">
-						<button class="user-list__submit" type="submit" {% if users|length == 0 %} disabled {% endif %}>Искать</button>
-						<a class="user-list__submit" href="users.php" {% if users|length == 0 %} disabled {% endif %}>Сбросить</a>
+						<button class="user-list__submit user-list__submit--search" type="submit" {% if users|length == 0 %} disabled {% endif %}>Искать</button>
+						<button class="user-list__submit user-list__submit--reset" type="button" {% if users|length == 0 %} disabled {% endif %}>Сбросить</button>
 					</div>
 				</form>
 				{% if users|length > 0 %}

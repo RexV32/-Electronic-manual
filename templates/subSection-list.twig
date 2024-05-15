@@ -36,7 +36,7 @@
 								{% else %}
 									<li class="main__panel-item" title="Показать подраздел">
 									{% endif %}
-									<a class="main__panel-button" href="?id={{subSection.Id}}&status={{subSection.Status}}">
+									<button class="main__panel-button main__panel-button--change" type="button" data-id="{{subSection.Id}}" data-status="{{subSection.Status}}" data-section="subSection">
 										{% if subSection.Status == 1 %}
 											<svg class="main__panel-icon" width="27" height="28" role="img" aria-label="hidden">
 												<use xlink:href="../image/icons/sprite.svg#hiddenIcon"></use>
@@ -48,7 +48,7 @@
 											</svg>
 											<span class="visually-hidden">Показать</span>
 										{% endif %}
-									</a>
+									</button>
 								</li>
 								<li class="main__panel-item" title="Удалить подраздел">
 									<button class="main__panel-button main__panel-button--delete" data-id="{{subSection.Id}}" data-section="subSection">

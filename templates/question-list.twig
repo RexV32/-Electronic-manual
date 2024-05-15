@@ -6,10 +6,8 @@
 			<h2 class="main__section-title">Список вопросов:</h2>
 			<form class="main__form" method="get">
 				<select class="selectpicker select select--padding" data-width="300px" data-live-search="true" data-size="5" title="Тесты" name="test">
-					{% set isFirst = true %}
 					{% for test in tests %}
-						<option value="{{ test.Id }}" {{ isFirst ? 'selected' : '' }}>{{ test.Name }}</option>
-						{% set isFirst = false %}
+						<option value="{{ test.Id }}" {% if test.Id == currentIdTest %} selected {% endif %}>{{ test.Name }}</option>
 					{% endfor %}
 				</select>
 				<button class="main__form-button" type="submit">Показать</button>

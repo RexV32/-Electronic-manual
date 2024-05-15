@@ -31,7 +31,7 @@
 									{% else %}
 										<li class="main__panel-item" title="Показать тест">
 										{% endif %}
-										<a class="main__panel-button" href="?id={{test.Id}}&status={{test.Status}}">
+										<button class="main__panel-button main__panel-button--change" type="button" data-id="{{test.Id}}" data-status="{{test.Status}}" data-section="test">
 											{% if test.Status == 1 %}
 												<svg class="main__panel-icon" width="27" height="28" role="img" aria-label="hidden">
 													<use xlink:href="../image/icons/sprite.svg#hiddenIcon"></use>
@@ -43,7 +43,7 @@
 												</svg>
 												<span class="visually-hidden">Показать</span>
 											{% endif %}
-										</a>
+										</button>
 									</li>
 									<li class="main__panel-item" title="Удалить тест">
 										<button class="main__panel-button main__panel-button--delete" type="button" data-id="{{test.Id}}" data-section="tests">

@@ -178,7 +178,9 @@
 				</section>
 				<section class="footer__copyright">
 					<h2 class="visually-hidden">Сибирский политехнический техникум</h2>
-					<img class="footer__copyright-image" src="../image/content/spt42.jpg" alt="Сибирский политехнический техникум">
+					<a href="https://www.spt42.ru">
+						<img class="footer__copyright-image" src="../image/content/spt42.jpg" alt="Сибирский политехнический техникум">
+					</a>
 				</section>
 			</div>
 		</footer>
@@ -186,10 +188,18 @@
         currentSection == "Discipline" or 
         currentSection == "Section" or 
         currentSection == "subSection" or 
+		currentSection == "test"
+  		%}
+			<script src="../js/change-status.js" type="module"></script>
+		{% endif %}
+		{% if 
+        currentSection == "Discipline" or 
+        currentSection == "Section" or 
+        currentSection == "subSection" or 
 		currentSection == "test" or
 		currentSection == "editorTests"
   		%}
-			<script src="../js/delete.js"></script>
+			<script src="../js/delete.js" type="module"></script>
 		{% endif %}
 
 		{% if 
@@ -207,22 +217,22 @@
 		{% endif %}
 
 		{% if  currentSection == "subSection" or currentSection == "addSubSection"%}
-			<script src="../js/select.js"></script>
+			<script src="../js/select.js" type="module"></script>
 			<script src="../js/bootstrap-select/jquery.min.js"></script>
 			<script src="../js/bootstrap-select/bootstrap.bundle.min.js"></script>
 			<script src="../js/bootstrap-select/bootstrap-select.min.js"></script>
 		{% endif %}
 
 		{% if currentSection == "Group" %}
-			<script src="../js/delete-group.js"></script>
+			<script src="../js/delete-group.js" type="module"></script>
 		{% endif %}
 
 		{% if currentSection == "userApproval" %}
-			<script src="../js/user-approval.js"></script>
+			<script src="../js/user-approval.js" type="module"></script>
 		{% endif %}
 
 		{% if currentSection == "listUser" %}
-			<script src="../js/control-user.js"></script>
+			<script src="../js/control-user.js" type="module"></script>
 		{% endif %}
 
 		{% if currentSection == "addSubSection"%}
@@ -240,11 +250,11 @@
 		{% endif %}
 
 		{% if currentSection == "addQuestion" or currentSection == "editQuestion" %}
-			<script src="../js/questionEditor.js"></script>
+			<script src="../js/questionEditor.js" type="module"></script>
 		{% endif %}
 		{% if currentSection == "results" %}
-			<script src="../js/delete-results.js"></script>
+			<script src="../js/delete-results.js" type="module"></script>
 		{% endif %}
-		<script src="../js/menu.js"></script>
+		<script src="../js/menu.js" type="module"></script>
 	</body>
 </html>

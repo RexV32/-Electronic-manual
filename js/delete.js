@@ -79,7 +79,7 @@ function accept() {
                 modal("Данные успешно удалены", "Успех", section, true);
             }
             else {
-                modalError(data.message, "Ошибка");
+                modal(data.message, "Ошибка");
             }
         })
         .catch(error => {

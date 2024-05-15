@@ -1,6 +1,8 @@
 const buttonsChange = document.querySelectorAll(".user-list__button--change");
 const buttonsDelete = document.querySelectorAll(".user-list__button--delete");
 const pageBody = document.querySelector(".page__body");
+const resetButton = document.querySelector(".user-list__submit--reset");
+const searchButton = document.querySelector(".user-list__submit--search");
 const templateChangeModal = `
   <div class="modal-change modal">
     <div class="modal-change__wrapper">
@@ -74,7 +76,6 @@ function modal(error, title, isSuccess = false) {
     button.addEventListener("click", closeModal);
   });
 }
-
 
 function handleChangeButtonClick(button) {
   const id = button.dataset.id;
@@ -182,4 +183,94 @@ buttonsChange.forEach((button) => {
 
 buttonsDelete.forEach((button) => {
   button.addEventListener("click", () => handleDeleteButtonClick(button));
+});
+
+resetButton.addEventListener("click", () => {
+  window.location.href = "users.php";
+});
+
+searchButton.addEventListener("click", (evt) => {
+  evt.preventDefault();
+  const dataForm = {
+    name: document.querySelector("input[name='name']").value.trim(),
+    surname: document.querySelector("input[name='surname']").value.trim(),
+    patronymic: document.querySelector("input[name='patronymic']").value.trim(),
+    login: document.querySelector("input[name='login']").value.trim(),
+    group: document.querySelector(".selectpicker").value.trim()
+  };
+  const data = new FormData();
+  data.append("data", JSON.stringify(dataForm, null, 2));
+  fetch("../server/search-users.php", {
+    method: "POST",
+    body: data
+  })
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+      else {
+        throw new Error("Не удалось выполнить запрос");
+      }
+    })
+    .then(data => {
+      if (data.success) {
+        const tbody = document.querySelector("tbody");
+        const table =  document.querySelector(".user-list__table");
+        const stubText = document.querySelector(".main__stub-text");
+        if(stubText) {
+          stubText.remove();
+        }
+        table.classList.remove("user-list__table--none");
+        tbody.innerHTML = "";
+        let content = "";
+        const users = data.users;
+        if (users.length > 0) {
+          users.forEach((user) => {
+            content += `<tr class="user-list__tr">
+          <td class="user-list__td" data-label="Группа">${user.NameGroup}</td>
+          <td class="user-list__td" data-label="ФИО">
+            ${user.Surname}
+            ${user.Name}
+            ${user.Patronymic}
+          </td>
+          <td class="user-list__td" data-label="Логин">${user.Login}</td>
+          <td class="user-list__td" data-label="Управление">
+            <ul class="user-list__control-list">
+              <li class="user-list__control-item" title="Изменить пароль">
+                <button class="user-list__button user-list__button--change" type="button" data-id="${user.Id}">
+                  <svg class="user-list__icon" width="29" height="29" role="img" aria-label="edit">
+                    <use xlink:href="../image/icons/sprite.svg#editIcon"></use>
+                  </svg>
+                  <span class="visually-hidden">Изменить пароль</span>
+                </button>
+              </li>
+              <li class="user-list__control-item" title="Удалить">
+                <button class="user-list__button user-list__button--delete" type="button" data-id="${user.Id}">
+                  <svg class="user-list__icon" width="28" height="28" role="img" aria-label="delete">
+                    <use xlink:href="../image/icons/sprite.svg#deleteIcon"></use>
+                  </svg>
+                  <span class="visually-hidden">Удалить</span>
+                </button>
+              </li>
+            </ul>
+          </td>
+        </tr>`;
+          });
+          tbody.innerHTML = content;
+        }
+        else {
+          const table =  document.querySelector(".user-list__table");
+          table.classList.add("user-list__table--none");
+          const form = document.querySelector(".user-list__form");
+          const template = `<p class="main__stub-text">Нет данных</p>`;
+          form.insertAdjacentHTML("afterend", template);
+        }
+      }
+      else {
+        modal(data.message, data.title);
+      }
+    })
+    .catch(error =>
+      modal(error, "Ошибка")
+    );
 });

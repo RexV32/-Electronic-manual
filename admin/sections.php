@@ -31,28 +31,15 @@ if($disciplinesQuantity > 0) {
 }
 
 if(isset($_GET["discipline"])) {
-    $id = $_GET["discipline"];
+    $currentIdDiscipline = $_GET["discipline"];
     $sql = "SELECT Sections.Id,Sections.Name, Sections.Status,Disciplines.Name as NameDiscipline FROM `Sections` INNER JOIN 
     Disciplines ON Sections.Id_discipline = Disciplines.Id WHERE Sections.Id_discipline = ?";
     $stmt = $link -> prepare($sql);
-    $stmt -> execute([$id]);
+    $stmt -> execute([$currentIdDiscipline]);
     $sections = $stmt -> fetchAll(PDO::FETCH_ASSOC);
     $sectionsSlice = array_slice($sections,$offset,$limit,true);
     $sectionQuantity = count($sections);
     $pages = ceil($sectionQuantity / $limit);
-    $currentIdDiscipline = $id;
-}
-
-if(isset($_GET["id"], $_GET["status"])) {
-    $newStatus = ($_GET["status"] == 1) ? 0 : 1;
-    $sql = "UPDATE `Sections` SET Status = :newStatus WHERE Id = :id";
-    $stmt = $link->prepare($sql);
-    $stmt->execute([
-        "newStatus" => $newStatus,
-        "id" => $_GET["id"],
-    ]);
-    $currentUrl = isset($_SERVER["HTTP_REFERER"])?explode("/",$_SERVER["HTTP_REFERER"])[5] : "sections.php";
-    header("Location:$currentUrl");
 }
 
 $content = $twig -> render('section-list.twig', 
