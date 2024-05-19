@@ -1,8 +1,7 @@
 <?php
 require_once("../server/connect.php");
 header('Content-Type: application/json; charset=utf-8');
-function deleteDirectory($dir)
-{
+function deleteDirectory($dir){
     $files = array_diff(scandir($dir), array('.', '..'));
 
     foreach ($files as $file) {
@@ -12,8 +11,7 @@ function deleteDirectory($dir)
 
     return rmdir($dir);
 }
-function findAndDeleteFolder($parentFolder, $targetFolder)
-{
+function findAndDeleteFolder($parentFolder, $targetFolder){
     $dirs = glob($parentFolder . '/*', GLOB_ONLYDIR);
 
     foreach ($dirs as $dir) {
@@ -26,93 +24,70 @@ function findAndDeleteFolder($parentFolder, $targetFolder)
     }
 }
 
-$data = filter_input_array(INPUT_POST, ["id" => FILTER_DEFAULT, "section" => FILTER_DEFAULT]);
-$id = $data["id"];
-$section = $data["section"];
+try {
+    $data = filter_input_array(INPUT_POST, ["id" => FILTER_DEFAULT, "section" => FILTER_DEFAULT]);
+    $id = $data["id"];
+    $section = $data["section"];
+    
+    if (!$id || !$section) {
+        throw new Exception("Недостаточно данных для выполнения операции");
+    }
 
-switch ($section) {
-    case "discipline":
-        $sql = "DELETE FROM `Disciplines` WHERE Id = ?";
-        $stmt = $link->prepare($sql);
-
-        try {
+    switch ($section) {
+        case "discipline":
+            $sql = "DELETE FROM `Disciplines` WHERE Id = ?";
             $path = "../uploads";
-            if (is_dir($path)) {
-                findAndDeleteFolder($path, $id);
-            }
-            $success = $stmt->execute([$id]);
-            echo json_encode(["success" => true]);
-        } catch (PDOException $exception) {
-            echo json_encode(["success" => false, "message" => "Не удалось выполнить запрос"]);
-        }
-        break;
+            break;
 
-    case "sections":
-        $sql = "DELETE FROM `Sections` WHERE Id = ?";
-        $stmt = $link->prepare($sql);
-
-        try {
+        case "sections":
+            $sql = "DELETE FROM `Sections` WHERE Id = ?";
             $path = "../uploads";
-            if (is_dir($path)) {
-                findAndDeleteFolder($path, $id);
-            }
-            $success = $stmt->execute([$id]);
-            echo json_encode(["success" => true]);
-        } catch (PDOException $exception) {
-            echo json_encode(["success" => false, "message" => "Не удалось выполнить запрос"]);
-        }
-        break;
-    case "subSection":
-        $sql = "DELETE FROM `SubSections` WHERE Id = ?";
-        $stmt = $link->prepare($sql);
+            break;
 
-        try {
+        case "subSection":
+            $sql = "DELETE FROM `SubSections` WHERE Id = ?";
             $path = "../uploads";
-            if (is_dir($path)) {
-                findAndDeleteFolder($path, $id);
-            }
-            $success = $stmt->execute([$id]);
-            echo json_encode(["success" => true]);
-        } catch (PDOException $exception) {
-            echo json_encode(["success" => false, "message" => "Не удалось выполнить запрос"]);
-        }
-        break;
-    case "tests":
-        $sql = "DELETE FROM `Tests` WHERE Id = ?";
-        $stmt = $link->prepare($sql);
+            break;
 
-        try {
+        case "tests":
+            $sql = "DELETE FROM `Tests` WHERE Id = ?";
             $path = "../uploads/quiz";
-            if (is_dir($path)) {
-                findAndDeleteFolder($path, $id);
+            break;
+
+        case "question":
+            $sql = "SELECT Image, Id_test FROM `Questions` WHERE Id = ?";
+            $stmt = $link->prepare($sql);
+            $stmt->execute([$id]);
+            $data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($data) {
+                $idTest = $data["Id_test"];
+                $image = $data["Image"];
+            } else {
+                throw new Exception("Вопрос не найден");
             }
-            $success = $stmt->execute([$id]);
-            echo json_encode(["success" => true]);
-        } catch (PDOException $exception) {
-            echo json_encode(["success" => false, "message" => "Не удалось выполнить запрос"]);
-        }
-        break;
-    case "question":
-        $sql = "SELECT Image, Id_test FROM `Questions` WHERE Id = ?";
-        $stmt = $link->prepare($sql);
-        $stmt -> execute([$id]);
-        $data = $stmt -> fetch(PDO::FETCH_ASSOC);
-        $idTest = $data["Id_test"];
-        $image = $data["Image"];
 
-        $sql = "DELETE FROM `Questions` WHERE Id = ?";
-        $stmt = $link->prepare($sql);
-
-        try {
-            if($image != null) {
-                $path = "../uploads/quiz/$idTest/$image";
-                unlink($path);
+            $sql = "DELETE FROM `Questions` WHERE Id = ?";
+            if ($image != null) {
+                $imagePath = "../uploads/quiz/$idTest/$image";
+                if (is_file($imagePath)) {
+                    unlink($imagePath);
+                }
             }
-            $success = $stmt->execute([$id]);
-            echo json_encode(["success" => true]);
-        } catch (PDOException $exception) {
-            echo json_encode(["success" => false, "message" => "Не удалось выполнить запрос"]);
-        }
-        break;
+            break;
 
+        default:
+            throw new Exception("Недопустимая секция");
+    }
+
+    $stmt = $link->prepare($sql);
+    $stmt->execute([$id]);
+
+    if (isset($path) && is_dir($path)) {
+        findAndDeleteFolder($path, $id);
+    }
+
+    echo json_encode(["success" => true]);
+} catch (Exception $error) {
+    echo json_encode(["success" => false, "message" => "Не удалось выполнить запрос: " . $error->getMessage()]);
 }

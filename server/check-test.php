@@ -79,6 +79,6 @@ try {
 
 
     echo json_encode(["success" => true, "result" => "Ваш результат составляет<br>$score из $countCorrect<br>правильных ответов", "title" => "Тест завершен"]);
-} catch (PDOException $e) {
+} catch (Exception $error) {
     echo json_encode(["success" => false, "message" => $e->getMessage(), "title" => "Ошибка"]);
 }

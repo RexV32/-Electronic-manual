@@ -1,51 +1,60 @@
 <?php
-require_once("function.php");
+require_once ("function.php");
 $title = "ЭКУМО";
 $currentSection = "test";
-if(!isset($_SESSION["user"])) {
+if (!isset($_SESSION["user"])) {
     header("Location: auth.php");
 }
 
-$array = [];
+$data = [];
+$questionsAarray = [];
 $role = $_SESSION["user"]["Role_id"];
 $idUser = $_SESSION["user"]["Id"];
 $idTest = $_GET["id"];
 
 $sql = "SELECT * FROM `Results` WHERE Id_User = :idUser AND Id_Test = :IdTest";
-$stmt = $link -> prepare($sql);
-$stmt -> execute([
+$stmt = $link->prepare($sql);
+$stmt->execute([
     "idUser" => $idUser,
     "IdTest" => $idTest
 ]);
 
-if($stmt -> rowCount() > 0) {
+if ($stmt->rowCount() > 0) {
     header("Location:index.php");
 }
 
-$sql = "SELECT Disciplines.Id as IdDisciplines,
-    Disciplines.Name as NameDiscipline,
-    GROUP_CONCAT(Sections.Name) as SectionName,
-    GROUP_CONCAT(Sections.Id) as SectionId FROM `Disciplines` 
-    INNER JOIN Sections ON Disciplines.Id = Sections.Id_discipline WHERE Disciplines.Status = 1 AND Sections.Status = 1 GROUP BY Disciplines.Id";
+$sql = "SELECT Id as IdDisciplines, Name as NameDiscipline FROM Disciplines WHERE Status = 1";
 $stmt = $link->prepare($sql);
 $stmt->execute();
-$data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$disciplinesArray = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-foreach ($data as $item) {
-    $idArray = explode(",", $item["SectionId"]);
-    $nameArray = explode(",", $item["SectionName"]);
-    unset($item["SectionId"]);
-    unset($item["SectionName"]);
-    $item["Section"] = [];
-    for ($i = 0; $i < count($idArray); $i++) {
-        $id = $idArray[$i];
-        $name = $nameArray[$i];
-        array_push($item["Section"], ["Id" => $id, "Name" => $name]);
+$sql = "SELECT Id, Name, Id_discipline FROM Sections WHERE Status = 1";
+$stmt = $link->prepare($sql);
+$stmt->execute();
+$sectionsArray = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$sql = "SELECT Id_disciplines FROM Tests";
+$stmt = $link->prepare($sql);
+$stmt->execute();
+$testDisciplines = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+foreach ($disciplinesArray as $discipline) {
+    $idDiscipline = $discipline["IdDisciplines"];
+    $discipline["Section"] = [];
+
+    foreach ($sectionsArray as $section) {
+        if ($section["Id_discipline"] == $idDiscipline) {
+            $id = $section["Id"];
+            $name = $section["Name"];
+            array_push($discipline["Section"], ["Id" => $id, "Name" => $name]);
+        }
     }
-    array_push($array, $item);
+
+    $discipline["isTest"] = in_array($idDiscipline, $testDisciplines);
+
+    array_push($data, $discipline);
 }
-$data = $array;
-$array = [];
+
 if (isset($_GET["id"]) && $_GET["id"] != "") {
     $sql = "SELECT Name FROM `Tests` WHERE Id = ?";
     $stmt = $link->prepare($sql);
@@ -64,35 +73,28 @@ if (isset($_GET["id"]) && $_GET["id"] != "") {
     $stmt->execute([$idTest]);
     $questions = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    if(count($questions) <= 0) {
-        header("Location:index.php");
-    }
-
-    foreach($questions as $question) {
+    foreach ($questions as $question) {
         $idAnswersArr = explode(",", $question["IdAnswers"]);
         $textAnswersArr = explode(",", $question["TextAnswers"]);
         unset($question["IdAnswers"]);
         unset($question["TextAnswers"]);
         $question["answers"] = [];
-        for($i = 0; $i < count($idAnswersArr); $i++) {
+        for ($i = 0; $i < count($idAnswersArr); $i++) {
             $id = $idAnswersArr[$i];
             $text = $textAnswersArr[$i];
             array_push($question["answers"], ["IdAnswer" => $id, "TextAnswer" => $text]);
         }
-        array_push($array, $question);
+        array_push($questionsAarray, $question);
     }
-    $questions = $array;
 } else {
     header("Location:index.php");
 }
-$template = "test.twig";
-$content = $twig->render($template, [
+$content = $twig->render("test.twig", [
     "title" => $title,
     "TestName" => $TestName,
-    "questions" => $questions,
+    "questions" => $questionsAarray,
     "currentSection" => $currentSection,
     "data" => $data,
-    "role" => $role,
-    "idTest" => $idTest
+    "role" => $role
 ]);
-print($content);
+print ($content);

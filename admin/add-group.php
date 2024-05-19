@@ -6,25 +6,11 @@ if(!isset($_SESSION["user"]) || $_SESSION["user"]["Role_id"] == 1) {
 
 
 $title = "ЭКУМО - Добавить группу";
-$errors = [];
-
-if($_SERVER["REQUEST_METHOD"] == "POST") {
-    $name = trim(filter_input(INPUT_POST, "name", FILTER_DEFAULT));
-    $errors["name"] = validateNameGroup($name, $link);
-    $errors = array_filter($errors);
-
-    if(!count($errors)) {
-        $sql = "INSERT INTO `Groups` (Name) VALUES(?)";
-        $stmt = $link -> prepare($sql);
-        $stmt -> execute([$name]);
-
-        header("Location:group.php");
-    }
-}
+$currentSection = "addGroup";
 
 $content = $twig -> render('add-group.twig', 
 [
     "title" => $title,
-    "errors" => $errors
+    "currentSection" => $currentSection
 ]);
 print($content);

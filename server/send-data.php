@@ -1,28 +1,29 @@
 <?php
-require_once("../server/connect.php");
+require_once ("../server/connect.php");
 header('Content-Type: application/json; charset=utf-8');
 
-$data = filter_input_array(INPUT_POST, 
-[
-    "idDiscipline" => FILTER_DEFAULT,
-    "idSection" => FILTER_DEFAULT,
-    "name" => FILTER_DEFAULT,
-    "content" => FILTER_DEFAULT
-]);
-$idDiscipline = $data["idDiscipline"];
-$idSection = $data["idSection"];
-$name = $data["name"];
-$content = $data["content"];
-
-$sql = "INSERT INTO `SubSections`(Name, Id_section) VALUES (:name, :idSection)";
-$stmt = $link->prepare($sql);
-
 try {
+    $data = filter_input_array(
+        INPUT_POST,
+        [
+            "idDiscipline" => FILTER_DEFAULT,
+            "idSection" => FILTER_DEFAULT,
+            "name" => FILTER_DEFAULT,
+            "content" => FILTER_DEFAULT
+        ]
+    );
+    $idDiscipline = $data["idDiscipline"];
+    $idSection = $data["idSection"];
+    $name = $data["name"];
+    $content = $data["content"];
+
+    $sql = "INSERT INTO `SubSections`(Name, Id_section) VALUES (:name, :idSection)";
+    $stmt = $link->prepare($sql);
     $stmt->execute([
         "name" => $name,
         "idSection" => $idSection
     ]);
-    $idSubSection = $link -> lastInsertId();
+    $idSubSection = $link->lastInsertId();
     $path = "../uploads/$idDiscipline/$idSection/$idSubSection";
     if (!file_exists($path)) {
         mkdir($path, 0777, true);
@@ -50,13 +51,13 @@ try {
     }
     $content = json_encode($json, true);
     $sql = "UPDATE `SubSections` SET Content = :content WHERE Id_section = :id";
-    $stmt = $link -> prepare($sql);
-    $success = $stmt -> execute([
+    $stmt = $link->prepare($sql);
+    $stmt->execute([
         "content" => $content,
         "id" => $idSection
     ]);
 
     echo json_encode(["success" => true]);
-} catch (PDOException $exception) {
+} catch (Exception $error) {
     echo json_encode(["success" => false, "message" => "Не удалось выполнить запрос"]);
 }

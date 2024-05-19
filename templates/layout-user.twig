@@ -93,9 +93,11 @@
 												<a class="dropmenu__link" href="index.php?section={{value.Id}}">{{value.Name}}</a>
 											</li>
 										{% endfor %}
+										{% if item.isTest %}
 										<li class="dropmenu__menu-item">
 											<a class="dropmenu__link" href="index.php?tests&disciplines={{item.IdDisciplines}}">Тесты</a>
 										</li>
+										{% endif %}
 									</ul>
 								</li>
 							{% endfor %}

@@ -10,7 +10,7 @@
 						<option value="{{ test.Id }}" {% if test.Id == currentIdTest %} selected {% endif %}>{{ test.Name }}</option>
 					{% endfor %}
 				</select>
-				<button class="main__form-button" type="submit">Показать</button>
+				<button class="main__form-button" type="submit" {% if tests|length == 0 %} disabled {% endif %}>Показать</button>
 			</form>
 			{% if questionSlice|length > 0 %}
 				<ul class="main__section-list">

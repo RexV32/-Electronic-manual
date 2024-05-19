@@ -8,9 +8,8 @@ function deleteUser($link, $id) {
     $stmt->execute([$id]);
 }
 
-$id = filter_input(INPUT_POST, "id", FILTER_DEFAULT);
-
 try {
+    $id = filter_input(INPUT_POST, "id", FILTER_DEFAULT);
     $sql = "SELECT Id FROM `Results` WHERE `Id_User` = ?";
     $stmt = $link->prepare($sql);
     $stmt->execute([$id]);
@@ -27,6 +26,6 @@ try {
         deleteUser($link, $id);
     }
     echo json_encode(["success" => true, "title" => "Успешно", "message" => "Пользователь успешно удален"]);
-} catch (PDOException $exception) {
+} catch (Exception $error) {
     echo json_encode(["success" => false, "message" => "Не удалось выполнить запрос", "title" => "Ошибка"]);
 }

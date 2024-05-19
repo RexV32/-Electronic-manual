@@ -5,36 +5,40 @@
 		<section class="main__section main__section--test">
 			<h2 class="main__section-title">{{TestName}}</h2>
 			<form class="test" method="post">
-				{% for question in questions %}
-				{% set index = loop.index %}
-					<div class="test__wrapper-question">
-						<p class="test__question" data-id="{{question.IdQuestions}}">{{question.TextQuestions}}</p>
-						{% set className = question.ImageQuestions? "" : "test__image--none" %}
-						<img class="test__image {{className}}" src="./uploads/quiz/{{idTest}}/{{question.ImageQuestions}}" alt="Фото к вопросу">
-						{% for answer in question.answers %}
-							{% if question.MultipleQuestions == 0 %}
-								<p class="test__group-answer">
-									<label class="test__label-answer">
-										<input class="test__radio" type="radio" name="answer-control--{{index}}" data-id="{{answer.IdAnswer}}">
-										<span class="test__control">
-											<span class="test__answer">{{answer.TextAnswer}}</span>
-										</span>
-									</label>
-								</p>
-							{% else %}
-								<p class="test__group-answer">
-									<label class="test__label-answer">
-										<input class="test__checkbox" type="checkbox" name="answer-control--{{answer.IdAnswer}}" data-id="{{answer.IdAnswer}}">
-										<span class="test__control-checkbox">
-											<span class="test__answer">{{answer.TextAnswer}}</span>
-										</span>
-									</label>
-								</p>
-							{% endif %}
-						{% endfor %}
-					</div>
-				{% endfor %}
-				<button class="test__submit" type="submit" {% if questions|length == 0 %} disabled {% endif %}>Завершить тест</button>
+				{% if questions|length > 0 %}
+					{% for question in questions %}
+						{% set index = loop.index %}
+						<div class="test__wrapper-question">
+							<p class="test__question" data-id="{{question.IdQuestions}}">{{question.TextQuestions}}</p>
+							{% set className = question.ImageQuestions? "" : "test__image--none" %}
+							<img class="test__image {{className}}" src="./uploads/quiz/{{idTest}}/{{question.ImageQuestions}}" alt="Фото к вопросу">
+							{% for answer in question.answers %}
+								{% if question.MultipleQuestions == 0 %}
+									<p class="test__group-answer">
+										<label class="test__label-answer">
+											<input class="test__radio" type="radio" name="answer-control--{{index}}" data-id="{{answer.IdAnswer}}">
+											<span class="test__control">
+												<span class="test__answer">{{answer.TextAnswer}}</span>
+											</span>
+										</label>
+									</p>
+								{% else %}
+									<p class="test__group-answer">
+										<label class="test__label-answer">
+											<input class="test__checkbox" type="checkbox" name="answer-control--{{answer.IdAnswer}}" data-id="{{answer.IdAnswer}}">
+											<span class="test__control-checkbox">
+												<span class="test__answer">{{answer.TextAnswer}}</span>
+											</span>
+										</label>
+									</p>
+								{% endif %}
+							{% endfor %}
+						</div>
+					{% endfor %}
+					<button class="test__submit" type="submit" {% if questions|length == 0 %} disabled {% endif %}>Завершить тест</button>
+				{% else %}
+					<p class="main__stub-text">Нет данных</p>
+				{% endif %}
 			</form>
 		</section>
 	</div>

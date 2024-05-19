@@ -12,7 +12,8 @@
 		currentSection == "editorTests" or
 		currentSection == "addQuestion" or 
 		currentSection == "editQuestion" or 
-		currentSection == "results"
+		currentSection == "results" or
+		currentSection == "test"
 		%}
 			<link rel="stylesheet" href="../js/bootstrap-select/bootstrap.min.css">
 			<link rel="stylesheet" href="../js/bootstrap-select/bootstrap-select.min.css">
@@ -209,7 +210,8 @@
 		currentSection == "addTests" or
 		currentSection == "editorTests" or
 		currentSection == "addQuestion" or 
-		currentSection == "results"
+		currentSection == "results" or
+		currentSection == "test"
   		%}
 			<script src="../js/bootstrap-select/jquery.min.js"></script>
 			<script src="../js/bootstrap-select/bootstrap.bundle.min.js"></script>
@@ -249,11 +251,29 @@
 			<script src="../js/editorJs/attaches/dist/bundle.js"></script>
 		{% endif %}
 
-		{% if currentSection == "addQuestion" or currentSection == "editQuestion" %}
-			<script src="../js/questionEditor.js" type="module"></script>
+		{% if currentSection == "addQuestion" %}
+			<script src="../js/add-questions.js" type="module"></script>
+		{% endif %}
+		{% if currentSection == "editQuestion" %}
+			<script src="../js/edit-question.js" type="module"></script>
 		{% endif %}
 		{% if currentSection == "results" %}
 			<script src="../js/delete-results.js" type="module"></script>
+		{% endif %}
+		{% if currentSection == "add-discipline" %}
+			<script src="../js/add-discipline.js" type="module"></script>
+		{% endif %}
+		{% if currentSection == "addSection" %}
+			<script src="../js/add-section.js" type="module"></script>
+		{% endif %}
+		{% if currentSection == "addGroup" %}
+			<script src="../js/add-group.js" type="module"></script>
+		{% endif %}
+		{% if currentSection == "addTests" %}
+			<script src="../js/add-test.js" type="module"></script>
+		{% endif %}
+		{% if currentSection == "rename" %}
+			<script src="../js/rename-section.js" type="module"></script>
 		{% endif %}
 		<script src="../js/menu.js" type="module"></script>
 	</body>

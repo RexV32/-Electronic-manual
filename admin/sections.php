@@ -32,8 +32,7 @@ if($disciplinesQuantity > 0) {
 
 if(isset($_GET["discipline"])) {
     $currentIdDiscipline = $_GET["discipline"];
-    $sql = "SELECT Sections.Id,Sections.Name, Sections.Status,Disciplines.Name as NameDiscipline FROM `Sections` INNER JOIN 
-    Disciplines ON Sections.Id_discipline = Disciplines.Id WHERE Sections.Id_discipline = ?";
+    $sql = "SELECT * FROM `Sections` WHERE `Id_discipline` = ?";
     $stmt = $link -> prepare($sql);
     $stmt -> execute([$currentIdDiscipline]);
     $sections = $stmt -> fetchAll(PDO::FETCH_ASSOC);

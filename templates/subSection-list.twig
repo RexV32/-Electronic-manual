@@ -15,7 +15,7 @@
 						<option value="{{section.Id}}" {% if section.Id == currentIdSection %} selected {% endif %}>{{section.Name}}</option>
 					{% endfor %}
 				</select>
-				<button class="main__form-button" type="submit">Показать</button>
+				<button class="main__form-button" type="submit" {% if disciplines|length == 0 or sections|length == 0 %} disabled {% endif %}>Показать</button>
 			</form>
 			{% if subSectionsSlice|length > 0 %}
 			<ul class="main__section-list">

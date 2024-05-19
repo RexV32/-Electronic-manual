@@ -4,13 +4,13 @@
 	<div class="main__content">
 		<section class="main__section">
 			<h2 class="main__section-title">Список разделов:</h2>
-			<form class="main__form" method="get" action="">
-				<select class="selectpicker select select--padding" data-width="300px" data-live-search="true" data-size="5" title="Группы" name="discipline">
+			<form class="main__form" method="get">
+				<select class="selectpicker select select--padding" data-width="300px" data-live-search="true" data-size="5" title="Дисциплины" name="discipline">
 					{% for discipline in disciplines %}
 						<option value="{{discipline.Id}}" {% if discipline.Id == currentIdDiscipline %} selected {% endif %}>{{discipline.Name}}</option>
 					{% endfor %}
 				</select>
-				<button class="main__form-button" type="submit">Показать</button>
+				<button class="main__form-button" type="submit" {% if disciplines|length == 0 %} disabled {% endif %}>Показать</button>
 			</form>
 			{% if sectionsSlice|length > 0 %}
 				<ul class="main__section-list">

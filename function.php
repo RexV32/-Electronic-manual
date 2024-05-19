@@ -13,7 +13,7 @@ if (!file_exists($path)) {
 $loader = new FilesystemLoader("$path");
 $twig = new Environment($loader);
 
-function validateName($value, $link, $refer) {
+function validateName($value, $link, $refer, $idDiscipline) {
     $length = strlen($value);
     if($length == 0) {
         return "Поле должно быть заполнено";
@@ -27,6 +27,20 @@ function validateName($value, $link, $refer) {
     
         if($rowCount) {
             return "Дисциплина с таким названием существует";
+        }
+    }
+
+    if($refer == "test") {
+        $sql = "SELECT * FROM Tests WHERE Name = :name AND Id_disciplines = :id";
+        $stmt = $link -> prepare($sql);
+        $stmt -> execute([
+            "name" => $value,
+            "id" => $idDiscipline
+        ]);
+        $rowCount = $stmt -> rowCount();
+
+        if($rowCount) {
+            return "В выбранной дисциплине уже есть тест с таким названием";
         }
     }
 
@@ -68,19 +82,22 @@ function validateIdDiscipline($id, $arrayId) {
     return null;
 }
 
-function validateNameTests($value, $link) {
+function validateNameTests($value, $link, $id) {
     $length = strlen($value);
     if($length == 0) {
         return "Поле должно быть заполнено";
     }
 
-    $sql = "SELECT * FROM `Tests` WHERE `Name` = ?";
+    $sql = "SELECT * FROM `Tests` WHERE `Name` = :name AND Id_disciplines = :id";
     $stmt = $link -> prepare($sql);
-    $stmt -> execute([$value]);
+    $stmt -> execute([
+        "name" => $value,
+        "id" => $id
+    ]);
     $rowCount = $stmt -> rowCount();
 
     if($rowCount) {
-        return "Тест с таким названием существует";
+        return "В выбранной дисциплине уже есть тест с таким названием";
     }
 
     return null;

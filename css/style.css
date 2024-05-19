@@ -259,11 +259,15 @@
   margin-bottom: 15px;
   overflow: hidden;
   text-overflow: ellipsis;
+  width: 280px;
+  text-align: center;
 }
 
 @media (min-width: 768px) {
   .main__title {
     white-space: nowrap;
+    width: auto;
+    text-align: left;
   }
 }
 
@@ -2147,6 +2151,17 @@
   background-color: #ffffff;
   outline: 1px solid #0d5f2e;
   color: #0d5f2e;
+}
+
+.form-question__label-button--disabled {
+  background-color: #8f8c8c;
+  transition: none;
+}
+
+.form-question__label-button--disabled:hover {
+  background-color: #8f8c8c;
+  outline: none;
+  color: #ffffff;
 }
 
 @media (min-width: 768px) {

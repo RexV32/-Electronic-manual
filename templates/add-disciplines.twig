@@ -5,11 +5,7 @@
     <section class="main__section">
         <h2 class="main__section-title">Добавить дисциплину</h2>
         <form class="main__second-form" method="post">
-            {% set className = errors|length > 0 ? "main__input--error" : "" %}
-            <input class="main__input {{className}}" type="text" placeholder="Наименование" name="name">
-            {% if errors|length > 0 %}
-            <span class="main__input-error">{{errors.name}}</span>
-            {% endif %}
+            <input class="main__input" type="text" placeholder="Наименование" name="name">
             <div class="main__button-wrapper">
                 <button class="main__form-button" type="submit">Добавить</button>
             </div>

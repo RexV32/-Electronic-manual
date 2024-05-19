@@ -1,48 +1,53 @@
 <?php
-require_once("../function.php");
+require_once ("../function.php");
 header('Content-Type: application/json; charset=utf-8');
 
-$data = filter_input_array(INPUT_POST, ["data" => FILTER_DEFAULT, "file" => FILTER_DEFAULT]);
-$decodedData = json_decode($data["data"], true);
-$multiple = $decodedData["multiple"] ? 1 : 0;
-$text = trim($decodedData["text"]);
-$id = $decodedData["id"];
-$answers = $decodedData["answers"];
+try {
+    $data = filter_input_array(INPUT_POST, ["data" => FILTER_DEFAULT, "file" => FILTER_DEFAULT]);
+    $decodedData = json_decode($data["data"], true);
+    $multiple = $decodedData["multiple"] ? 1 : 0;
+    $text = trim($decodedData["text"]);
+    $id = $decodedData["id"];
+    $answers = $decodedData["answers"];
 
-$tests = getTests($link);
-$testsIdArray = array_column($tests, "Id");
+    $tests = getTests($link);
+    $testsIdArray = array_column($tests, "Id");
 
-if(validateTests($id, $testsIdArray)) {
-    $sql = "INSERT INTO `Questions`(`Text`, `Id_test`, `Multiple`, `Image`) VALUES (:text,:id,:multiple,:image)";
-    $stmt = $link -> prepare($sql);
-    $stmt -> execute([
-        "text" => $text,
-        "id" => $id,
-        "multiple" => $multiple,
-        "image" => isset($_FILES['file'])? basename($_FILES['file']["name"]) : null
-    ]);
-    $idQuestion = $link -> lastInsertId();
-
-    if(isset($_FILES['file'])) {
-        $file = $_FILES['file'];
-        $path = "../uploads/quiz/$id/" . basename($file['name']);
-        move_uploaded_file($file["tmp_name"], $path);
-    }
-
-    foreach($answers as $answer) {
-        $text = $answer["answer"];
-        $correct = $answer["correct"] ? 1 : 0;
-        $sql = "INSERT INTO `Answers`(`Id_question`, `Text`, `Correct`) VALUES (:id, :text, :correct)";
-        $stmt = $link -> prepare($sql);
-        $stmt -> execute([
-            "id" => $idQuestion,
+    if (validateTests($id, $testsIdArray)) {
+        if (isset($_FILES['file'])) {
+            $file = $_FILES['file'];
+            $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
+            $newFileName = uniqid() . '.' . $extension;
+            $path = "../uploads/quiz/$id/" . $newFileName;
+            move_uploaded_file($file["tmp_name"], $path);
+        }
+        
+        $sql = "INSERT INTO `Questions`(`Text`, `Id_test`, `Multiple`, `Image`) VALUES (:text,:id,:multiple,:image)";
+        $stmt = $link->prepare($sql);
+        $stmt->execute([
             "text" => $text,
-            "correct" => $correct
+            "id" => $id,
+            "multiple" => $multiple,
+            "image" => isset($_FILES['file']) ? $newFileName : null
         ]);
-    }
+        $idQuestion = $link->lastInsertId();
 
-    echo json_encode(["success" => true]);
-}
-else {
-    echo json_encode(["success" => false, "message" => "Неудалось создать вопрос", "title" => "Ошибка"]);
+        foreach ($answers as $answer) {
+            $text = $answer["answer"];
+            $correct = $answer["correct"] ? 1 : 0;
+            $sql = "INSERT INTO `Answers`(`Id_question`, `Text`, `Correct`) VALUES (:id, :text, :correct)";
+            $stmt = $link->prepare($sql);
+            $stmt->execute([
+                "id" => $idQuestion,
+                "text" => $text,
+                "correct" => $correct
+            ]);
+        }
+
+        echo json_encode(["success" => true]);
+    } else {
+        echo json_encode(["success" => false, "message" => "Неудалось создать вопрос", "title" => "Ошибка"]);
+    }
+} catch (Exception $errors) {
+    echo json_encode(["success" => false, "message" => "Неудалось создать вопрос. " . $errors->getMessage(), "title" => "Ошибка"]);
 }

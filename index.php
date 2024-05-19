@@ -23,20 +23,27 @@ $stmt = $link->prepare($sql);
 $stmt->execute();
 $sectionsArray = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+$sql = "SELECT Id_disciplines FROM Tests";
+$stmt = $link->prepare($sql);
+$stmt->execute();
+$testDisciplines = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
 foreach ($disciplinesArray as $discipline) {
     $idDiscipline = $discipline["IdDisciplines"];
     $discipline["Section"] = [];
+
     foreach ($sectionsArray as $section) {
-        $idSection = $section["Id_discipline"];
-        if ($idDiscipline == $idSection) {
+        if ($section["Id_discipline"] == $idDiscipline) {
             $id = $section["Id"];
             $name = $section["Name"];
             array_push($discipline["Section"], ["Id" => $id, "Name" => $name]);
         }
     }
+
+    $discipline["isTest"] = in_array($idDiscipline, $testDisciplines);
+
     array_push($data, $discipline);
 }
-
 
 if (!isset($_GET["section"]) && !isset($_GET["tests"])) {
     $template = 'index.twig';

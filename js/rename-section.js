@@ -1,12 +1,4 @@
-const acceptButtons = document.querySelectorAll(".main__button-control--accept");
-const cancelButtons = document.querySelectorAll(".main__button-control--cancel");
-const acceptAllButton = document.querySelector(".main__accept-button");
-const pageBody = document.querySelector(".page__body");
-
-function handleButtonClick(evt, actionType) {
-    const id = evt.target.dataset.id;
-    userApproval(id, actionType);
-}
+const submit = document.querySelector(".main__form-button");
 
 function modal(error, title) {
     const pageBody = document.body;
@@ -24,6 +16,7 @@ function modal(error, title) {
     const buttons = document.querySelectorAll(".modal__button");
 
     const closeModal = () => {
+        submit.disabled = false;
         modal = document.querySelector(".modal");
         modal.remove();
     };
@@ -33,25 +26,48 @@ function modal(error, title) {
     });
 }
 
-function userApproval(id, action) {
+submit.addEventListener("click", (evt) => {
+    evt.preventDefault();
+    submit.disabled = true;
+    const name = document.querySelector(".main__input").value.trim();
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get('id');
+    const refer = urlParams.get('section');
     const data = new FormData();
     data.append("id", id);
-    data.append("action", action);
-
-    fetch("../server/approval.php", {
+    data.append("name", name);
+    data.append("refer", refer);
+    fetch("../server/rename.php", {
         method: "POST",
         body: data
     })
         .then(response => {
             if (response.ok) {
                 return response.json();
-            } else {
+            }
+            else {
                 throw new Error("Не удалось выполнить запрос");
             }
         })
         .then(data => {
             if (data.success) {
-                window.location.href = "user-approval.php";
+                const refer = data.url;
+                let url = "";
+                switch (refer) {
+                    case "discipline":
+                        url = "disciplines.php";
+                        break;
+                    case "section":
+                        url = "sections.php";
+                        break;
+                    case "test":
+                        url = "test-list.php";
+                        break;
+                    default:
+                        modal("Не удалось перенаправить на другую страницу", "Ошибка");
+                        return;
+                }
+                window.location.href = url;
             }
             else {
                 modal(data.message, "Ошибка");
@@ -60,18 +76,4 @@ function userApproval(id, action) {
         .catch(error => {
             modal(error, "Ошибка");
         });
-}
-
-acceptButtons.forEach((button) => {
-    button.addEventListener("click", (evt) => handleButtonClick(evt, "accept"));
 });
-
-cancelButtons.forEach((button) => {
-    button.addEventListener("click", (evt) => handleButtonClick(evt, "cancel"));
-});
-
-if (acceptAllButton) {
-    acceptAllButton.addEventListener("click", () => {
-        userApproval(null, "allAccept");
-    });
-}

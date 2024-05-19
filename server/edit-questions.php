@@ -2,14 +2,12 @@
 require_once ("../function.php");
 header('Content-Type: application/json; charset=utf-8');
 
-function deleteFile($nameFolder, $nameFile)
-{
+function deleteFile($nameFolder, $nameFile) {
     $path = "../uploads/quiz/$nameFolder/$nameFile";
     unlink($path);
 }
 
-function addAnswer($id, $text, $correct, $link)
-{
+function addAnswer($id, $text, $correct, $link) {
     $sql = "INSERT INTO `Answers`(`Id_question`, `Text`, `Correct`) VALUES (?, ?, ?)";
     $stmt = $link->prepare($sql);
     $stmt->execute([$id, $text, $correct]);
@@ -22,7 +20,7 @@ try {
     $textQuestion = trim($decodedData["text"]);
     $idQuestion = $decodedData["id"];
     $answers = $decodedData["answers"];
-    $currentPhoto = $data["currentPhoto"];
+    $currentPhoto = pathinfo($data["currentPhoto"], PATHINFO_BASENAME);
     $isDeletePhoto = $data["isDeletePhoto"] ? 1 : 0;
 
     $sql = "SELECT * FROM `Questions` WHERE Id = ?";
@@ -40,16 +38,18 @@ try {
     ]);
 
     if (isset($_FILES['file'])) {
+        $file = $_FILES['file'];
+        $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
+        $newFileName = uniqid() . '.' . $extension;
+        $path = "../uploads/quiz/$idTest/" . $newFileName;
+        move_uploaded_file($file["tmp_name"], $path);
+
         $sql = "UPDATE `Questions` SET Image = :image WHERE Id = :id";
         $stmt = $link->prepare($sql);
         $stmt->execute([
-            "image" => basename($_FILES['file']["name"]),
+            "image" => isset($_FILES['file']) ? $newFileName : null,
             "id" => $idQuestion
         ]);
-
-        $file = $_FILES['file'];
-        $path = "../uploads/quiz/$idTest/" . basename($file['name']);
-        move_uploaded_file($file["tmp_name"], $path);
 
         if ($currentPhoto != "") {
             deleteFile($idTest, $currentPhoto);
@@ -99,7 +99,7 @@ try {
         }
     }
 
-    echo json_encode(["success" => true]);
-} catch (PDOException $e) {
+    echo json_encode(["success" => true, "current" => $currentPhoto]);
+} catch (Exception $e) {
     echo json_encode(["success" => false, "message" => $e->getMessage(), "title" => "Ошибка"]);
 }
