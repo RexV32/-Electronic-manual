@@ -1,5 +1,5 @@
 <?php
-require_once("../server/connect.php");
+require_once ("../server/connect.php");
 header('Content-Type: application/json; charset=utf-8');
 function deleteDirectory($dir){
     $files = array_diff(scandir($dir), array('.', '..'));
@@ -28,7 +28,7 @@ try {
     $data = filter_input_array(INPUT_POST, ["id" => FILTER_DEFAULT, "section" => FILTER_DEFAULT]);
     $id = $data["id"];
     $section = $data["section"];
-    
+
     if (!$id || !$section) {
         throw new Exception("Недостаточно данных для выполнения операции");
     }
@@ -50,12 +50,19 @@ try {
             break;
 
         case "tests":
+            $sql = "SELECT Id_disciplines as idDiscipline FROM `Tests` WHERE `Id` = ?";
+            $stmt = $link -> prepare($sql);
+            $stmt -> execute([$id]);
+            $idDiscipline = $stmt -> fetchColumn();
+
             $sql = "DELETE FROM `Tests` WHERE Id = ?";
-            $path = "../uploads/quiz";
+            $path = "../uploads/$idDiscipline/quiz";
             break;
 
         case "question":
-            $sql = "SELECT Image, Id_test FROM `Questions` WHERE Id = ?";
+            $sql = "SELECT Image, Id_test, Disciplines.Id as idTest FROM `Questions` 
+            INNER JOIN Tests ON Tests.Id = Questions.Id_test 
+            INNER JOIN Disciplines ON Disciplines.Id = Tests.Id_disciplines WHERE Questions.Id = ?";
             $stmt = $link->prepare($sql);
             $stmt->execute([$id]);
             $data = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -63,13 +70,14 @@ try {
             if ($data) {
                 $idTest = $data["Id_test"];
                 $image = $data["Image"];
+                $idDiscipline = $data["idTest"];
             } else {
                 throw new Exception("Вопрос не найден");
             }
 
             $sql = "DELETE FROM `Questions` WHERE Id = ?";
             if ($image != null) {
-                $imagePath = "../uploads/quiz/$idTest/$image";
+                $imagePath = "../uploads/$idDiscipline/quiz/$idTest/$image";
                 if (is_file($imagePath)) {
                     unlink($imagePath);
                 }

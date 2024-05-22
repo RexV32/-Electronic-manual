@@ -58,7 +58,7 @@
 						{% endfor %}
 					</ul>
 				{% else %}
-					<p class="main__stub-text">Нет данных</p>
+					<p class="main__stub-text">Разделы не найдены</p>
 				{% endif %}
 				{% set className = sections|length <= limit ? "pagintaion--none": ""%}
 				<div class="pagintaion {{className}}">

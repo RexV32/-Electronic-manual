@@ -1,7 +1,8 @@
 <?php
 if(isset($_FILES)) {
     $file = $_FILES["file"];
-    $fileName = basename($file["name"]);
+    $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
+    $fileName = uniqid() . '.' . $extension;
     $targetFile = "../uploads/temp/$fileName";
     $url = "../uploads/temp/$fileName";
 

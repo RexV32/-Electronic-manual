@@ -21,6 +21,12 @@ try {
             mkdir($path, 0777, true);
         }
 
+        $path = "../uploads/$nameFolder/quiz";
+
+        if (!file_exists($path)) {
+            mkdir($path, 0777, true);
+        }
+
         echo json_encode(["success" => true]);
     } else {
         echo json_encode(["success" => false, "message" => $errors["name"]]);

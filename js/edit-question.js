@@ -165,7 +165,6 @@ optionAnswer.forEach((answer) => {
 
 fileField.addEventListener("change", () => {
   file = fileField.files[0];
-  console.log(file);
   const fileName = file.name.toLowerCase();
   const isFileTypeValid = FILE_TYPES.some((type) => fileName.endsWith(type));
 
@@ -188,7 +187,6 @@ buttonDeleteFile.addEventListener("click", () => {
   if (!isDeletePhoto) {
     oldPhoto = image.src;
     isDeletePhoto = 1;
-    console.log(oldPhoto);
   }
   fileField.disabled = false;
   const label = document.querySelector(".form-question__label-button");
@@ -197,7 +195,6 @@ buttonDeleteFile.addEventListener("click", () => {
   file = "";
   image.classList.add("form-question__image--none");
   buttonDeleteFile.classList.add("form-question__button--none");
-  console.log(file);
 });
 
 submitEdit.addEventListener("click", (evt) => {

@@ -15,7 +15,7 @@
 						<button type="button" class="form-question__button {{ className }}">Удалить фото</button>
 					</div>
 					{% set className = question.Image != null ? "" : "form-question__image--none" %}
-					<img class="form-question__image {{ className }}" alt="Вставленное фото"  {% if question.Image %} src="../uploads/quiz/{{ question.Id_test }}/{{ question.Image }} {% endif %}">
+					<img class="form-question__image {{ className }}" alt="Вставленное фото"  {% if question.Image %} src="../uploads/{{ question.IdDiscipline }}/quiz/{{ question.Id_test }}/{{ question.Image }} {% endif %}">
 					<fieldset class="form-question__fieldset form-question__fieldset--radio">
 						<legend class="visually-hidden">Количество ответов</legend>
 						<p class="form-question__group">

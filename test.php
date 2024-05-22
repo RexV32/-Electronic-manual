@@ -61,11 +61,16 @@ if (isset($_GET["id"]) && $_GET["id"] != "") {
     $stmt->execute([$idTest]);
     $TestName = $stmt->fetchColumn();
 
+    $sql = "SELECT Id_disciplines FROM Tests WHERE Id = ?";
+    $stmt = $link -> prepare($sql);
+    $stmt -> execute([$idTest]);
+    $disciplineId = $stmt -> fetchColumn();
 
     $sql = "SELECT q.Id AS IdQuestions,
     q.Text AS TextQuestions,
     q.Multiple AS MultipleQuestions,
     q.Image AS ImageQuestions,
+    q.Id_test AS idTest,
     GROUP_CONCAT(a.Id) AS IdAnswers,
     GROUP_CONCAT(a.Text) AS TextAnswers 
     FROM `Questions` AS q INNER JOIN `Answers` AS a ON a.Id_question = q.Id WHERE q.`Id_test` = ? GROUP BY q.Id";
@@ -95,6 +100,7 @@ $content = $twig->render("test.twig", [
     "questions" => $questionsAarray,
     "currentSection" => $currentSection,
     "data" => $data,
-    "role" => $role
+    "role" => $role,
+    "idDiscipline" => $disciplineId
 ]);
 print ($content);

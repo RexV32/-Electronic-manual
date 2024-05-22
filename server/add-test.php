@@ -23,7 +23,7 @@ try {
         ]);
         $lastInsertId = $link->lastInsertId();
         $nameFolder = $lastInsertId;
-        $path = "../uploads/quiz/$nameFolder";
+        $path = "../uploads/$id/quiz/$nameFolder";
 
         if (!file_exists($path)) {
             mkdir($path, 0777, true);

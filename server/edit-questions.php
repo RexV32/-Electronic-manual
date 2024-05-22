@@ -2,8 +2,8 @@
 require_once ("../function.php");
 header('Content-Type: application/json; charset=utf-8');
 
-function deleteFile($nameFolder, $nameFile) {
-    $path = "../uploads/quiz/$nameFolder/$nameFile";
+function deleteFile($nameFolder, $nameFile, $idDiscipline) {
+    $path = "../uploads/$idDiscipline/quiz/$nameFolder/$nameFile";
     unlink($path);
 }
 
@@ -23,11 +23,14 @@ try {
     $currentPhoto = pathinfo($data["currentPhoto"], PATHINFO_BASENAME);
     $isDeletePhoto = $data["isDeletePhoto"] ? 1 : 0;
 
-    $sql = "SELECT * FROM `Questions` WHERE Id = ?";
+    $sql = "SELECT Questions.Id_test, Disciplines.Id FROM `Questions` 
+    INNER JOIN Tests ON Tests.Id = Questions.Id_test 
+    INNER JOIN Disciplines ON Disciplines.Id = Tests.Id_disciplines WHERE Questions.Id = ?";
     $stmt = $link->prepare($sql);
     $stmt->execute([$idQuestion]);
     $questionsFromDB = $stmt->fetch(PDO::FETCH_ASSOC);
     $idTest = $questionsFromDB["Id_test"];
+    $idDiscipline = $questionsFromDB["Id"];
 
     $sql = "UPDATE `Questions` SET Text = :text, Multiple = :multiple WHERE Id = :id";
     $stmt = $link->prepare($sql);
@@ -41,7 +44,7 @@ try {
         $file = $_FILES['file'];
         $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
         $newFileName = uniqid() . '.' . $extension;
-        $path = "../uploads/quiz/$idTest/" . $newFileName;
+        $path = "../uploads/$idDiscipline/quiz/$idTest/" . $newFileName;
         move_uploaded_file($file["tmp_name"], $path);
 
         $sql = "UPDATE `Questions` SET Image = :image WHERE Id = :id";
@@ -52,11 +55,11 @@ try {
         ]);
 
         if ($currentPhoto != "") {
-            deleteFile($idTest, $currentPhoto);
+            deleteFile($idTest, $currentPhoto, $idDiscipline);
         }
     } else {
         if ($isDeletePhoto) {
-            deleteFile($idTest, $currentPhoto);
+            deleteFile($idTest, $currentPhoto, $idDiscipline);
             $sql = "UPDATE `Questions` SET Image = :image WHERE Id = :id";
             $stmt = $link->prepare($sql);
             $stmt->execute([

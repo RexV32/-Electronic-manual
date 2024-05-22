@@ -63,7 +63,7 @@
 					{% endfor %}
 				</ul>
 			{% else %}
-				<p class="main__stub-text">Нет данных</p>
+				<p class="main__stub-text">Подразделы не найдены</p>
 			{% endif %}
 			{% set className = subSections|length <= limit ? "pagintaion--none": ""%}
 			<div class="pagintaion {{className}}">

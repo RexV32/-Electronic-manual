@@ -15,10 +15,15 @@ try {
 
     if (validateTests($id, $testsIdArray)) {
         if (isset($_FILES['file'])) {
+            $sql = "SELECT Id_disciplines FROM Tests WHERE Id = ?";
+            $stmt = $link -> prepare($sql);
+            $stmt -> execute([$id]);
+            $idDiscipline = $stmt -> fetchColumn();
+
             $file = $_FILES['file'];
             $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
             $newFileName = uniqid() . '.' . $extension;
-            $path = "../uploads/quiz/$id/" . $newFileName;
+            $path = "../uploads/$idDiscipline/quiz/$id/" . $newFileName;
             move_uploaded_file($file["tmp_name"], $path);
         }
         

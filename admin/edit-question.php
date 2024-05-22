@@ -18,7 +18,10 @@ if(isset($_GET["id"])) {
         header("Location:question-list.php");
     }
 
-    $sql = "SELECT * FROM `Questions` WHERE `Id` = ?";
+    $sql = "SELECT Disciplines.Id as IdDiscipline, Questions.Id_test, Questions.Id as Id, Questions.Text, Questions.Multiple, Questions.Image
+    FROM `Questions` 
+    INNER JOIN Tests ON Tests.Id = Questions.Id_test 
+    INNER JOIN Disciplines ON Disciplines.Id = Tests.Id_disciplines WHERE Questions.Id = ?";
     $stmt = $link -> prepare($sql);
     $stmt -> execute([$id]);
     $question = $stmt -> fetch(PDO::FETCH_ASSOC);

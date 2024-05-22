@@ -50,7 +50,7 @@
 						{% endfor %}
 					</ul>
 				{% else %}
-					<p class="main__stub-text">Нет данных</p>
+					<p class="main__stub-text">Дисциплины не найдены</p>
 				{% endif %}
 				{% set className = disciplines|length <= limit ? "pagintaion--none": ""%}
 				<div class="pagintaion {{className}}">

@@ -159,7 +159,7 @@ searchButton.addEventListener("click", (evt) => {
                     const table =  document.querySelector(".user-list__table");
                     table.classList.add("user-list__table--none");
                     const form = document.querySelector(".user-list__form");
-                    const template = `<p class="main__stub-text">Нет данных</p>`;
+                    const template = `<p class="main__stub-text">Результаты не найденый</p>`;
                     form.insertAdjacentHTML("afterend", template);
                 }
             }
