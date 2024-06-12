@@ -3,6 +3,12 @@ require_once ("../server/connect.php");
 header('Content-Type: application/json; charset=utf-8');
 
 try {
+    // Проверка, что переменная $link инициализирована
+    if (!isset($link)) {
+        throw new Exception("Не удалось подключиться к базе данных");
+    }
+
+    // Получение данных из POST-запроса
     $data = filter_input_array(
         INPUT_POST,
         [
@@ -12,6 +18,12 @@ try {
             "content" => FILTER_DEFAULT
         ]
     );
+
+    // Проверка, что все необходимые данные получены
+    if (empty($data["idDiscipline"]) || empty($data["idSection"]) || empty($data["name"]) || empty($data["content"])) {
+        throw new Exception("Некорректные входные данные");
+    }
+
     $idDiscipline = $data["idDiscipline"];
     $idSection = $data["idSection"];
     $name = $data["name"];
@@ -23,6 +35,7 @@ try {
         "name" => $name,
         "idSection" => $idSection
     ]);
+
     $idSubSection = $link->lastInsertId();
     $path = "../uploads/$idDiscipline/$idSection/$idSubSection";
     if (!file_exists($path)) {
@@ -50,14 +63,15 @@ try {
         }
     }
     $content = json_encode($json, true);
-    $sql = "UPDATE `SubSections` SET Content = :content WHERE Id_section = :id";
+    $sql = "UPDATE `SubSections` SET Content = :content WHERE Id = :id";
     $stmt = $link->prepare($sql);
     $stmt->execute([
         "content" => $content,
-        "id" => $idSection
+        "id" => $idSubSection
     ]);
 
     echo json_encode(["success" => true]);
 } catch (Exception $error) {
-    echo json_encode(["success" => false, "message" => "Не удалось выполнить запрос"]);
+    echo json_encode(["success" => false, "message" => $error->getMessage()]);
 }
+?>

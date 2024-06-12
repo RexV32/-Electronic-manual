@@ -169,6 +169,8 @@ fetch("../server/get-data.php", {
                 data.append("content", jsonData);
                 data.append("name", name);
                 console.log(jsonData);
+                console.log(id);
+                console.log(name);
                 fetch("../server/update-subSection.php", {
                     method: "POST",
                     body: data
