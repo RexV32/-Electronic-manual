@@ -13,9 +13,6 @@ const editor = new EditorJS({
   holder: "editor",
   tools: {
     underline: Underline,
-    footnotes: {
-      class: FootnotesTune,
-    },
     table: {
       class: Table,
       inlineToolbar: true,
@@ -24,7 +21,6 @@ const editor = new EditorJS({
         rows: 2,
         cols: 3,
       },
-      tunes: ['footnotes'],
     },
     quote: {
       class: Quote,
@@ -33,7 +29,6 @@ const editor = new EditorJS({
         quotePlaceholder: 'Текст цитаты',
         captionPlaceholder: 'Автор цитаты',
       },
-      tunes: ['footnotes'],
     },
     list: {
       class: nestedList,
@@ -41,17 +36,14 @@ const editor = new EditorJS({
       config: {
         defaultStyle: 'ordered'
       },
-      tunes: ['footnotes'],
     },
     Marker: {
       class: Marker,
       shortcut: 'CTRL+2',
-      tunes: ['footnotes'],
     },
     inlineCode: {
       class: inlineCode,
       shortcut: 'CTRL+1',
-      tunes: ['footnotes'],
     },
     image: {
       class: ImageTool,
@@ -69,12 +61,10 @@ const editor = new EditorJS({
         levels: [1, 2, 3, 4, 5, 6],
         defaultLevel: 1
       },
-      tunes: ['footnotes'],
     },
     paragraph: {
       class: Paragraph,
       inlineToolbar: true,
-      tunes: ['footnotes'],
     },
     embed: {
       class: Embed,

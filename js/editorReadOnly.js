@@ -63,9 +63,6 @@ function loadEditor(content) {
 
     tools: {
       underline: Underline,
-      footnotes: {
-        class: FootnotesTune,
-      },
       table: {
         class: Table,
         inlineToolbar: true,
@@ -74,7 +71,6 @@ function loadEditor(content) {
           rows: 2,
           cols: 3,
         },
-        tunes: ['footnotes'],
       },
       quote: {
         class: Quote,
@@ -83,7 +79,6 @@ function loadEditor(content) {
           quotePlaceholder: 'Текст цитаты',
           captionPlaceholder: 'Автор цитаты',
         },
-        tunes: ['footnotes'],
       },
       list: {
         class: nestedList,
@@ -91,16 +86,13 @@ function loadEditor(content) {
         config: {
           defaultStyle: 'ordered'
         },
-        tunes: ['footnotes'],
       },
       Marker: {
         class: Marker,
         shortcut: 'CTRL+M',
-        tunes: ['footnotes'],
       },
       inlineCode: {
         class: inlineCode,
-        tunes: ['footnotes'],
       },
       image: {
         class: ImageTool,
@@ -118,12 +110,10 @@ function loadEditor(content) {
           levels: [1, 2, 3, 4, 5, 6],
           defaultLevel: 1
         },
-        tunes: ['footnotes'],
       },
       paragraph: {
         class: Paragraph,
         inlineToolbar: true,
-        tunes: ['footnotes'],
       },
       embed: {
         class: Embed,

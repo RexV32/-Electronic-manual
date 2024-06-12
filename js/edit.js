@@ -57,9 +57,6 @@ fetch("../server/get-data.php", {
             data: content,
             tools: {
                 underline: Underline,
-                footnotes: {
-                    class: FootnotesTune,
-                },
                 table: {
                     class: Table,
                     inlineToolbar: true,
@@ -68,7 +65,6 @@ fetch("../server/get-data.php", {
                         rows: 2,
                         cols: 3,
                     },
-                    tunes: ['footnotes'],
                 },
                 quote: {
                     class: Quote,
@@ -77,7 +73,6 @@ fetch("../server/get-data.php", {
                         quotePlaceholder: 'Текст цитаты',
                         captionPlaceholder: 'Автор цитаты',
                     },
-                    tunes: ['footnotes'],
                 },
                 list: {
                     class: nestedList,
@@ -85,17 +80,14 @@ fetch("../server/get-data.php", {
                     config: {
                         defaultStyle: 'ordered'
                     },
-                    tunes: ['footnotes'],
                 },
                 Marker: {
                     class: Marker,
                     shortcut: 'CTRL+2',
-                    tunes: ['footnotes'],
                 },
                 inlineCode: {
                     class: inlineCode,
                     shortcut: 'CTRL+1',
-                    tunes: ['footnotes'],
                 },
                 image: {
                     class: ImageTool,
@@ -113,12 +105,10 @@ fetch("../server/get-data.php", {
                         levels: [1, 2, 3, 4, 5, 6],
                         defaultLevel: 1
                     },
-                    tunes: ['footnotes'],
                 },
                 paragraph: {
                     class: Paragraph,
                     inlineToolbar: true,
-                    tunes: ['footnotes'],
                 },
                 embed: {
                     class: Embed,
@@ -178,6 +168,7 @@ fetch("../server/get-data.php", {
                 data.append("id", id);
                 data.append("content", jsonData);
                 data.append("name", name);
+                console.log(jsonData);
                 fetch("../server/update-subSection.php", {
                     method: "POST",
                     body: data
