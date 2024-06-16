@@ -12,6 +12,7 @@ try {
 
     $tests = getTests($link);
     $testsIdArray = array_column($tests, "Id");
+    $arr = [];
 
     if (validateTests($id, $testsIdArray)) {
         if (isset($_FILES['file'])) {
@@ -39,6 +40,7 @@ try {
 
         foreach ($answers as $answer) {
             $text = $answer["answer"];
+            array_push($arr, $text);
             $correct = $answer["correct"] ? 1 : 0;
             $sql = "INSERT INTO `Answers`(`Id_question`, `Text`, `Correct`) VALUES (:id, :text, :correct)";
             $stmt = $link->prepare($sql);
@@ -49,7 +51,7 @@ try {
             ]);
         }
 
-        echo json_encode(["success" => true]);
+        echo json_encode(["success" => true, "a" => $arr]);
     } else {
         echo json_encode(["success" => false, "message" => "Неудалось создать вопрос", "title" => "Ошибка"]);
     }

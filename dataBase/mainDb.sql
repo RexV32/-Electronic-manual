@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `Answers` (
   `Id` int NOT NULL,
   `Id_question` int NOT NULL,
-  `Text` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `Text` TEXT COLLATE utf8mb4_general_ci NOT NULL,
   `Correct` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -65,7 +65,7 @@ CREATE TABLE `Groups` (
 
 CREATE TABLE `Questions` (
   `Id` int NOT NULL,
-  `Text` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `Text` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `Id_test` int NOT NULL,
   `Multiple` int NOT NULL,
   `Image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL

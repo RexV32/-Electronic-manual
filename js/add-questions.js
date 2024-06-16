@@ -187,7 +187,7 @@ submitCreate.addEventListener("click", (evt) => {
     };
     const idTest = document.querySelector(".selectpicker").value;
     const options = document.querySelectorAll(".form-question__radio[name='option-answer']");
-    const questionText = document.querySelector(".form-question__question-input").value;
+    const questionText = document.querySelector(".form-question__question-input").value.trim();
     const answers = document.querySelectorAll(".form-question__group-answer");
     let multipleOption = 0;
 
@@ -213,7 +213,7 @@ submitCreate.addEventListener("click", (evt) => {
         if (isCorrectAnswer) {
             count++;
         }
-        const answerText = answer.querySelector(".form-question__answer-input").value;
+        const answerText = answer.querySelector(".form-question__answer-input").value.trim();
         if (answerText.length === 0) {
             modal("Введите текст ответа", "Ошибка");
             return;
@@ -238,6 +238,7 @@ submitCreate.addEventListener("click", (evt) => {
     const jsonData = JSON.stringify(questionData, null, 2);
     data.append("data", jsonData);
     data.append("file", file);
+    console.log(jsonData);
     fetch("../server/add-questions.php", {
         method: "POST",
         body: data
