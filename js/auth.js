@@ -30,8 +30,8 @@ submit.addEventListener("click", (evt) => {
     evt.preventDefault();
     evt.target.disabled = true;
     const dataUser = {
-        login: document.querySelector(".auth__input[type='text']").value,
-        password: document.querySelector(".auth__input[type='password']").value,
+        login: document.querySelector(".auth__input[type='text']").value.trim(),
+        password: document.querySelector(".auth__input[type='password']").value.trim(),
     };
     const data = new FormData();
     data.append("data", JSON.stringify(dataUser));

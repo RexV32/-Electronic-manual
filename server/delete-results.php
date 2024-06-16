@@ -2,8 +2,8 @@
 require_once ("../server/connect.php");
 header('Content-Type: application/json; charset=utf-8');
 try {
-    $data = filter_input_array(INPUT_POST, "id", FILTER_DEFAULT);
-    $id = $data["id"];
+    $data = filter_input(INPUT_POST, "id", FILTER_DEFAULT);
+    $id = $data;
     $sql = "DELETE FROM `Results` WHERE Id = ?";
     $stmt = $link->prepare($sql);
     $stmt->execute([$id]);

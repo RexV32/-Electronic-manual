@@ -11,16 +11,16 @@ try {
     $sql = "SELECT 
     q.Id AS IdQuestions,
     q.Text AS TextQuestions,
-    GROUP_CONCAT(a.Id) AS IdAnswers,
-    GROUP_CONCAT(a.Text) AS TextAnswers 
+    GROUP_CONCAT(a.Id SEPARATOR 'ℵ') AS IdAnswers,
+    GROUP_CONCAT(a.Text SEPARATOR 'ℵ') AS TextAnswers 
     FROM `Questions` AS q INNER JOIN `Answers` AS a ON a.Id_question = q.Id WHERE q.`Id_test` = ? AND a.Correct = 1 GROUP BY q.Id";
     $stmt = $link->prepare($sql);
     $stmt->execute([$idTest]);
     $questions = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $countCorrect = 0;
     foreach ($questions as $question) {
-        $idAnswersArr = explode(",", $question["IdAnswers"]);
-        $textAnswersArr = explode(",", $question["TextAnswers"]);
+        $idAnswersArr = explode("ℵ", $question["IdAnswers"]);
+        $textAnswersArr = explode("ℵ", $question["TextAnswers"]);
         unset($question["IdAnswers"]);
         unset($question["TextAnswers"]);
         $question["answers"] = [];
