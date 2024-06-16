@@ -35,9 +35,11 @@
 										<span class="visually-hidden">Закрыть меню</span>
 									</button>
 								</li>
-								<li class="menu__user-item">
-									<a class="menu__user-link" href="admin/admin.php">Панель администратора</a>
-								</li>
+								{% if role == 2 %}
+									<li class="menu__user-item">
+										<a class="menu__user-link" href="admin/admin.php">Панель администратора</a>
+									</li>
+								{% endif %}
 								<li class="menu__user-item">
 									<a class="menu__user-link" href="logout.php">Выйти</a>
 								</li>
@@ -56,9 +58,11 @@
 															<a class="dropmenu__link" href="index.php?section={{value.Id}}">{{value.Name}}</a>
 														</li>
 													{% endfor %}
-													<li class="dropmenu__menu-item">
-														<a class="dropmenu__link" href="index.php?tests&disciplines={{item.IdDisciplines}}">Тесты</a>
-													</li>
+													{% if item.isTest %}
+														<li class="dropmenu__menu-item">
+															<a class="dropmenu__link" href="index.php?tests&disciplines={{item.IdDisciplines}}">Тесты</a>
+														</li>
+													{% endif %}
 												</ul>
 											</li>
 										{% endfor %}
@@ -94,9 +98,9 @@
 											</li>
 										{% endfor %}
 										{% if item.isTest %}
-										<li class="dropmenu__menu-item">
-											<a class="dropmenu__link" href="index.php?tests&disciplines={{item.IdDisciplines}}">Тесты</a>
-										</li>
+											<li class="dropmenu__menu-item">
+												<a class="dropmenu__link" href="index.php?tests&disciplines={{item.IdDisciplines}}">Тесты</a>
+											</li>
 										{% endif %}
 									</ul>
 								</li>

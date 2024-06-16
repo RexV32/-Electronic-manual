@@ -9,12 +9,14 @@ openbutton.addEventListener("click", () => {
   let div = document.createElement("div");
   div.classList.add("menu-background");
   body.append(div);
-  html.style.overflow = "hidden";
+  html.classList.add("page-block");
+  body.classList.add("body-block");
 })
 
 closeButton.addEventListener("click",() => {
   menu.classList.remove("menu__wrapper--open");
   const background = document.querySelector(".menu-background");
   body.removeChild(background);
-  html.style.overflow = "";
+  html.classList.remove("page-block");
+  body.classList.remove("body-block");
 })

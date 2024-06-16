@@ -3,12 +3,6 @@ require_once ("../server/connect.php");
 header('Content-Type: application/json; charset=utf-8');
 
 try {
-    // Проверка, что переменная $link инициализирована
-    if (!isset($link)) {
-        throw new Exception("Не удалось подключиться к базе данных");
-    }
-
-    // Получение данных из POST-запроса
     $data = filter_input_array(
         INPUT_POST,
         [
@@ -19,7 +13,6 @@ try {
         ]
     );
 
-    // Проверка, что все необходимые данные получены
     if (empty($data["idDiscipline"]) || empty($data["idSection"]) || empty($data["name"]) || empty($data["content"])) {
         throw new Exception("Некорректные входные данные");
     }
@@ -37,31 +30,26 @@ try {
     ]);
 
     $idSubSection = $link->lastInsertId();
-    $path = "../uploads/$idDiscipline/$idSection/$idSubSection";
-    if (!file_exists($path)) {
-        mkdir($path, 0777, true);
-    }
 
-    $sourceFolder = "../uploads/temp";
-    $targetFolder = "../uploads/$idDiscipline/$idSection/$idSubSection";
-    $files = scandir($sourceFolder);
-    foreach ($files as $file) {
-        $sourcePath = $sourceFolder . '/' . $file;
-        if (is_file($sourcePath)) {
-            $targetPath = $targetFolder . '/' . $file;
-            rename($sourcePath, $targetPath);
-        }
-    }
-
+    $arrName = [];
     $json = json_decode($content, true);
     foreach ($json['blocks'] as &$block) {
         if ($block['type'] === 'image' || $block['type'] === 'attaches') {
             $currentUrl = $block['data']['file']['url'];
             $fileName = basename($currentUrl);
-            $newUrl = "../uploads/$idDiscipline/$idSection/$idSubSection/$fileName";
-            $block['data']['file']['url'] = $newUrl;
+            $sourcePath = "../uploads/temp/" . $fileName;
+            $targetPath = "../uploads/$idDiscipline/$idSection/$idSubSection/" . $fileName;
+            if (is_file($sourcePath)) {
+                if (!file_exists(dirname($targetPath))) {
+                    mkdir(dirname($targetPath), 0777, true);
+                }
+                rename($sourcePath, $targetPath);
+            }
+            $block['data']['file']['url'] = $targetPath;
+            array_push($arrName, $fileName);
         }
     }
+
     $content = json_encode($json, true);
     $sql = "UPDATE `SubSections` SET Content = :content WHERE Id = :id";
     $stmt = $link->prepare($sql);
@@ -70,8 +58,15 @@ try {
         "id" => $idSubSection
     ]);
 
+    $tempFiles = scandir("../uploads/temp");
+    foreach ($tempFiles as $tempFile) {
+        $tempFilePath = "../uploads/temp/" . $tempFile;
+        if (is_file($tempFilePath)) {
+            unlink($tempFilePath);
+        }
+    }
+
     echo json_encode(["success" => true]);
 } catch (Exception $error) {
     echo json_encode(["success" => false, "message" => $error->getMessage()]);
 }
-?>

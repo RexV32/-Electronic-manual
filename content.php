@@ -9,6 +9,16 @@ $data = [];
 $template = "content.twig";
 $currentSection = "content";
 $role = $_SESSION["user"]["Role_id"];
+$id = $_GET["id"];
+
+$sql = "SELECT `Id` FROM `SubSections` WHERE Status = 1 AND Id = ?";
+$stmt = $link->prepare($sql);
+$stmt->execute([$id]);
+$data = $stmt->fetchColumn();
+
+if(!$data) {
+    header("Location: index.php"); 
+}
 
 $sql = "SELECT Disciplines.Id as IdDisciplines,
     Disciplines.Name as NameDiscipline,
@@ -19,7 +29,13 @@ $stmt = $link->prepare($sql);
 $stmt->execute();
 $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+$sql = "SELECT Id_disciplines FROM Tests WHERE Status = 1";
+$stmt = $link->prepare($sql);
+$stmt->execute();
+$testDisciplines = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
 foreach ($data as $item) {
+    $idDiscipline = $item["IdDisciplines"];
     $idArray = explode(",", $item["SectionId"]);
     $nameArray = explode(",", $item["SectionName"]);
     unset($item["SectionId"]);
@@ -30,6 +46,7 @@ foreach ($data as $item) {
         $name = $nameArray[$i];
         array_push($item["Section"], ["Id" => $id, "Name" => $name]);
     }
+    $item["isTest"] = in_array($idDiscipline, $testDisciplines);
     array_push($array, $item);
 }
 $data = $array;

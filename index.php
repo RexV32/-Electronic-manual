@@ -10,7 +10,7 @@ $template = "";
 $context = [];
 $data = [];
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
-$limit = 5;
+$limit = 10;
 $offset = ($page - 1) * $limit;
 
 $sql = "SELECT Id as IdDisciplines, Name as NameDiscipline FROM Disciplines WHERE Status = 1";
@@ -23,7 +23,7 @@ $stmt = $link->prepare($sql);
 $stmt->execute();
 $sectionsArray = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-$sql = "SELECT Id_disciplines FROM Tests";
+$sql = "SELECT Id_disciplines FROM Tests WHERE Status = 1";
 $stmt = $link->prepare($sql);
 $stmt->execute();
 $testDisciplines = $stmt->fetchAll(PDO::FETCH_COLUMN);
@@ -59,7 +59,7 @@ if (!isset($_GET["section"]) && !isset($_GET["tests"])) {
         $sql = "SELECT SubSections.Id as IdSubSections,
         SubSections.Name as NameSubSections,
         SubSections.Id_section as currentIdSection 
-        FROM SubSections WHERE `SubSections`.`Id_section` = ?";
+        FROM SubSections WHERE `SubSections`.`Id_section` = ? AND  `SubSections`.`Status` = 1";
         $stmt = $link->prepare($sql);
         $stmt->execute([$id]);
         $subSections = $stmt->fetchAll(PDO::FETCH_ASSOC);
